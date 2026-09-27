@@ -368,6 +368,18 @@
         <span id="audioName" style="font-size:12.5px; color:var(--muted); margin-left:10px;"></span>
         <div class="helper" style="margin-top:10px;">Use a track you own or have rights to — this page can't supply licensed songs, only play back a file you provide.</div>
 
+        <label style="margin-top:18px;">Layout style</label>
+        <select id="layoutSelect">
+          <option value="bottom">Bottom caption</option>
+          <option value="center">Center focus</option>
+          <option value="top">Top title</option>
+          <option value="framed">Framed photo</option>
+          <option value="split">Split panel</option>
+          <option value="cinematic">Cinematic bars</option>
+          <option value="random">Random layout each time</option>
+        </select>
+        <div class="helper" style="margin-top:8px;">Pick a fixed look, or choose Random to get a different layout every time you generate.</div>
+
         <div class="panel-actions" style="margin-top:6px;">
           <button class="btn btn-primary" id="generateVideoBtn">Generate video</button>
         </div>
@@ -848,14 +860,106 @@
   }
 
   function drawCover(ctx, img, W, H, zoom){
-    var ir = img.width / img.height, cr = W / H;
+    drawCoverRect(ctx, img, 0, 0, W, H, zoom);
+  }
+  function drawCoverRect(ctx, img, x, y, w, h, zoom){
+    var ir = img.width / img.height, cr = w / h;
     var sw, sh, sx, sy;
     if(ir > cr){ sh = img.height; sw = sh * cr; } else { sw = img.width; sh = sw / cr; }
     sx = (img.width - sw) / 2; sy = (img.height - sh) / 2;
     var zsw = sw / zoom, zsh = sh / zoom;
     var zsx = sx + (sw - zsw) / 2, zsy = sy + (sh - zsh) / 2;
-    ctx.drawImage(img, zsx, zsy, zsw, zsh, 0, 0, W, H);
+    ctx.drawImage(img, zsx, zsy, zsw, zsh, x, y, w, h);
   }
+
+  function brandLabel(ctx, x, y, align){
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.font = '12px Arial';
+    ctx.textAlign = align || 'left';
+    ctx.fillText('NAVAAR STUDIO', x, y);
+  }
+
+  var LAYOUTS = {
+    bottom: function(ctx, img, W, H, zoom, text, alpha, rtl){
+      drawCover(ctx, img, W, H, zoom);
+      var g = ctx.createLinearGradient(0, H*0.38, 0, H);
+      g.addColorStop(0,'rgba(5,8,20,0)'); g.addColorStop(1,'rgba(5,8,20,0.88)');
+      ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+      brandLabel(ctx, 30, 40, 'left');
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#eef1fb'; ctx.textAlign = 'center';
+      ctx.font = rtl ? '38px "Noto Nastaliq Urdu", serif' : '30px Georgia, serif';
+      wrapCentered(ctx, text, W/2, H-140, W-90, 46);
+      ctx.globalAlpha = 1;
+    },
+    center: function(ctx, img, W, H, zoom, text, alpha, rtl){
+      drawCover(ctx, img, W, H, zoom);
+      ctx.fillStyle = 'rgba(5,8,20,0.5)'; ctx.fillRect(0,0,W,H);
+      brandLabel(ctx, W/2, 46, 'center');
+      ctx.strokeStyle = 'rgba(82,217,208,0.9)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(W/2-24, H/2-70); ctx.lineTo(W/2+24, H/2-70); ctx.stroke();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#eef1fb'; ctx.textAlign = 'center';
+      ctx.font = rtl ? '44px "Noto Nastaliq Urdu", serif' : '34px Georgia, serif';
+      wrapCentered(ctx, text, W/2, H/2+20, W-100, 52);
+      ctx.globalAlpha = 1;
+    },
+    top: function(ctx, img, W, H, zoom, text, alpha, rtl){
+      drawCover(ctx, img, W, H, zoom);
+      var g = ctx.createLinearGradient(0,0,0,H*0.55);
+      g.addColorStop(0,'rgba(5,8,20,0.85)'); g.addColorStop(1,'rgba(5,8,20,0)');
+      ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#eef1fb'; ctx.textAlign = 'center';
+      ctx.font = rtl ? '38px "Noto Nastaliq Urdu", serif' : '30px Georgia, serif';
+      wrapCentered(ctx, text, W/2, 190, W-100, 46);
+      ctx.globalAlpha = 1;
+      brandLabel(ctx, W-30, H-36, 'right');
+    },
+    framed: function(ctx, img, W, H, zoom, text, alpha, rtl){
+      ctx.fillStyle = '#0c1330'; ctx.fillRect(0,0,W,H);
+      var m = 42, photoH = H*0.62;
+      drawCoverRect(ctx, img, m, m+34, W-m*2, photoH, zoom);
+      ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 2;
+      ctx.strokeRect(m, m+34, W-m*2, photoH);
+      brandLabel(ctx, W/2, 30, 'center');
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#eef1fb'; ctx.textAlign = 'center';
+      ctx.font = rtl ? '32px "Noto Nastaliq Urdu", serif' : '26px Georgia, serif';
+      wrapCentered(ctx, text, W/2, m+34+photoH+80, W-90, 40);
+      ctx.globalAlpha = 1;
+    },
+    split: function(ctx, img, W, H, zoom, text, alpha, rtl){
+      var splitY = H*0.6;
+      drawCoverRect(ctx, img, 0, 0, W, splitY, zoom);
+      var panel = ctx.createLinearGradient(0, splitY, 0, H);
+      panel.addColorStop(0,'#101a3f'); panel.addColorStop(1,'#0a0f24');
+      ctx.fillStyle = panel; ctx.fillRect(0, splitY, W, H-splitY);
+      ctx.strokeStyle = 'rgba(82,217,208,0.9)'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(0, splitY); ctx.lineTo(W, splitY); ctx.stroke();
+      brandLabel(ctx, 30, 40, 'left');
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#eef1fb'; ctx.textAlign = 'center';
+      ctx.font = rtl ? '32px "Noto Nastaliq Urdu", serif' : '26px Georgia, serif';
+      wrapCentered(ctx, text, W/2, splitY + (H-splitY)/2 + 12, W-90, 40);
+      ctx.globalAlpha = 1;
+    },
+    cinematic: function(ctx, img, W, H, zoom, text, alpha, rtl){
+      drawCover(ctx, img, W, H, zoom);
+      var bar = 78;
+      var g = ctx.createLinearGradient(0, H*0.3, 0, H*0.7);
+      g.addColorStop(0,'rgba(5,8,20,0.15)'); g.addColorStop(0.5,'rgba(5,8,20,0.55)'); g.addColorStop(1,'rgba(5,8,20,0.15)');
+      ctx.fillStyle = g; ctx.fillRect(0, bar, W, H-bar*2);
+      ctx.fillStyle = '#050814'; ctx.fillRect(0,0,W,bar); ctx.fillRect(0,H-bar,W,bar);
+      brandLabel(ctx, W/2, bar/2+5, 'center');
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#eef1fb'; ctx.textAlign = 'center';
+      ctx.font = rtl ? '34px "Noto Nastaliq Urdu", serif' : '26px Georgia, serif';
+      wrapCentered(ctx, text, W/2, H/2+16, W-110, 44);
+      ctx.globalAlpha = 1;
+    }
+  };
+  var LAYOUT_KEYS = Object.keys(LAYOUTS);
 
   function wrapCentered(ctx, txt, cx, baseY, maxWidth, lineHeight){
     var words = txt.split(' ');
@@ -870,11 +974,19 @@
     lines.forEach(function(ln, i){ ctx.fillText(ln, cx, startY + i * lineHeight); });
   }
 
+  var layoutSelect = document.getElementById('layoutSelect');
+
   generateVideoBtn.addEventListener('click', async function(){
     if(photos.length === 0){ videoStatus.textContent = 'Add at least one photo first.'; return; }
     var lines = lyricsInput.value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
     if(lines.length === 0){ videoStatus.textContent = 'Add at least one line of poetry or lyrics.'; return; }
     if(!('MediaRecorder' in window)){ videoStatus.textContent = 'Your browser does not support in-browser video recording.'; return; }
+
+    var chosenLayout = layoutSelect.value;
+    if(chosenLayout === 'random'){
+      chosenLayout = LAYOUT_KEYS[Math.floor(Math.random() * LAYOUT_KEYS.length)];
+    }
+    var drawLayout = LAYOUTS[chosenLayout];
 
     generateVideoBtn.disabled = true;
     videoStatus.textContent = 'Preparing…';
@@ -915,7 +1027,7 @@
       generateVideoBtn.disabled = false;
     };
 
-    videoStatus.textContent = 'Recording…';
+    videoStatus.textContent = 'Recording… (layout: ' + chosenLayout + ')';
     recorder.start();
     if(audioEl && audioFile){ audioEl.currentTime = 0; audioEl.play().catch(function(){}); }
 
@@ -933,28 +1045,14 @@
       var pIdx = Math.min(photos.length - 1, Math.floor(elapsed / photoSlot));
       var pProgress = (elapsed - pIdx * photoSlot) / photoSlot;
       var zoom = 1 + 0.08 * pProgress;
-      drawCover(vctx, photos[pIdx], W, H, zoom);
-
-      var grad = vctx.createLinearGradient(0, H * 0.38, 0, H);
-      grad.addColorStop(0, 'rgba(5,8,20,0)');
-      grad.addColorStop(1, 'rgba(5,8,20,0.88)');
-      vctx.fillStyle = grad; vctx.fillRect(0, 0, W, H);
-
-      vctx.fillStyle = 'rgba(255,255,255,0.6)';
-      vctx.font = '12px Arial';
-      vctx.textAlign = 'left';
-      vctx.fillText('NAVAAR STUDIO', 30, 40);
 
       var lIdx = Math.min(lines.length - 1, Math.floor(elapsed / lineSlot));
       var lProgress = (elapsed - lIdx * lineSlot) / lineSlot;
       var fade = lProgress < 0.15 ? lProgress / 0.15 : (lProgress > 0.85 ? (1 - lProgress) / 0.15 : 1);
-      vctx.globalAlpha = Math.max(0, Math.min(1, fade));
+      fade = Math.max(0, Math.min(1, fade));
       var curLine = lines[lIdx];
-      vctx.fillStyle = '#eef1fb';
-      vctx.textAlign = 'center';
-      vctx.font = isUrdu(curLine) ? '38px "Noto Nastaliq Urdu", serif' : '30px Georgia, serif';
-      wrapCentered(vctx, curLine, W / 2, H - 140, W - 90, 46);
-      vctx.globalAlpha = 1;
+
+      drawLayout(vctx, photos[pIdx], W, H, zoom, curLine, fade, isUrdu(curLine));
 
       requestAnimationFrame(render);
     }
