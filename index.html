@@ -190,6 +190,7 @@
     <div class="nav-links">
       <nav><ul>
         <li><a href="#features">Features</a></li>
+        <li><a href="#photoVideo">Photo Video</a></li>
         <li><a href="#templates">Templates</a></li>
         <li><a href="#how">How it works</a></li>
         <li><a href="#pricing">Pricing</a></li>
@@ -335,6 +336,49 @@
         <span class="count" id="savedCount">0 / 999</span>
       </div>
       <div class="saved-list" id="savedList"></div>
+    </div>
+  </div>
+</section>
+
+<section id="photoVideo" style="background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Photo + lyrics video maker</div>
+      <h2>Turn your photos and words into a short video.</h2>
+      <p>Upload your own photos, write the poetry or lyrics that should appear on screen, add your own audio file, then export a real, downloadable short video — photos gently pan behind your words like a lyric video.</p>
+    </div>
+
+    <div class="studio-grid">
+      <div class="panel">
+        <label>Your photos</label>
+        <input type="file" id="photoInput" accept="image/*" multiple style="display:none;">
+        <button class="btn btn-outline btn-small" id="photoBtn" type="button">Add photos</button>
+        <span class="helper" style="margin:0 0 0 10px;">Used as a slideshow background, in the order added.</span>
+        <div id="photoThumbs" style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;"></div>
+
+        <label style="margin-top:22px;">Poetry or lyrics</label>
+        <textarea id="lyricsInput" style="direction:rtl; min-height:120px;" placeholder="ایک سطر فی لائن لکھیں">لفظوں کو منظر دو
+تم سا کوئی نہیں
+دل کو سکون دو</textarea>
+        <div class="helper">Write one line per row. Each line appears on screen in turn, timed evenly across the video.</div>
+
+        <label>Background audio (optional)</label>
+        <input type="file" id="audioInput" accept="audio/*" style="display:none;">
+        <button class="btn btn-outline btn-small" id="audioBtn" type="button">Add audio file</button>
+        <span id="audioName" style="font-size:12.5px; color:var(--muted); margin-left:10px;"></span>
+        <div class="helper" style="margin-top:10px;">Use a track you own or have rights to — this page can't supply licensed songs, only play back a file you provide.</div>
+
+        <div class="panel-actions" style="margin-top:6px;">
+          <button class="btn btn-primary" id="generateVideoBtn">Generate video</button>
+        </div>
+        <div class="status-line" id="videoStatus"></div>
+        <video class="export-video" id="photoExportVideo" controls></video>
+        <a class="download-link" id="photoDownloadLink" download="navaar-photo-video.webm">Download this video (.webm)</a>
+      </div>
+
+      <div class="preview-card" style="padding:0; overflow:hidden;">
+        <canvas id="videoCanvas" width="540" height="960" style="width:100%; display:block; border-radius:20px;"></canvas>
+      </div>
     </div>
   </div>
 </section>
@@ -724,6 +768,197 @@
         el.textContent = mode === 'annual' ? 'Billed annually' : 'Billed monthly';
       }
     });
+  });
+
+  /* ---- Photo + lyrics video maker ---- */
+  var photos = [];
+  var audioFile = null, audioEl = null;
+
+  var photoInput = document.getElementById('photoInput');
+  var photoBtn = document.getElementById('photoBtn');
+  var photoThumbs = document.getElementById('photoThumbs');
+  var lyricsInput = document.getElementById('lyricsInput');
+  var audioInput = document.getElementById('audioInput');
+  var audioBtn = document.getElementById('audioBtn');
+  var audioName = document.getElementById('audioName');
+  var generateVideoBtn = document.getElementById('generateVideoBtn');
+  var videoStatus = document.getElementById('videoStatus');
+  var videoCanvas = document.getElementById('videoCanvas');
+  var vctx = videoCanvas.getContext('2d');
+  var photoExportVideo = document.getElementById('photoExportVideo');
+  var photoDownloadLink = document.getElementById('photoDownloadLink');
+
+  photoBtn.addEventListener('click', function(){ photoInput.click(); });
+  audioBtn.addEventListener('click', function(){ audioInput.click(); });
+
+  function renderThumbs(){
+    photoThumbs.innerHTML = '';
+    photos.forEach(function(p, i){
+      var wrap = document.createElement('div');
+      wrap.style.position = 'relative';
+      var img = document.createElement('img');
+      img.src = p.src; img.style.width = '56px'; img.style.height = '56px';
+      img.style.objectFit = 'cover'; img.style.borderRadius = '8px';
+      img.style.border = '1px solid var(--border-strong)';
+      var del = document.createElement('button');
+      del.textContent = '×';
+      del.type = 'button';
+      del.style.cssText = 'position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:#ff5a5a;color:#fff;font-size:11px;line-height:1;cursor:pointer;border:none;';
+      del.addEventListener('click', function(){ photos.splice(i,1); renderThumbs(); });
+      wrap.appendChild(img); wrap.appendChild(del);
+      photoThumbs.appendChild(wrap);
+    });
+  }
+
+  photoInput.addEventListener('change', function(){
+    var files = Array.prototype.slice.call(photoInput.files || []);
+    files.forEach(function(file){
+      var reader = new FileReader();
+      reader.onload = function(e){
+        var img = new Image();
+        img.onload = function(){ photos.push(img); renderThumbs(); };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+    photoInput.value = '';
+  });
+
+  audioInput.addEventListener('change', function(){
+    var file = audioInput.files && audioInput.files[0];
+    if(!file) return;
+    audioFile = file;
+    audioName.textContent = file.name;
+    if(audioEl){ audioEl.pause(); }
+    audioEl = new Audio();
+    audioEl.src = URL.createObjectURL(file);
+    audioEl.crossOrigin = 'anonymous';
+  });
+
+  function ensureAudioReady(){
+    return new Promise(function(resolve){
+      if(!audioEl || !audioFile){ resolve(0); return; }
+      if(audioEl.readyState >= 1 && !isNaN(audioEl.duration)){ resolve(audioEl.duration); return; }
+      audioEl.addEventListener('loadedmetadata', function handler(){
+        audioEl.removeEventListener('loadedmetadata', handler);
+        resolve(audioEl.duration || 0);
+      });
+      audioEl.addEventListener('error', function(){ resolve(0); });
+    });
+  }
+
+  function drawCover(ctx, img, W, H, zoom){
+    var ir = img.width / img.height, cr = W / H;
+    var sw, sh, sx, sy;
+    if(ir > cr){ sh = img.height; sw = sh * cr; } else { sw = img.width; sh = sw / cr; }
+    sx = (img.width - sw) / 2; sy = (img.height - sh) / 2;
+    var zsw = sw / zoom, zsh = sh / zoom;
+    var zsx = sx + (sw - zsw) / 2, zsy = sy + (sh - zsh) / 2;
+    ctx.drawImage(img, zsx, zsy, zsw, zsh, 0, 0, W, H);
+  }
+
+  function wrapCentered(ctx, txt, cx, baseY, maxWidth, lineHeight){
+    var words = txt.split(' ');
+    var line = '', lines = [];
+    for(var i=0;i<words.length;i++){
+      var test = line + words[i] + ' ';
+      if(ctx.measureText(test).width > maxWidth && line !== ''){ lines.push(line.trim()); line = words[i] + ' '; }
+      else { line = test; }
+    }
+    lines.push(line.trim());
+    var startY = baseY - (lines.length - 1) * lineHeight;
+    lines.forEach(function(ln, i){ ctx.fillText(ln, cx, startY + i * lineHeight); });
+  }
+
+  generateVideoBtn.addEventListener('click', async function(){
+    if(photos.length === 0){ videoStatus.textContent = 'Add at least one photo first.'; return; }
+    var lines = lyricsInput.value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+    if(lines.length === 0){ videoStatus.textContent = 'Add at least one line of poetry or lyrics.'; return; }
+    if(!('MediaRecorder' in window)){ videoStatus.textContent = 'Your browser does not support in-browser video recording.'; return; }
+
+    generateVideoBtn.disabled = true;
+    videoStatus.textContent = 'Preparing…';
+    photoDownloadLink.style.display = 'none';
+    photoExportVideo.style.display = 'none';
+
+    var audioDuration = await ensureAudioReady();
+    var W = videoCanvas.width, H = videoCanvas.height;
+    var totalMs;
+    if(audioDuration && audioDuration > 0){ totalMs = Math.min(audioDuration, 30) * 1000; }
+    else { totalMs = Math.max(6, Math.min(30, lines.length * 3)) * 1000; }
+
+    var canvasStream = videoCanvas.captureStream(30);
+    var combined = new MediaStream();
+    canvasStream.getVideoTracks().forEach(function(t){ combined.addTrack(t); });
+    if(audioEl && audioFile){
+      try{
+        var aStream = audioEl.captureStream ? audioEl.captureStream() : (audioEl.mozCaptureStream ? audioEl.mozCaptureStream() : null);
+        if(aStream){ aStream.getAudioTracks().forEach(function(t){ combined.addTrack(t); }); }
+      } catch(e){}
+    }
+
+    var mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+    var recorder;
+    try { recorder = new MediaRecorder(combined, { mimeType: mimeType }); }
+    catch(e){ videoStatus.textContent = 'Recording is not supported in this browser.'; generateVideoBtn.disabled = false; return; }
+
+    var chunks = [];
+    recorder.ondataavailable = function(e){ if(e.data && e.data.size) chunks.push(e.data); };
+    recorder.onstop = function(){
+      var blob = new Blob(chunks, { type: mimeType });
+      var url = URL.createObjectURL(blob);
+      photoExportVideo.src = url;
+      photoExportVideo.style.display = 'block';
+      photoDownloadLink.href = url;
+      photoDownloadLink.style.display = 'inline-block';
+      videoStatus.textContent = 'Your video is ready — play it back or download it.';
+      generateVideoBtn.disabled = false;
+    };
+
+    videoStatus.textContent = 'Recording…';
+    recorder.start();
+    if(audioEl && audioFile){ audioEl.currentTime = 0; audioEl.play().catch(function(){}); }
+
+    var start = null;
+    var photoSlot = totalMs / photos.length;
+    var lineSlot = totalMs / lines.length;
+
+    function render(ts){
+      if(start === null) start = ts;
+      var elapsed = ts - start;
+      if(elapsed >= totalMs){
+        setTimeout(function(){ recorder.stop(); if(audioEl) audioEl.pause(); }, 100);
+        return;
+      }
+      var pIdx = Math.min(photos.length - 1, Math.floor(elapsed / photoSlot));
+      var pProgress = (elapsed - pIdx * photoSlot) / photoSlot;
+      var zoom = 1 + 0.08 * pProgress;
+      drawCover(vctx, photos[pIdx], W, H, zoom);
+
+      var grad = vctx.createLinearGradient(0, H * 0.38, 0, H);
+      grad.addColorStop(0, 'rgba(5,8,20,0)');
+      grad.addColorStop(1, 'rgba(5,8,20,0.88)');
+      vctx.fillStyle = grad; vctx.fillRect(0, 0, W, H);
+
+      vctx.fillStyle = 'rgba(255,255,255,0.6)';
+      vctx.font = '12px Arial';
+      vctx.textAlign = 'left';
+      vctx.fillText('NAVAAR STUDIO', 30, 40);
+
+      var lIdx = Math.min(lines.length - 1, Math.floor(elapsed / lineSlot));
+      var lProgress = (elapsed - lIdx * lineSlot) / lineSlot;
+      var fade = lProgress < 0.15 ? lProgress / 0.15 : (lProgress > 0.85 ? (1 - lProgress) / 0.15 : 1);
+      vctx.globalAlpha = Math.max(0, Math.min(1, fade));
+      var curLine = lines[lIdx];
+      vctx.fillStyle = '#eef1fb';
+      vctx.textAlign = 'center';
+      vctx.font = isUrdu(curLine) ? '38px "Noto Nastaliq Urdu", serif' : '30px Georgia, serif';
+      wrapCentered(vctx, curLine, W / 2, H - 140, W - 90, 46);
+      vctx.globalAlpha = 1;
+
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
   });
 })();
 </script>
