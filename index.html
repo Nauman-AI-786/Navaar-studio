@@ -54,6 +54,17 @@
   nav ul{display:flex; gap:34px; font-size:14.5px; color: var(--muted-2);}
   nav a:hover{color:var(--text);}
   .nav-links{display:flex; align-items:center; gap:34px;}
+  .auth-box{position:relative;}
+  .auth-panel{
+    display:none; position:absolute; top:44px; right:0; width:250px;
+    background: var(--card); border:1px solid var(--border-strong); border-radius:12px;
+    padding:16px; box-shadow:0 20px 40px -10px rgba(0,0,0,0.5); z-index:60;
+  }
+  .auth-panel.open{display:block;}
+  .auth-panel label{font-size:11.5px; margin-bottom:5px;}
+  .auth-panel input{width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--border-strong); border-radius:8px; color:var(--text); padding:8px 10px; font-size:13px;}
+  .auth-panel-actions{display:flex; gap:8px; margin-top:14px;}
+  .auth-status{font-size:12px; color:var(--accent); margin-top:10px; min-height:14px;}
 
   .hero{padding:88px 0 64px;}
   .hero-grid{display:grid; grid-template-columns:1.1fr 0.95fr; gap:56px; align-items:center;}
@@ -196,6 +207,20 @@
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul></nav>
+      <div class="auth-box" id="authBox">
+        <button class="btn btn-outline btn-small" id="authToggleBtn" type="button">Sign in</button>
+        <div class="auth-panel" id="authPanel">
+          <label>Email</label>
+          <input type="email" id="authEmail" placeholder="you@example.com">
+          <label style="margin-top:10px;">Password</label>
+          <input type="password" id="authPassword" placeholder="••••••••">
+          <div class="auth-panel-actions">
+            <button class="btn btn-outline btn-small" id="signUpBtn" type="button">Sign up</button>
+            <button class="btn btn-primary btn-small" id="signInBtn" type="button">Sign in</button>
+          </div>
+          <div class="auth-status" id="authStatus"></div>
+        </div>
+      </div>
       <a href="#studio" class="btn btn-primary btn-small">Start creating</a>
     </div>
   </div>
@@ -468,16 +493,17 @@
         <h3>Creator</h3><p>For regular video making and deeper creative control.</p>
         <div class="price"><span class="amount" data-monthly="12" data-annual="9">$12</span> <span>/ month</span></div>
         <span class="billed-note">Billed monthly</span>
-        <button class="btn btn-primary" style="width:100%;">Choose Creator</button>
+        <button class="btn btn-primary" style="width:100%;" id="creatorBtn" data-plan="creator">Choose Creator</button>
       </div>
       <div class="price-card">
         <h3>Studio</h3><p>For teams building a consistent creative output.</p>
         <div class="price"><span class="amount" data-monthly="24" data-annual="19">$24</span> <span>/ month</span></div>
         <span class="billed-note">Billed monthly</span>
-        <button class="btn btn-outline" style="width:100%;">Choose Studio</button>
+        <button class="btn btn-outline" style="width:100%;" id="studioBtn" data-plan="studio">Choose Studio</button>
       </div>
     </div>
     <div class="pricing-note">Sample prototype pricing only. No payment flow is included on this page.</div>
+    <div class="pricing-note" id="checkoutStatus" style="color:var(--accent);"></div>
   </div>
 </section>
 
@@ -532,8 +558,23 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
+  /* ====== Fill these in with your own values (see backend README.md) ====== */
+  var CONFIG = {
+    SUPABASE_URL: 'https://YOUR-PROJECT.supabase.co',
+    SUPABASE_ANON_KEY: 'YOUR-SUPABASE-ANON-KEY',
+    BACKEND_URL: 'https://your-backend-url.onrender.com'
+  };
+  var sb = null;
+  try {
+    if (window.supabase && CONFIG.SUPABASE_URL.indexOf('YOUR-PROJECT') === -1) {
+      sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    }
+  } catch(e){}
+  var currentUser = null; // set once signed in
+
   var BG = {
     cinematic: ['#141c42','#0d1330'],
     dusk:      ['#5b3a1a','#2b1710'],
@@ -545,6 +586,72 @@
   var FONT_CLASS = { classic:'font-classic', modern:'font-modern', serifen:'font-serif-en', sansen:'font-sans-en' };
   var MOOD_LABEL = { cinematic:'CINEMATIC POETRY', editorial:'EDITORIAL CALM', motion:'FORWARD MOTION', romantic:'ROMANTIC WARMTH', spiritual:'SPIRITUAL STILLNESS', announcement:'BOLD ANNOUNCEMENT' };
   var VOICE_LABEL = { ambient:'Quiet ambient', piano:'Warm piano', strings:'Uplifting strings', none:'No audio' };
+
+  /* ---- Auth ---- */
+  var authToggleBtn = document.getElementById('authToggleBtn');
+  var authPanel = document.getElementById('authPanel');
+  var authEmail = document.getElementById('authEmail');
+  var authPassword = document.getElementById('authPassword');
+  var authStatus = document.getElementById('authStatus');
+  var signInBtn = document.getElementById('signInBtn');
+  var signUpBtn = document.getElementById('signUpBtn');
+
+  authToggleBtn.addEventListener('click', function(){
+    if(currentUser){
+      if(sb) sb.auth.signOut();
+      currentUser = null;
+      updateAuthUI();
+      renderSaved();
+      return;
+    }
+    authPanel.classList.toggle('open');
+  });
+
+  function updateAuthUI(){
+    if(currentUser){
+      authToggleBtn.textContent = 'Sign out (' + currentUser.email.split('@')[0] + ')';
+      authPanel.classList.remove('open');
+    } else {
+      authToggleBtn.textContent = 'Sign in';
+    }
+  }
+
+  function requireSupabase(){
+    if(!sb){
+      authStatus.textContent = 'Backend not connected yet — fill in CONFIG at the top of the script.';
+      return false;
+    }
+    return true;
+  }
+
+  signUpBtn.addEventListener('click', async function(){
+    if(!requireSupabase()) return;
+    authStatus.textContent = 'Creating account…';
+    var { data, error } = await sb.auth.signUp({ email: authEmail.value, password: authPassword.value });
+    if(error){ authStatus.textContent = error.message; return; }
+    authStatus.textContent = 'Check your email to confirm, then sign in.';
+  });
+
+  signInBtn.addEventListener('click', async function(){
+    if(!requireSupabase()) return;
+    authStatus.textContent = 'Signing in…';
+    var { data, error } = await sb.auth.signInWithPassword({ email: authEmail.value, password: authPassword.value });
+    if(error){ authStatus.textContent = error.message; return; }
+    currentUser = data.user;
+    updateAuthUI();
+    renderSaved();
+    authStatus.textContent = '';
+  });
+
+  if(sb){
+    sb.auth.getSession().then(function(res){
+      if(res.data && res.data.session){
+        currentUser = res.data.session.user;
+        updateAuthUI();
+        renderSaved();
+      }
+    });
+  }
 
   var textInput = document.getElementById('textInput');
   var moodSelect = document.getElementById('moodSelect');
@@ -596,22 +703,41 @@
     });
   });
 
-  /* Saved projects (persisted in this browser via localStorage) */
+  /* Saved projects: backend-synced when signed in, localStorage as a guest fallback */
   var STORAGE_KEY = 'navaar_saved_projects';
-  function loadProjects(){
+  function loadLocalProjects(){
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
     catch(e){ return []; }
   }
-  function saveProjects(list){
+  function saveLocalProjects(list){
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch(e){}
   }
-  function renderSaved(){
-    var list = loadProjects();
+
+  async function fetchProjects(){
+    if(currentUser && sb){
+      try{
+        var res = await fetch(CONFIG.BACKEND_URL + '/api/projects/' + currentUser.id);
+        if(!res.ok) throw new Error('backend error');
+        var rows = await res.json();
+        return rows.map(function(r){ return { id:r.id, text:r.text, mood:r.mood, typography:r.typography, background:r.background, voice:r.voice, date:r.created_at }; });
+      } catch(e){
+        statusLine && (statusLine.textContent = 'Could not reach the backend — showing local projects instead.');
+        return loadLocalProjects();
+      }
+    }
+    return loadLocalProjects();
+  }
+
+  async function renderSaved(){
+    var list = await fetchProjects();
     var savedList = document.getElementById('savedList');
     var savedCount = document.getElementById('savedCount');
     var emptyText = document.getElementById('savedEmptyText');
     savedCount.textContent = list.length + ' / 999';
     emptyText.style.display = list.length ? 'none' : 'block';
+    emptyText.textContent = currentUser
+      ? 'No saved projects yet. Your next meaningful line can be the first.'
+      : 'No saved projects yet. Sign in to sync these across devices — for now they save to this browser only.';
     savedList.innerHTML = '';
     list.slice().reverse().forEach(function(p){
       var row = document.createElement('div');
@@ -624,7 +750,7 @@
     });
     savedList.querySelectorAll('.load-link').forEach(function(el){
       el.addEventListener('click', function(){
-        var p = loadProjects().find(function(x){ return String(x.id) === el.getAttribute('data-id'); });
+        var p = list.find(function(x){ return String(x.id) === el.getAttribute('data-id'); });
         if(!p) return;
         textInput.value = p.text; moodSelect.value = p.mood; typeSelect.value = p.typography;
         bgSelect.value = p.background; voiceSelect.value = p.voice;
@@ -633,19 +759,41 @@
       });
     });
     savedList.querySelectorAll('[data-del]').forEach(function(el){
-      el.addEventListener('click', function(){
+      el.addEventListener('click', async function(){
         var id = el.getAttribute('data-del');
-        var list2 = loadProjects().filter(function(x){ return String(x.id) !== id; });
-        saveProjects(list2); renderSaved();
+        if(currentUser && sb){
+          try{ await fetch(CONFIG.BACKEND_URL + '/api/projects/' + id, { method:'DELETE' }); } catch(e){}
+        } else {
+          saveLocalProjects(loadLocalProjects().filter(function(x){ return String(x.id) !== id; }));
+        }
+        renderSaved();
       });
     });
   }
-  document.getElementById('saveBtn').addEventListener('click', function(){
+
+  document.getElementById('saveBtn').addEventListener('click', async function(){
     if(!textInput.value.trim()){ statusLine.textContent = 'Add a line of text before saving.'; return; }
-    var list = loadProjects();
-    list.push({ id: Date.now(), text: textInput.value, mood: moodSelect.value, typography: typeSelect.value, background: bgSelect.value, voice: voiceSelect.value, date: Date.now() });
-    saveProjects(list); renderSaved();
-    statusLine.textContent = 'Project saved to this browser.';
+    var entry = { text: textInput.value, mood: moodSelect.value, typography: typeSelect.value, background: bgSelect.value, voice: voiceSelect.value };
+
+    if(currentUser && sb){
+      try{
+        var res = await fetch(CONFIG.BACKEND_URL + '/api/projects', {
+          method:'POST', headers:{ 'Content-Type':'application/json' },
+          body: JSON.stringify(Object.assign({ userId: currentUser.id }, entry))
+        });
+        if(!res.ok) throw new Error('save failed');
+        statusLine.textContent = 'Project saved to your account.';
+      } catch(e){
+        statusLine.textContent = 'Could not reach the backend — saved to this browser instead.';
+        var list = loadLocalProjects(); list.push(Object.assign({ id: Date.now(), date: Date.now() }, entry)); saveLocalProjects(list);
+      }
+    } else {
+      var list2 = loadLocalProjects();
+      list2.push(Object.assign({ id: Date.now(), date: Date.now() }, entry));
+      saveLocalProjects(list2);
+      statusLine.textContent = 'Saved to this browser. Sign in to sync across devices.';
+    }
+    renderSaved();
   });
   renderSaved();
 
@@ -764,10 +912,12 @@
   });
 
   /* Pricing toggle */
+  var currentBilling = 'monthly';
   document.getElementById('billingToggle').addEventListener('click', function(e){
     var target = e.target.closest('span');
     if(!target) return;
     var mode = target.getAttribute('data-mode');
+    currentBilling = mode;
     document.querySelectorAll('#billingToggle span').forEach(function(s){ s.classList.toggle('active', s === target); });
     document.querySelectorAll('.amount[data-monthly]').forEach(function(el){
       el.textContent = '$' + el.getAttribute('data-' + mode);
@@ -778,6 +928,33 @@
     document.querySelectorAll('.price-card .billed-note').forEach(function(el){
       if(el.parentElement.querySelector('.amount[data-monthly]')){
         el.textContent = mode === 'annual' ? 'Billed annually' : 'Billed monthly';
+      }
+    });
+  });
+
+  var checkoutStatus = document.getElementById('checkoutStatus');
+  [document.getElementById('creatorBtn'), document.getElementById('studioBtn')].forEach(function(btn){
+    btn.addEventListener('click', async function(){
+      if(!currentUser){
+        checkoutStatus.textContent = 'Sign in first, then choose a plan.';
+        authPanel.classList.add('open');
+        return;
+      }
+      if(!CONFIG.BACKEND_URL || CONFIG.BACKEND_URL.indexOf('your-backend-url') !== -1){
+        checkoutStatus.textContent = 'Backend not connected yet — set BACKEND_URL in CONFIG at the top of the script.';
+        return;
+      }
+      checkoutStatus.textContent = 'Opening secure checkout…';
+      try{
+        var res = await fetch(CONFIG.BACKEND_URL + '/api/checkout', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ plan: btn.getAttribute('data-plan'), billing: currentBilling, userId: currentUser.id })
+        });
+        var data = await res.json();
+        if(data.url){ window.location.href = data.url; }
+        else { checkoutStatus.textContent = data.error || 'Could not start checkout.'; }
+      } catch(e){
+        checkoutStatus.textContent = 'Could not reach the backend.';
       }
     });
   });
