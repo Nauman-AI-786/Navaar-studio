@@ -54,17 +54,58 @@
   nav ul{display:flex; gap:34px; font-size:14.5px; color: var(--muted-2);}
   nav a:hover{color:var(--text);}
   .nav-links{display:flex; align-items:center; gap:34px;}
-  .auth-box{position:relative;}
-  .auth-panel{
-    display:none; position:absolute; top:44px; right:0; width:250px;
-    background: var(--card); border:1px solid var(--border-strong); border-radius:12px;
-    padding:16px; box-shadow:0 20px 40px -10px rgba(0,0,0,0.5); z-index:60;
-  }
-  .auth-panel.open{display:block;}
-  .auth-panel label{font-size:11.5px; margin-bottom:5px;}
-  .auth-panel input{width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--border-strong); border-radius:8px; color:var(--text); padding:8px 10px; font-size:13px;}
-  .auth-panel-actions{display:flex; gap:8px; margin-top:14px;}
-  .auth-status{font-size:12px; color:var(--accent); margin-top:10px; min-height:14px;}
+  .auth-box{display:flex; align-items:center; gap:10px;}
+  .auth-box .hidden{display:none !important;}
+
+  /* Auth modal: Sign in and Sign up open as separate screens */
+  .modal-overlay{position:fixed; inset:0; z-index:100; background:rgba(4,7,20,0.72); backdrop-filter:blur(6px); display:none; align-items:center; justify-content:center; padding:20px; overflow-y:auto;}
+  .modal-overlay.open{display:flex;}
+  .modal{position:relative; width:100%; max-width:460px; background:var(--card); border:1px solid var(--border-strong); border-radius:18px; padding:30px 28px 26px; box-shadow:0 40px 80px -20px rgba(0,0,0,0.7); max-height:calc(100vh - 40px); overflow-y:auto;}
+  .modal-close{position:absolute; top:14px; right:14px; width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); color:var(--muted-2); font-size:18px; cursor:pointer; line-height:1;}
+  .modal-close:hover{color:var(--text); background:rgba(255,255,255,0.12);}
+  .modal h3{font-size:22px; margin-bottom:6px;}
+  .modal .sub{font-size:13.5px; color:var(--muted); margin-bottom:20px;}
+  .auth-view{display:none;}
+  .auth-view.active{display:block;}
+  .modal .fld{margin-bottom:14px;}
+  .modal .fld label{margin-bottom:6px;}
+  .modal input[type=text], .modal input[type=email], .modal input[type=password]{width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--border-strong); border-radius:9px; color:var(--text); padding:11px 12px; font-size:14px;}
+  .modal input:focus, .modal select:focus{outline:none; border-color:var(--accent);}
+  .modal input.bad, .modal select.bad{border-color:#ff7a7a;}
+  .modal .hint{font-size:12px; color:var(--muted); margin-top:5px;}
+  .auth-status{font-size:13px; color:var(--accent); margin-top:12px; min-height:18px;}
+  .auth-status.err{color:#ff9a9a;}
+  .modal-actions{display:flex; gap:10px; margin-top:18px;}
+  .modal-actions .btn{flex:1;}
+  .switch-line{text-align:center; font-size:13px; color:var(--muted); margin-top:18px;}
+  .switch-line a, .link-btn{color:var(--accent); cursor:pointer; background:none; font-size:inherit; font-weight:600;}
+  .forgot-row{text-align:right; margin:-4px 0 4px; font-size:12.5px;}
+
+  /* Sign up slides */
+  .steps-bar{display:flex; gap:6px; margin:4px 0 8px;}
+  .steps-bar span{flex:1; height:4px; border-radius:4px; background:rgba(255,255,255,0.1); transition:background .25s ease;}
+  .steps-bar span.done{background:var(--accent);}
+  .step-label{font-size:12px; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:16px;}
+  .su-step{display:none;}
+  .su-step.active{display:block; animation:slideIn .28s ease;}
+  @keyframes slideIn{from{opacity:0; transform:translateX(18px);} to{opacity:1; transform:none;}}
+  .plan-options{display:grid; gap:10px;}
+  .plan-opt{display:flex; align-items:center; gap:12px; border:1px solid var(--border-strong); border-radius:11px; padding:13px 14px; cursor:pointer; transition:border-color .15s ease, background .15s ease;}
+  .plan-opt:hover{border-color:rgba(82,217,208,0.5);}
+  .plan-opt.selected{border-color:var(--accent); background:var(--accent-soft);}
+  .plan-opt input{accent-color:var(--accent);}
+  .plan-opt .pn{font-weight:600; font-size:14.5px;}
+  .plan-opt .pd{font-size:12.5px; color:var(--muted);}
+  .plan-opt .pp{margin-left:auto; font-size:13px; color:var(--muted-2); white-space:nowrap;}
+  .review-list{border:1px solid var(--border); border-radius:11px; overflow:hidden; margin-bottom:14px;}
+  .review-list div{display:flex; justify-content:space-between; gap:14px; padding:10px 14px; font-size:13.5px; border-bottom:1px solid var(--border);}
+  .review-list div:last-child{border-bottom:none;}
+  .review-list span:first-child{color:var(--muted);}
+  .review-list span:last-child{color:var(--text); text-align:right; word-break:break-word;}
+  .terms-row{display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--muted-2);}
+  .terms-row input{margin-top:3px; accent-color:var(--accent);}
+  .success-box{text-align:center; padding:10px 0;}
+  .success-box .tick{width:54px; height:54px; border-radius:50%; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 14px;}
 
   .hero{padding:88px 0 64px;}
   .hero-grid{display:grid; grid-template-columns:1.1fr 0.95fr; gap:56px; align-items:center;}
@@ -168,7 +209,7 @@
   .faq-q::before{content:"▸"; color:var(--accent); font-size:12px; transition: transform .2s ease;}
   .faq-item.open .faq-q::before{transform: rotate(90deg);}
   .faq-a{max-height:0; overflow:hidden; font-size:14px; color:var(--muted); padding:0 4px; transition: max-height .25s ease, padding .25s ease;}
-  .faq-item.open .faq-a{max-height:200px; padding:0 4px 18px 20px;}
+  .faq-item.open .faq-a{max-height:320px; padding:0 4px 18px 20px;}
 
   .cta-band{background: linear-gradient(135deg,#1c2a63,#12183a); border-radius:24px; padding:70px 40px; text-align:center;}
   .cta-band .eyebrow{justify-content:center; display:flex;}
@@ -208,18 +249,9 @@
         <li><a href="#faq">FAQ</a></li>
       </ul></nav>
       <div class="auth-box" id="authBox">
-        <button class="btn btn-outline btn-small" id="authToggleBtn" type="button">Sign in</button>
-        <div class="auth-panel" id="authPanel">
-          <label>Email</label>
-          <input type="email" id="authEmail" placeholder="you@example.com">
-          <label style="margin-top:10px;">Password</label>
-          <input type="password" id="authPassword" placeholder="••••••••">
-          <div class="auth-panel-actions">
-            <button class="btn btn-outline btn-small" id="signUpBtn" type="button">Sign up</button>
-            <button class="btn btn-primary btn-small" id="signInBtn" type="button">Sign in</button>
-          </div>
-          <div class="auth-status" id="authStatus"></div>
-        </div>
+        <button class="btn btn-outline btn-small" id="openSignInBtn" type="button">Sign in</button>
+        <button class="btn btn-outline btn-small" id="openSignUpBtn" type="button">Sign up</button>
+        <button class="btn btn-outline btn-small hidden" id="signOutBtn" type="button">Sign out</button>
       </div>
       <a href="#studio" class="btn btn-primary btn-small">Start creating</a>
     </div>
@@ -502,7 +534,7 @@
         <button class="btn btn-outline" style="width:100%;" id="studioBtn" data-plan="studio">Choose Studio</button>
       </div>
     </div>
-    <div class="pricing-note">Sample prototype pricing only. No payment flow is included on this page.</div>
+    <div class="pricing-note">Paid plans are billed securely through LemonSqueezy. Prices shown in USD; you can cancel anytime from your subscription.</div>
     <div class="pricing-note" id="checkoutStatus" style="color:var(--accent);"></div>
   </div>
 </section>
@@ -529,7 +561,7 @@
       </div>
       <div class="faq-item">
         <div class="faq-q">How is my creative work handled?</div>
-        <div class="faq-a">Everything you type and save stays in your own browser's local storage on this device — nothing is uploaded to a server from this page.</div>
+        <div class="faq-a">Guests: your text and saved projects stay in this browser's local storage. Signed-in users: saved projects (text and style choices) sync to our database so you can open them on any device. Photos and audio you add for the photo video maker are processed in your browser and are not uploaded.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Can I return to saved projects?</div>
@@ -557,6 +589,80 @@
     <div class="copy">2026 Navaar Studio</div>
   </div>
 </footer>
+
+<div class="modal-overlay" id="authOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="authCloseBtn" type="button" aria-label="Close">×</button>
+
+    <!-- SIGN IN -->
+    <div class="auth-view" id="viewSignIn">
+      <h3>Welcome back</h3>
+      <p class="sub">Sign in to sync your saved projects and manage your plan.</p>
+      <div class="fld"><label for="siEmail">Email</label><input type="email" id="siEmail" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="fld"><label for="siPassword">Password</label><input type="password" id="siPassword" placeholder="Your password" autocomplete="current-password"></div>
+      <div class="forgot-row"><button type="button" class="link-btn" id="forgotBtn">Forgot password?</button></div>
+      <div class="modal-actions"><button class="btn btn-primary" id="signInSubmit" type="button">Sign in</button></div>
+      <div class="auth-status" id="siStatus"></div>
+      <div class="switch-line">New to Navaar Studio? <a id="toSignUp">Create an account</a></div>
+    </div>
+
+    <!-- SIGN UP (4 slides) -->
+    <div class="auth-view" id="viewSignUp">
+      <h3>Create your account</h3>
+      <p class="sub">It takes about a minute. One step at a time.</p>
+      <div class="steps-bar" id="stepsBar"><span></span><span></span><span></span><span></span></div>
+      <div class="step-label" id="stepLabel">Step 1 of 4 · Account</div>
+
+      <div class="su-step" data-step="1">
+        <div class="fld"><label for="suName">Full name</label><input type="text" id="suName" placeholder="Your name" autocomplete="name"></div>
+        <div class="fld"><label for="suEmail">Email</label><input type="email" id="suEmail" placeholder="you@example.com" autocomplete="email"></div>
+        <div class="fld"><label for="suPassword">Password</label><input type="password" id="suPassword" placeholder="At least 8 characters" autocomplete="new-password"><div class="hint">Use 8 or more characters with a letter and a number.</div></div>
+        <div class="fld"><label for="suPassword2">Confirm password</label><input type="password" id="suPassword2" placeholder="Type it again" autocomplete="new-password"></div>
+      </div>
+
+      <div class="su-step" data-step="2">
+        <div class="fld"><label for="suRole">What will you create?</label>
+          <select id="suRole"><option value="">Choose one…</option><option>Poetry and shayari videos</option><option>Quotes and reflections</option><option>Announcements and promos</option><option>Photo and lyrics videos</option><option>Client work for a team or brand</option></select></div>
+        <div class="fld"><label for="suLang">Main language of your text</label>
+          <select id="suLang"><option value="">Choose one…</option><option>Urdu</option><option>English</option><option>Both Urdu and English</option></select></div>
+        <div class="fld"><label for="suCountry">Country</label><input type="text" id="suCountry" placeholder="e.g. Pakistan" autocomplete="country-name"></div>
+        <div class="fld"><label for="suSource">How did you find Navaar Studio?</label>
+          <select id="suSource"><option value="">Choose one…</option><option>Search engine</option><option>Social media</option><option>Friend or colleague</option><option>Fiverr</option><option>Other</option></select></div>
+      </div>
+
+      <div class="su-step" data-step="3">
+        <div class="plan-options" id="planOptions">
+          <label class="plan-opt selected"><input type="radio" name="suPlan" value="free" checked><div><div class="pn">Free</div><div class="pd">Explore the studio and make first drafts.</div></div><div class="pp">$0</div></label>
+          <label class="plan-opt"><input type="radio" name="suPlan" value="creator"><div><div class="pn">Creator</div><div class="pd">Regular video making, deeper creative control.</div></div><div class="pp">from $9/mo</div></label>
+          <label class="plan-opt"><input type="radio" name="suPlan" value="studio"><div><div class="pn">Studio</div><div class="pd">For teams building consistent creative output.</div></div><div class="pp">from $19/mo</div></label>
+        </div>
+        <div class="hint" style="margin-top:12px;">Paid plans are completed at checkout after you sign in. You can change plan anytime.</div>
+      </div>
+
+      <div class="su-step" data-step="4">
+        <div class="review-list" id="reviewList"></div>
+        <label class="terms-row"><input type="checkbox" id="suTerms"><span>I agree to the Terms and Privacy Policy.</span></label>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="suBack" type="button">Back</button>
+        <button class="btn btn-primary" id="suNext" type="button">Next</button>
+      </div>
+      <div class="auth-status" id="suStatus"></div>
+      <div class="switch-line">Already have an account? <a id="toSignIn">Sign in</a></div>
+    </div>
+
+    <!-- SIGN UP SUCCESS -->
+    <div class="auth-view" id="viewDone">
+      <div class="success-box">
+        <div class="tick">✓</div>
+        <h3>Account created</h3>
+        <p class="sub" id="doneText">Check your email to confirm your address, then sign in.</p>
+        <div class="modal-actions"><button class="btn btn-primary" id="doneBtn" type="button">Go to Sign in</button></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -602,60 +708,191 @@
   var MOOD_LABEL = { cinematic:'CINEMATIC POETRY', editorial:'EDITORIAL CALM', motion:'FORWARD MOTION', romantic:'ROMANTIC WARMTH', spiritual:'SPIRITUAL STILLNESS', announcement:'BOLD ANNOUNCEMENT' };
   var VOICE_LABEL = { ambient:'Quiet ambient', piano:'Warm piano', strings:'Uplifting strings', none:'No audio' };
 
-  /* ---- Auth ---- */
-  var authToggleBtn = document.getElementById('authToggleBtn');
-  var authPanel = document.getElementById('authPanel');
-  var authEmail = document.getElementById('authEmail');
-  var authPassword = document.getElementById('authPassword');
-  var authStatus = document.getElementById('authStatus');
-  var signInBtn = document.getElementById('signInBtn');
-  var signUpBtn = document.getElementById('signUpBtn');
+  /* ---- Auth (separate Sign in / Sign up screens, 4-step Sign up) ---- */
+  var overlay = document.getElementById('authOverlay');
+  var openSignInBtn = document.getElementById('openSignInBtn');
+  var openSignUpBtn = document.getElementById('openSignUpBtn');
+  var signOutBtn = document.getElementById('signOutBtn');
+  var views = { signin: document.getElementById('viewSignIn'), signup: document.getElementById('viewSignUp'), done: document.getElementById('viewDone') };
+  var siStatus = document.getElementById('siStatus');
+  var suStatus = document.getElementById('suStatus');
+  var suStep = 1, SU_TOTAL = 4;
+  var STEP_NAMES = ['Account', 'Profile', 'Plan', 'Review'];
 
-  authToggleBtn.addEventListener('click', function(){
-    if(currentUser){
-      if(sb) sb.auth.signOut();
-      currentUser = null;
-      updateAuthUI();
-      renderSaved();
-      return;
-    }
-    authPanel.classList.toggle('open');
+  function showView(name){
+    Object.keys(views).forEach(function(k){ views[k].classList.toggle('active', k === name); });
+  }
+  function openAuth(name){
+    siStatus.textContent = ''; suStatus.textContent = '';
+    if(name === 'signup'){ goStep(1); }
+    showView(name);
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+  }
+  function closeAuth(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+  }
+  function setStatus(el, msg, isErr){ el.textContent = msg; el.classList.toggle('err', !!isErr); }
+
+  openSignInBtn.addEventListener('click', function(){ openAuth('signin'); });
+  openSignUpBtn.addEventListener('click', function(){ openAuth('signup'); });
+  document.getElementById('authCloseBtn').addEventListener('click', closeAuth);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeAuth(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuth(); });
+  document.getElementById('toSignUp').addEventListener('click', function(){ openAuth('signup'); });
+  document.getElementById('toSignIn').addEventListener('click', function(){ openAuth('signin'); });
+  document.getElementById('doneBtn').addEventListener('click', function(){ openAuth('signin'); });
+
+  signOutBtn.addEventListener('click', function(){
+    if(sb) sb.auth.signOut();
+    currentUser = null;
+    updateAuthUI();
+    renderSaved();
   });
 
   function updateAuthUI(){
-    if(currentUser){
-      authToggleBtn.textContent = 'Sign out (' + currentUser.email.split('@')[0] + ')';
-      authPanel.classList.remove('open');
-    } else {
-      authToggleBtn.textContent = 'Sign in';
+    var loggedIn = !!currentUser;
+    openSignInBtn.classList.toggle('hidden', loggedIn);
+    openSignUpBtn.classList.toggle('hidden', loggedIn);
+    signOutBtn.classList.toggle('hidden', !loggedIn);
+    if(loggedIn){
+      var meta = currentUser.user_metadata || {};
+      var nm = (meta.full_name || currentUser.email.split('@')[0]).split(' ')[0];
+      signOutBtn.textContent = 'Sign out (' + nm + ')';
     }
   }
 
-  function requireSupabase(){
+  function requireSupabase(el){
     if(!sb){
-      authStatus.textContent = 'Backend not connected yet — fill in CONFIG at the top of the script.';
+      setStatus(el, 'Backend not connected yet — fill in CONFIG at the top of the script.', true);
       return false;
     }
     return true;
   }
 
-  signUpBtn.addEventListener('click', async function(){
-    if(!requireSupabase()) return;
-    authStatus.textContent = 'Creating account…';
-    var { data, error } = await sb.auth.signUp({ email: authEmail.value, password: authPassword.value });
-    if(error){ authStatus.textContent = error.message; return; }
-    authStatus.textContent = 'Check your email to confirm, then sign in.';
-  });
-
-  signInBtn.addEventListener('click', async function(){
-    if(!requireSupabase()) return;
-    authStatus.textContent = 'Signing in…';
-    var { data, error } = await sb.auth.signInWithPassword({ email: authEmail.value, password: authPassword.value });
-    if(error){ authStatus.textContent = error.message; return; }
-    currentUser = data.user;
+  /* Sign in */
+  document.getElementById('signInSubmit').addEventListener('click', async function(){
+    var email = document.getElementById('siEmail').value.trim();
+    var pw = document.getElementById('siPassword').value;
+    if(!email || !pw){ setStatus(siStatus, 'Enter your email and password.', true); return; }
+    if(!requireSupabase(siStatus)) return;
+    setStatus(siStatus, 'Signing in…');
+    var res = await sb.auth.signInWithPassword({ email: email, password: pw });
+    if(res.error){ setStatus(siStatus, res.error.message, true); return; }
+    currentUser = res.data.user;
     updateAuthUI();
     renderSaved();
-    authStatus.textContent = '';
+    setStatus(siStatus, '');
+    closeAuth();
+  });
+  ['siEmail','siPassword'].forEach(function(id){
+    document.getElementById(id).addEventListener('keydown', function(e){
+      if(e.key === 'Enter') document.getElementById('signInSubmit').click();
+    });
+  });
+
+  document.getElementById('forgotBtn').addEventListener('click', async function(){
+    var email = document.getElementById('siEmail').value.trim();
+    if(!email){ setStatus(siStatus, 'Type your email above first, then tap Forgot password.', true); return; }
+    if(!requireSupabase(siStatus)) return;
+    var res = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin });
+    if(res.error){ setStatus(siStatus, res.error.message, true); return; }
+    setStatus(siStatus, 'Password reset link sent. Check your email.');
+  });
+
+  /* Sign up slides */
+  function val(id){ return document.getElementById(id).value.trim(); }
+  function mark(id, ok){ document.getElementById(id).classList.toggle('bad', !ok); return ok; }
+  function chosenPlan(){ return document.querySelector('input[name="suPlan"]:checked').value; }
+
+  function goStep(n){
+    suStep = n;
+    document.querySelectorAll('.su-step').forEach(function(s){ s.classList.toggle('active', Number(s.getAttribute('data-step')) === n); });
+    document.querySelectorAll('#stepsBar span').forEach(function(b, i){ b.classList.toggle('done', i < n); });
+    document.getElementById('stepLabel').textContent = 'Step ' + n + ' of ' + SU_TOTAL + ' · ' + STEP_NAMES[n - 1];
+    document.getElementById('suBack').style.visibility = n === 1 ? 'hidden' : 'visible';
+    document.getElementById('suNext').textContent = n === SU_TOTAL ? 'Create account' : 'Next';
+    if(n === SU_TOTAL) buildReview();
+    setStatus(suStatus, '');
+  }
+
+  function validateStep(n){
+    var ok = true, msg = '';
+    if(n === 1){
+      var pw = document.getElementById('suPassword').value;
+      var pw2 = document.getElementById('suPassword2').value;
+      var a = mark('suName', val('suName').length >= 2);
+      var b = mark('suEmail', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('suEmail')));
+      var c = mark('suPassword', pw.length >= 8 && /[A-Za-z]/.test(pw) && /\d/.test(pw));
+      var d = mark('suPassword2', pw2 !== '' && pw2 === pw);
+      ok = a && b && c && d;
+      if(!ok) msg = !a ? 'Enter your full name.' : !b ? 'Enter a valid email.' : !c ? 'Password needs 8+ characters with a letter and a number.' : 'Passwords do not match.';
+    }
+    if(n === 2){
+      var r = mark('suRole', val('suRole') !== '');
+      var l = mark('suLang', val('suLang') !== '');
+      var k = mark('suCountry', val('suCountry').length >= 2);
+      var s = mark('suSource', val('suSource') !== '');
+      ok = r && l && k && s;
+      if(!ok) msg = 'Please fill in every field to continue.';
+    }
+    if(n === 4){
+      ok = document.getElementById('suTerms').checked;
+      if(!ok) msg = 'Please accept the Terms and Privacy Policy.';
+    }
+    if(!ok) setStatus(suStatus, msg, true); else setStatus(suStatus, '');
+    return ok;
+  }
+
+  var PLAN_NAME = { free:'Free', creator:'Creator', studio:'Studio' };
+  function buildReview(){
+    var rows = [['Name', val('suName')], ['Email', val('suEmail')], ['Creating', val('suRole')], ['Language', val('suLang')], ['Country', val('suCountry')], ['Found us via', val('suSource')], ['Plan', PLAN_NAME[chosenPlan()]]];
+    document.getElementById('reviewList').innerHTML = rows.map(function(r){
+      return '<div><span>' + esc(r[0]) + '</span><span>' + esc(r[1]) + '</span></div>';
+    }).join('');
+  }
+
+  document.querySelectorAll('input[name="suPlan"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      document.querySelectorAll('.plan-opt').forEach(function(o){ o.classList.toggle('selected', o.querySelector('input').checked); });
+    });
+  });
+  document.querySelectorAll('.modal input, .modal select').forEach(function(el){
+    el.addEventListener('input', function(){ el.classList.remove('bad'); });
+  });
+
+  document.getElementById('suBack').addEventListener('click', function(){ if(suStep > 1) goStep(suStep - 1); });
+  document.getElementById('suNext').addEventListener('click', async function(){
+    if(!validateStep(suStep)) return;
+    if(suStep < SU_TOTAL){ goStep(suStep + 1); return; }
+    if(!requireSupabase(suStatus)) return;
+    var btn = document.getElementById('suNext');
+    btn.disabled = true;
+    setStatus(suStatus, 'Creating account…');
+    var plan = chosenPlan();
+    var res = await sb.auth.signUp({
+      email: val('suEmail'),
+      password: document.getElementById('suPassword').value,
+      options: { data: {
+        full_name: val('suName'), creator_type: val('suRole'), language: val('suLang'),
+        country: val('suCountry'), heard_from: val('suSource'), preferred_plan: plan
+      } }
+    });
+    btn.disabled = false;
+    if(res.error){ setStatus(suStatus, res.error.message, true); return; }
+    if(res.data && res.data.session){
+      // Email confirmation is off: user is already signed in.
+      currentUser = res.data.session.user;
+      updateAuthUI(); renderSaved(); closeAuth();
+      if(plan !== 'free'){
+        document.getElementById('checkoutStatus').textContent = 'Account ready. Choose your ' + PLAN_NAME[plan] + ' plan below to continue to checkout.';
+        document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
+      }
+      return;
+    }
+    document.getElementById('doneText').textContent = 'Check ' + val('suEmail') + ' to confirm your address, then sign in.';
+    showView('done');
   });
 
   if(sb){
@@ -951,8 +1188,8 @@
   [document.getElementById('creatorBtn'), document.getElementById('studioBtn')].forEach(function(btn){
     btn.addEventListener('click', async function(){
       if(!currentUser){
-        checkoutStatus.textContent = 'Sign in first, then choose a plan.';
-        authPanel.classList.add('open');
+        checkoutStatus.textContent = 'Sign in or create an account first, then choose a plan.';
+        openAuth('signin');
         return;
       }
       if(!CONFIG.BACKEND_URL || CONFIG.BACKEND_URL.indexOf('your-backend-url') !== -1){
