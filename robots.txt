@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nauman-ai-786.github.io/Navaar-studio/sitemap.xml
