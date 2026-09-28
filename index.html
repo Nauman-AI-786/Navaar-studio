@@ -575,6 +575,21 @@
   } catch(e){}
   var currentUser = null; // set once signed in
 
+  // Every backend call carries the signed-in user's login token so the server knows who is asking.
+  async function authHeaders(extra){
+    var h = Object.assign({}, extra || {});
+    try{
+      var r = await sb.auth.getSession();
+      if(r.data && r.data.session){ h['Authorization'] = 'Bearer ' + r.data.session.access_token; }
+    } catch(e){}
+    return h;
+  }
+  function esc(str){
+    return String(str).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
   var BG = {
     cinematic: ['#141c42','#0d1330'],
     dusk:      ['#5b3a1a','#2b1710'],
@@ -716,7 +731,7 @@
   async function fetchProjects(){
     if(currentUser && sb){
       try{
-        var res = await fetch(CONFIG.BACKEND_URL + '/api/projects/' + currentUser.id);
+        var res = await fetch(CONFIG.BACKEND_URL + '/api/projects/' + currentUser.id, { headers: await authHeaders() });
         if(!res.ok) throw new Error('backend error');
         var rows = await res.json();
         return rows.map(function(r){ return { id:r.id, text:r.text, mood:r.mood, typography:r.typography, background:r.background, voice:r.voice, date:r.created_at }; });
@@ -743,7 +758,7 @@
       var row = document.createElement('div');
       row.className = 'saved-item';
       var d = new Date(p.date);
-      row.innerHTML = '<div class="txt">' + p.text + '</div>' +
+      row.innerHTML = '<div class="txt">' + esc(p.text) + '</div>' +
         '<div class="meta">' + d.toLocaleDateString() + '</div>' +
         '<div class="row-actions"><span class="load-link" data-id="'+p.id+'">Load</span><button class="btn-danger" data-del="'+p.id+'">Delete</button></div>';
       savedList.appendChild(row);
@@ -762,7 +777,7 @@
       el.addEventListener('click', async function(){
         var id = el.getAttribute('data-del');
         if(currentUser && sb){
-          try{ await fetch(CONFIG.BACKEND_URL + '/api/projects/' + id, { method:'DELETE' }); } catch(e){}
+          try{ await fetch(CONFIG.BACKEND_URL + '/api/projects/' + id, { method:'DELETE', headers: await authHeaders() }); } catch(e){}
         } else {
           saveLocalProjects(loadLocalProjects().filter(function(x){ return String(x.id) !== id; }));
         }
@@ -778,8 +793,8 @@
     if(currentUser && sb){
       try{
         var res = await fetch(CONFIG.BACKEND_URL + '/api/projects', {
-          method:'POST', headers:{ 'Content-Type':'application/json' },
-          body: JSON.stringify(Object.assign({ userId: currentUser.id }, entry))
+          method:'POST', headers: await authHeaders({ 'Content-Type':'application/json' }),
+          body: JSON.stringify(entry)
         });
         if(!res.ok) throw new Error('save failed');
         statusLine.textContent = 'Project saved to your account.';
@@ -947,8 +962,8 @@
       checkoutStatus.textContent = 'Opening secure checkout…';
       try{
         var res = await fetch(CONFIG.BACKEND_URL + '/api/checkout', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ plan: btn.getAttribute('data-plan'), billing: currentBilling, userId: currentUser.id })
+          method: 'POST', headers: await authHeaders({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify({ plan: btn.getAttribute('data-plan'), billing: currentBilling })
         });
         var data = await res.json();
         if(data.url){ window.location.href = data.url; }
