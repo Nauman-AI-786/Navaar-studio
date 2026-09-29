@@ -1819,7 +1819,68 @@ var seen=false;try{seen=sessionStorage.getItem('nvIntro')}catch(e){}if(!seen)int
   if(pn)pn.textContent='Free needs no payment. Sign in to choose a paid plan.';
 })();
 </script>
+<!-- NAVAAR FIXES V2 -->
+<style>
+/* header: sirf logo + menu button. Baqi sab menu mein */
+header nav,#authToggleBtn{display:none!important}
+.nav-links{gap:12px}
+#nvMenuBtn{position:static!important;transform:none!important;width:42px;height:42px;border:1px solid var(--border-strong);border-radius:50%;font-size:20px;line-height:1;padding:0;flex:none;background:var(--card);color:var(--accent);cursor:pointer}
+.auth-panel{position:fixed;top:76px;right:16px;width:min(300px,calc(100vw - 32px));max-height:calc(100vh - 96px);overflow:auto}
+#nvSide .nvl.out{color:#ff9a9a;margin-top:14px;border:1px solid rgba(255,120,120,.3)}
+.hero-actions{flex-wrap:wrap}
+.preview-urdu{white-space:pre-line}
+@media(max-width:900px){footer nav ul{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 20px}}
+@media(max-width:700px){
+  .wrap{padding:0 18px}.statbar .wrap{padding:26px 18px}
+  section{padding:56px 0}.hero{padding:44px 0 36px}
+  .select-grid{grid-template-columns:1fr}.panel{padding:18px}
+}
+</style>
+<script>
+(function(){
+  var RTL=/[\u0600-\u06FF]/,$=function(i){return document.getElementById(i)};
 
+  // 1) Menu button header mein (desktop + mobile dono)
+  var b=$('nvMenuBtn'),nl=document.querySelector('.nav-links');
+  if(b&&nl)nl.appendChild(b);
+
+  // 2) Sign in / Log out sirf menu mein (Log out sab se last)
+  var S=$('nvSide'),t=$('authToggleBtn');
+  var inBtn=document.createElement('button');inBtn.type='button';inBtn.className='nvl';inBtn.textContent='Sign in / Create account';
+  var outBtn=document.createElement('button');outBtn.type='button';outBtn.className='nvl out';outBtn.textContent='Log out';
+  S.appendChild(inBtn);S.appendChild(outBtn);
+  function sync(){var on=t.textContent.trim()!=='Sign in';inBtn.style.display=on?'none':'block';outBtn.style.display=on?'block':'none';}
+  inBtn.onclick=function(){$('nvShade').click();t.click();};
+  outBtn.onclick=function(){$('nvShade').click();$('signOutBtn').click();};
+  if(window.MutationObserver)new MutationObserver(sync).observe(t,{childList:true,characterData:true,subtree:true});
+  sync();
+
+  // 3) Text box language ke hisab se RTL/LTR
+  ['textInput','lyricsInput'].forEach(function(id){
+    var e=$(id);if(!e)return;
+    function d(){e.style.direction=RTL.test(e.value)?'rtl':'ltr';}
+    e.addEventListener('input',d);d();
+  });
+
+  // 4) Template cards ki direction
+  document.querySelectorAll('.dir-thumb').forEach(function(el){
+    el.style.direction=RTL.test(el.textContent)?'rtl':'ltr';
+  });
+
+  // 5) "Start with Free" button
+  var free=document.querySelector('.price-card .btn-outline:not([id])');
+  if(free)free.addEventListener('click',function(){location.href='editor.html';});
+
+  // 6) Feedback consent text (public dikhta hai)
+  var c=$('feedbackConsent');
+  if(c&&c.parentNode&&c.parentNode.lastChild.nodeType===3){
+    c.parentNode.lastChild.textContent=' I agree that my name, rating and feedback may be stored and shown publicly on this page.';
+  }
+
+  // 7) Urdu font pehle load ho, taake video mein sahi nazar aaye
+  if(document.fonts){document.fonts.load('30px "Noto Nastaliq Urdu"');}
+})();
+</script>
 
 </body>
 </html>
