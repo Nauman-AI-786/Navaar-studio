@@ -1707,5 +1707,50 @@ $('nvAbout').onclick=function(){menu(false);intro(true)};$('nvStart').onclick=fu
 document.addEventListener('keydown',function(e){if(e.key=='Escape'){menu(false);intro(false)}});
 var seen=false;try{seen=sessionStorage.getItem('nvIntro')}catch(e){}if(!seen)intro(true);})();
 </script>
+  <!-- NAVAAR FIXES: paste this whole block in index.html, just before the final </body> -->
+<style>
+.hero-actions{flex-wrap:wrap}
+.preview-urdu{white-space:pre-line}
+#nvMenuBtn{position:static!important;transform:none!important;width:40px;height:40px;border:1px solid var(--border-strong);border-radius:50%;font-size:20px;line-height:1;padding:0;flex:none}
+@media(max-width:900px){footer nav ul{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 20px}}
+@media(max-width:700px){
+  .wrap{padding:0 18px}.statbar .wrap{padding:26px 18px}
+  section{padding:56px 0}.hero{padding:44px 0 36px}
+  .select-grid{grid-template-columns:1fr}.panel{padding:18px}
+}
+</style>
+<script>
+(function(){
+  var RTL=/[\u0600-\u06FF]/;
+  // 1) Menu button goes into the header so it stops covering page content
+  var b=document.getElementById('nvMenuBtn'),nl=document.querySelector('.nav-links'),ab=document.getElementById('authBox');
+  if(b&&nl&&ab)nl.insertBefore(b,ab);
+  // 2) After login the Sign in button showed a second hamburger; show "Account" instead
+  var t=document.getElementById('authToggleBtn');
+  if(t&&window.MutationObserver){
+    new MutationObserver(function(){if(t.textContent==='\u2630')t.textContent='Account';})
+      .observe(t,{childList:true,characterData:true,subtree:true});
+  }
+  // 3) Text boxes follow the language typed (Urdu = right-to-left, English = left-to-right)
+  ['textInput','lyricsInput'].forEach(function(id){
+    var e=document.getElementById(id);if(!e)return;
+    function d(){e.style.direction=RTL.test(e.value)?'rtl':'ltr';}
+    e.addEventListener('input',d);d();
+  });
+  // 4) Template cards: English text was showing right-to-left and Urdu left-to-right
+  document.querySelectorAll('.dir-thumb').forEach(function(el){
+    el.style.direction=RTL.test(el.textContent)?'rtl':'ltr';
+  });
+  // 5) "Start with Free" did nothing
+  var free=document.querySelector('.price-card .btn-outline:not([id])');
+  if(free)free.addEventListener('click',function(){location.href='editor.html';});
+  // 6) Feedback is shown publicly on the page, so the consent text now says so
+  var c=document.getElementById('feedbackConsent');
+  if(c&&c.parentNode&&c.parentNode.lastChild.nodeType===3){
+    c.parentNode.lastChild.textContent=' I agree that my name, rating and feedback may be stored and shown publicly on this page.';
+  }
+})();
+</script>
+
 </body>
 </html>
