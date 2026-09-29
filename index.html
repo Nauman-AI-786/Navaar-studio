@@ -1169,4 +1169,200 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
     vertical: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.save(); c.translate(W*.12,H/2); c.rotate(-Math.PI/2); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,28,23,'Arial, sans-serif'); wrapCentered(c,t,0,0,H*.68,36); c.restore(); c.globalAlpha=1; },
     duotone: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.fillStyle='rgba(10,20,45,.28)'; c.fillRect(0,0,W,H); c.strokeStyle='rgba(255,255,255,.8)'; c.lineWidth=3; c.strokeRect(26,26,W-52,H-52); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,35,28); wrapCentered(c,t,W/2,H/2+12,W-110,45); c.globalAlpha=1; },
     polaroid: function(c,img,W,H,z,t,a,r){ c.fillStyle='#f4f0e8'; c.fillRect(0,0,W,H); var m=42; drawCoverRect(c,img,m,48,W-m*2,H*.57,z); c.globalAlpha=a; c.fillStyle='#171923'; c.textAlign='center'; c.font=font(r,29,24); wrapCentered(c,t,W/2,H*.79,W-105,37); c.globalAlpha=1; },
-    spotlight: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); var g=c.createRadialGradient(W/2,H/2,20,W/2,H/2,W*.7); g.addColorStop(0,'rgba(0,0,0,0)'); g
+    spotlight: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); var g=c.createRadialGradient(W/2,H/2,20,W/2,H/2,W*.7); g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(1,'rgba(0,0,0,.68)'); c.fillStyle=g; c.fillRect(0,0,W,H); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,36,29); wrapCentered(c,t,W/2,H*.73,W-100,44); c.globalAlpha=1; },
+    diagonal: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.save(); c.translate(W*.05,H*.64); c.rotate(-.08); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='left'; c.font=font(r,32,26,'Arial, sans-serif'); wrapLeft(c,t,0,0,W*.8,40); c.restore(); c.globalAlpha=1; }
+  };
+  var LAYOUT_KEYS = Object.keys(LAYOUTS);
+
+  generateVideoBtn.addEventListener('click', async function(){
+    if(photos.length === 0){ videoStatus.textContent = 'Add at least one photo first.'; return; }
+    var lines = lyricsInput.value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
+    if(lines.length === 0){ videoStatus.textContent = 'Add at least one line of poetry or lyrics.'; return; }
+    if(!('MediaRecorder' in window)){ videoStatus.textContent = 'Your browser does not support in-browser video recording.'; return; }
+
+    var chosen = $('layoutSelect').value;
+    if(chosen === 'random') chosen = LAYOUT_KEYS[Math.floor(Math.random() * LAYOUT_KEYS.length)];
+    var drawLayout = LAYOUTS[chosen];
+
+    generateVideoBtn.disabled = true;
+    videoStatus.textContent = 'Preparing…';
+    photoDownloadLink.style.display = 'none'; photoExportVideo.style.display = 'none';
+    try{ if(document.fonts) await document.fonts.load('30px "Noto Nastaliq Urdu"'); }catch(e){}
+
+    var audioDuration = await ensureAudioReady();
+    var W = videoCanvas.width, H = videoCanvas.height, totalMs;
+    if(audioDuration > 0) totalMs = Math.min(audioDuration, 30) * 1000;
+    else totalMs = Math.max(6, Math.min(30, lines.length * 3)) * 1000;
+
+    var combined = new MediaStream();
+    videoCanvas.captureStream(30).getVideoTracks().forEach(function(t){ combined.addTrack(t); });
+    if(audioEl && audioFile){
+      try{
+        var aStream = audioEl.captureStream ? audioEl.captureStream() : (audioEl.mozCaptureStream ? audioEl.mozCaptureStream() : null);
+        if(aStream) aStream.getAudioTracks().forEach(function(t){ combined.addTrack(t); });
+      } catch(e){}
+    }
+
+    var mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
+    var recorder;
+    try { recorder = new MediaRecorder(combined, { mimeType: mimeType }); }
+    catch(e){ videoStatus.textContent = 'Recording is not supported in this browser.'; generateVideoBtn.disabled = false; return; }
+
+    var chunks = [];
+    recorder.ondataavailable = function(e){ if(e.data && e.data.size) chunks.push(e.data); };
+    recorder.onstop = function(){
+      var blob = new Blob(chunks, { type: mimeType });
+      var url = URL.createObjectURL(blob);
+      photoExportVideo.src = url; photoExportVideo.style.display = 'block';
+      photoDownloadLink.href = url; photoDownloadLink.style.display = 'inline-block';
+      videoStatus.textContent = 'Your video is ready — play it back or download it.';
+      generateVideoBtn.disabled = false;
+    };
+
+    videoStatus.textContent = 'Recording… (layout: ' + chosen + ')';
+    recorder.start();
+    if(audioEl && audioFile){ audioEl.currentTime = 0; audioEl.play().catch(function(){}); }
+
+    var start = null, photoSlot = totalMs / photos.length, lineSlot = totalMs / lines.length;
+    function frame(ts){
+      if(start === null) start = ts;
+      var elapsed = ts - start;
+      if(elapsed >= totalMs){
+        setTimeout(function(){ if(recorder.state !== 'inactive') recorder.stop(); if(audioEl) audioEl.pause(); }, 100);
+        return;
+      }
+      var pIdx = Math.min(photos.length - 1, Math.floor(elapsed / photoSlot));
+      var zoom = 1 + 0.08 * ((elapsed - pIdx * photoSlot) / photoSlot);
+      var lIdx = Math.min(lines.length - 1, Math.floor(elapsed / lineSlot));
+      var lp = (elapsed - lIdx * lineSlot) / lineSlot;
+      var fade = lp < 0.15 ? lp / 0.15 : (lp > 0.85 ? (1 - lp) / 0.15 : 1);
+      fade = Math.max(0, Math.min(1, fade));
+      drawLayout(vctx, photos[pIdx], W, H, zoom, lines[lIdx], fade, isUrdu(lines[lIdx]));
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  });
+
+  /* Templates: filter chips and arrows */
+  var grid = $('templateGrid');
+  document.querySelectorAll('.tp-arrows button').forEach(function(b){
+    b.addEventListener('click', function(){ grid.scrollBy({ left: (+b.dataset.d) * grid.clientWidth * .8, behavior:'smooth' }); });
+  });
+  document.querySelectorAll('.chip').forEach(function(c){
+    c.addEventListener('click', function(){
+      document.querySelectorAll('.chip').forEach(function(x){ x.classList.toggle('on', x === c); });
+      var k = c.dataset.f;
+      grid.querySelectorAll('.dir-card').forEach(function(d){ d.style.display = (k === 'all' || d.dataset.cat === k) ? '' : 'none'; });
+      grid.scrollTo({ left: 0 });
+    });
+  });
+})();
+</script>
+
+<!-- Side menu + intro behaviour -->
+<script>
+(function(){
+  var $ = function(i){ return document.getElementById(i); };
+  var S = $('nvSide'), Sh = $('nvShade'), B = $('nvMenuBtn'), I = $('nvIntro');
+  function menu(o){ S.classList.toggle('on', o); Sh.classList.toggle('on', o); B.setAttribute('aria-expanded', o); }
+  function intro(o){
+    I.classList.toggle('on', o);
+    document.body.style.overflow = o ? 'hidden' : '';
+    if(!o){ try{ sessionStorage.setItem('nvIntro', '1'); }catch(e){} }
+  }
+  B.addEventListener('click', function(){ menu(!S.classList.contains('on')); });
+  Sh.addEventListener('click', function(){ menu(false); });
+  S.addEventListener('click', function(e){ if(e.target.closest('a')) menu(false); });
+  $('nvAbout').addEventListener('click', function(){ menu(false); intro(true); });
+  $('nvStart').addEventListener('click', function(){ intro(false); });
+  $('nvTour').addEventListener('click', function(){ intro(false); menu(true); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ menu(false); intro(false); $('authPanel').classList.remove('open'); }
+  });
+
+  // Sign in / Log out live only in the menu (Log out is last)
+  var inBtn = $('nvSignIn'), outBtn = $('nvLogOut');
+  window.nvSyncAuth = function(){
+    var on = !!window.nvLoggedIn;
+    inBtn.style.display = on ? 'none' : 'block';
+    outBtn.style.display = on ? 'block' : 'none';
+  };
+  inBtn.addEventListener('click', function(){ menu(false); if(window.nvOpenAuth) window.nvOpenAuth(); });
+  outBtn.addEventListener('click', function(){ menu(false); if(window.nvSignOut) window.nvSignOut(); });
+  window.nvSyncAuth();
+
+  // Show the welcome intro when the website opens
+  var seen = false;
+  try{ seen = sessionStorage.getItem('nvIntro'); }catch(e){}
+  if(!seen) intro(true);
+})();
+</script>
+
+<!-- Safari/iPhone recording (mp4) + quick poetry export that keeps line breaks -->
+<script>
+(function(){
+  var RTL = /[\u0600-\u06FF]/, $ = function(i){ return document.getElementById(i); };
+  var MR = window.MediaRecorder;
+  if(!MR) return;
+  if(MR.isTypeSupported && !MR.isTypeSupported('video/webm')){
+    var mp4 = ['video/mp4;codecs=avc1,mp4a.40.2', 'video/mp4'].filter(function(t){ return MR.isTypeSupported(t); })[0];
+    if(mp4){
+      window.MediaRecorder = function(s){ return new MR(s, { mimeType: mp4 }); };
+      window.MediaRecorder.isTypeSupported = MR.isTypeSupported.bind(MR);
+      var B = window.Blob;
+      window.Blob = function(p, o){ if(o && /webm/.test(o.type || '')) o = Object.assign({}, o, { type: 'video/mp4' }); return new B(p, o); };
+      window.Blob.prototype = B.prototype;
+      [['downloadLink','navaar-video-preview'], ['photoDownloadLink','navaar-photo-video']].forEach(function(a){
+        var l = $(a[0]); if(l){ l.download = a[1] + '.mp4'; l.textContent = 'Download this video (.mp4)'; }
+      });
+    }
+  }
+  var BG = { cinematic:['#141c42','#0d1330'], dusk:['#5b3a1a','#2b1710'], teal:['#123f3a','#0a1f1e'], midnight:['#0d1440','#070a1f'], rose:['#4a1530','#160a18'], slate:['#2a3049','#12162a'] };
+  $('exportBtn').addEventListener('click', async function(){
+    var nb = this, st = $('statusLine'), v = $('exportVideo'), dl = $('downloadLink');
+    var mime = ['video/webm;codecs=vp9', 'video/webm', 'video/mp4'].filter(function(t){ return MR.isTypeSupported(t); })[0];
+    if(!mime){ st.textContent = 'Recording is not supported in this browser.'; return; }
+    var e2 = mime.indexOf('mp4') > -1 ? 'mp4' : 'webm';
+    nb.disabled = true; st.textContent = 'Recording your animated preview…'; dl.style.display = 'none'; v.style.display = 'none';
+    try{ if(document.fonts) await document.fonts.load('42px "Noto Nastaliq Urdu"'); }catch(e){}
+    var W = 540, H = 960, c = document.createElement('canvas'); c.width = W; c.height = H;
+    var x = c.getContext('2d');
+    var p = BG[$('bgSelect').value] || BG.cinematic, text = $('textInput').value || 'Navaar Studio', rtl = RTL.test(text), dur = 4000, t0 = null;
+    x.font = rtl ? '42px "Noto Nastaliq Urdu",serif' : '36px Georgia,serif';
+    var lines = [], lh = rtl ? 68 : 52;
+    text.split('\n').forEach(function(par){
+      var l = '';
+      par.split(' ').forEach(function(w){ var t = l ? l + ' ' + w : w; if(x.measureText(t).width > W - 72 && l){ lines.push(l); l = w; } else l = t; });
+      lines.push(l);
+    });
+    var chunks = [], rec;
+    try{ rec = new MediaRecorder(c.captureStream(30), { mimeType: mime }); }
+    catch(err){ st.textContent = 'Recording is not supported in this browser.'; nb.disabled = false; return; }
+    function draw(ts){
+      if(t0 === null) t0 = ts;
+      var a = (ts - t0) / dur * Math.PI * 2;
+      var g = x.createLinearGradient(0, 0, W + 80 * Math.cos(a), H + 80 * Math.sin(a)); g.addColorStop(0, p[0]); g.addColorStop(1, p[1]); x.fillStyle = g; x.fillRect(0, 0, W, H);
+      var gx = W / 2 + Math.cos(a) * 80, gy = H * .35 + Math.sin(a) * 60, r = x.createRadialGradient(gx, gy, 10, gx, gy, 320);
+      r.addColorStop(0, 'rgba(82,217,208,.18)'); r.addColorStop(1, 'rgba(82,217,208,0)'); x.fillStyle = r; x.fillRect(0, 0, W, H);
+      x.fillStyle = 'rgba(255,255,255,.55)'; x.font = '12px Arial'; x.textAlign = 'left'; x.fillText('NAVAAR STUDIO', 36, 50);
+      x.strokeStyle = '#52d9d0'; x.lineWidth = 2; x.beginPath(); x.moveTo(36, 80); x.lineTo(74, 80); x.stroke();
+      x.fillStyle = '#eef1fb'; x.font = rtl ? '42px "Noto Nastaliq Urdu",serif' : '36px Georgia,serif'; x.textAlign = rtl ? 'right' : 'left';
+      var y0 = 440 - (lines.length - 1) * lh / 2;
+      lines.forEach(function(l, i){ x.fillText(l, rtl ? W - 36 : 36, y0 + i * lh); });
+      x.fillStyle = 'rgba(238,241,251,.7)'; x.font = '16px Arial'; x.textAlign = 'left'; x.fillText('Give your words a scene.', 36, H - 90);
+      if(ts - t0 < dur) requestAnimationFrame(draw);
+    }
+    rec.ondataavailable = function(e){ if(e.data && e.data.size) chunks.push(e.data); };
+    rec.onstop = function(){
+      var u = URL.createObjectURL(new Blob(chunks, { type: mime.split(';')[0] }));
+      v.src = u; v.style.display = 'block';
+      dl.href = u; dl.download = 'navaar-video-preview.' + e2; dl.textContent = 'Download this video (.' + e2 + ')'; dl.style.display = 'inline-block';
+      st.textContent = 'Preview ready. Play it back or download the file.'; nb.disabled = false;
+    };
+    rec.start(); requestAnimationFrame(draw);
+    setTimeout(function(){ if(rec.state !== 'inactive') rec.stop(); }, dur + 150);
+  });
+})();
+</script>
+</body>
+</html>
