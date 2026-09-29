@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo to Cartoon — Navaar Studio</title>
+<meta name="description" content="Turn your photo into a cartoon, anime, 3D or sketch style image for free with Navaar Studio.">
+<meta name="theme-color" content="#0c1214">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+:root{--bg:#0c1214;--card:#141f22;--bd:rgba(121,217,189,.13);--bd2:rgba(210,235,228,.2);--tx:#f3f7f5;--mu:#93a8a2;--mu2:#c3d2ce;--ac:#79d9bd;--soft:rgba(121,217,189,.13)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(900px 480px at 80% -8%,rgba(121,217,189,.13),transparent 60%),var(--bg);color:var(--tx);font:16px/1.6 'Inter','Segoe UI',Arial,sans-serif;min-height:100vh}
+a{color:var(--ac);text-decoration:none}
+.wrap{max-width:900px;margin:0 auto;padding:22px 18px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px}
+.top b{font-size:18px}
+h1{font-size:clamp(26px,6vw,38px);line-height:1.15;margin-bottom:8px}
+p{color:var(--mu2)}
+.muted{color:var(--mu);font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px}
+label{display:block;font-size:12.5px;color:var(--mu2);margin:14px 0 6px;font-weight:600}
+select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--bd2);border-radius:10px;color:var(--tx);padding:11px 12px;font:inherit;font-size:14px}
+select option{background:#141f22}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:999px;font-size:14.5px;font-weight:600;cursor:pointer;border:1px solid transparent;font-family:inherit}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-p{background:linear-gradient(135deg,var(--ac),#a8ecd6);color:#08201a;width:100%;margin-top:18px}
+.btn-o{background:rgba(255,255,255,.03);border-color:var(--bd2);color:var(--tx);width:100%}
+.box{aspect-ratio:1;border:1px dashed var(--bd2);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0a1012;color:var(--mu);font-size:13px;text-align:center;padding:10px}
+.box img{width:100%;height:100%;object-fit:contain}
+.st{font-size:13px;color:var(--ac);margin-top:12px;min-height:18px}
+#dl{display:none;margin-top:12px;font-weight:600;font-size:14px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><b>Navaar Studio</b><a href="index.html">&larr; Home</a></div>
+  <h1>Photo to Cartoon</h1>
+  <p>Upload a photo, pick a style, and get a cartoon version. Free, sign in required.</p>
+
+  <div class="grid">
+    <div class="panel">
+      <div class="box" id="src">Your photo will appear here</div>
+      <input type="file" id="pin" accept="image/*" hidden>
+      <button class="btn btn-o" id="pbtn" type="button" style="margin-top:12px">Choose photo</button>
+      <label for="sty">Style</label>
+      <select id="sty">
+        <option value="cartoon">Cartoon</option>
+        <option value="anime">Anime</option>
+        <option value="pixar">3D Pixar style</option>
+        <option value="sketch">Pencil sketch</option>
+      </select>
+      <button class="btn btn-p" id="go" type="button">Make cartoon</button>
+      <div class="st" id="st"></div>
+    </div>
+    <div class="panel">
+      <div class="box" id="out">Your cartoon will appear here</div>
+      <a id="dl" download="navaar-cartoon.png">Download image</a>
+      <p class="muted" style="margin-top:12px">Tip: a clear, front-facing photo with good light gives the best result. Limit: 5 cartoons per hour.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var CFG={URL:'https://zcungofmmaagqcinafhb.supabase.co',KEY:'sb_publishable_7ydxbZOzF0v2X58P7Pk_jg_za4pBQ3s',API:'https://navaar-backend-production.up.railway.app'};
+var sb=null,photoData=null,st=$('st');
+try{if(window.supabase)sb=window.supabase.createClient(CFG.URL,CFG.KEY)}catch(e){}
+
+$('pbtn').onclick=function(){$('pin').click()};
+$('pin').onchange=function(){
+  var f=this.files[0];this.value='';if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){var im=new Image();
+    im.onload=function(){
+      // shrink to max 512px (multiples of 8) so the request stays small and fast
+      var s=Math.min(1,512/Math.max(im.width,im.height));
+      var w=Math.max(256,Math.round(im.width*s/8)*8),h=Math.max(256,Math.round(im.height*s/8)*8);
+      var c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);
+      photoData=c.toDataURL('image/jpeg',0.9);
+      $('src').innerHTML='';var p=new Image();p.src=photoData;$('src').appendChild(p);
+      st.textContent='Photo ready. Tap Make cartoon.'};
+    im.onerror=function(){st.textContent='Could not read this photo.'};
+    im.src=e.target.result};
+  r.readAsDataURL(f)};
+
+$('go').onclick=async function(){
+  var b=this;
+  if(!photoData){st.textContent='Choose a photo first.';return}
+  if(!sb){st.textContent='Account service is not connected right now.';return}
+  var s=await sb.auth.getSession();
+  if(!s.data.session){st.textContent='Please sign in on the home page first, then come back.';return}
+  b.disabled=true;st.textContent='Making your cartoon… this can take up to a minute.';$('dl').style.display='none';
+  try{
+    var r=await fetch(CFG.API+'/api/ai/cartoon',{method:'POST',
+      headers:{'Content-Type':'application/json',Authorization:'Bearer '+s.data.session.access_token},
+      body:JSON.stringify({image:photoData,style:$('sty').value})});
+    var d=await r.json().catch(function(){return{}});
+    if(!r.ok||!d.image)throw new Error(d.error||'Could not make the cartoon.');
+    $('out').innerHTML='';var o=new Image();o.src=d.image;$('out').appendChild(o);
+    $('dl').href=d.image;$('dl').style.display='inline-block';
+    st.textContent='Done! Download it below.';
+  }catch(e){st.textContent=e.message}
+  b.disabled=false};
+})();
+</script>
+</body>
+</html>
