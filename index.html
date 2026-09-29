@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Navaar Studio — Urdu &amp; English Text Video Creator</title>
-<meta name="description" content="Navaar Studio is a free online studio to turn Urdu and English text into cinematic lyric-style videos with your photos and audio. Choose a template, style the typography and export.">
+<title>Navaar Studio — Free Online Video Editor for Urdu &amp; English</title>
+<meta name="description" content="Navaar Studio is a free online video editor with a timeline, Urdu and English text, filters, templates and uploads for photos, video, audio and fonts. Download as video, MP4 or PNG.">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#0c1214">
 <meta name="author" content="Navaar Studio">
@@ -12,18 +12,18 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Navaar Studio">
-<meta property="og:title" content="Navaar Studio — Urdu &amp; English Video Creator">
-<meta property="og:description" content="Turn poetry, quotes and stories into cinematic text videos with your own photos and audio.">
+<meta property="og:title" content="Navaar Studio — Free Online Video Editor">
+<meta property="og:description" content="Edit videos in your browser: timeline, Urdu text, templates and downloads.">
 <meta property="og:url" content="https://nauman-ai-786.github.io/Navaar-studio/">
 <meta property="og:image" content="https://nauman-ai-786.github.io/Navaar-studio/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Navaar Studio — Urdu &amp; English Video Creator">
-<meta name="twitter:description" content="Turn poetry, quotes and stories into cinematic text videos.">
+<meta name="twitter:title" content="Navaar Studio — Free Online Video Editor">
+<meta name="twitter:description" content="Edit videos in your browser with Urdu and English text.">
 <meta name="twitter:image" content="https://nauman-ai-786.github.io/Navaar-studio/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Navaar Studio","url":"https://nauman-ai-786.github.io/Navaar-studio/","description":"Free online studio to create Urdu and English lyric-style text videos with photos and audio.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","inLanguage":["en","ur"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Navaar Studio","url":"https://nauman-ai-786.github.io/Navaar-studio/","description":"Free online video editor for Urdu and English: timeline, text, photos, video, audio and downloads.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","inLanguage":["en","ur"]}</script>
 
 <style>
   :root{
@@ -275,6 +275,33 @@
     .section-head-row p{text-align:left;}
     footer .wrap{flex-direction:column; gap:16px; text-align:center;}
   }
+
+  /* ===== Navaar new look ===== */
+  body{background:radial-gradient(1100px 520px at 78% -8%,rgba(121,217,189,.13),transparent 60%),radial-gradient(800px 420px at 4% 6%,rgba(216,182,116,.08),transparent 60%),var(--bg);}
+  header{background:rgba(12,18,20,.72); backdrop-filter:blur(16px) saturate(1.3);}
+  header .wrap{height:68px;}
+  .btn{border-radius:999px;}
+  .btn-primary{box-shadow:0 8px 26px -8px rgba(121,217,189,.55);}
+  .btn-primary:hover{box-shadow:0 12px 30px -8px rgba(121,217,189,.7);}
+  .btn-outline{background:rgba(255,255,255,.03);}
+  .btn-outline:hover{border-color:var(--accent);}
+  .hero h1{font-size:clamp(36px,5.4vw,60px); line-height:1.06; letter-spacing:-.03em; max-width:15ch;}
+  .hero .lead{max-width:52ch;}
+  .preview-card{border-radius:26px; box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(121,217,189,.16);}
+  .eyebrow{letter-spacing:.08em;}
+  h2{letter-spacing:-.025em;}
+  .card,.plan,.tpl,.feature{border-radius:18px;}
+  .ed{padding:76px 0 8px;}
+  .ed-box{display:grid; grid-template-columns:1.05fr 1fr; gap:44px; align-items:center; padding:38px; border:1px solid var(--border); border-radius:26px; background:linear-gradient(160deg,rgba(121,217,189,.09),rgba(20,31,34,.6) 55%);}
+  .ed-box h2{margin-bottom:12px;}
+  .ed-tools{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 26px;}
+  .ed-tools span{padding:6px 13px; border:1px solid var(--border-strong); border-radius:999px; font-size:13px; color:var(--muted-2);}
+  .ed-mock{background:#0a1012; border:1px solid var(--border-strong); border-radius:16px; padding:12px; box-shadow:0 30px 60px -30px #000;}
+  .ed-dots{display:flex; gap:6px; margin-bottom:10px;} .ed-dots i{width:9px;height:9px;border-radius:50%;background:#2a3a3d;}
+  .ed-screen{height:150px; border-radius:10px; background:linear-gradient(135deg,#123b3a,#3a2b17); display:flex; align-items:center; justify-content:center; font-family:'Noto Nastaliq Urdu',serif; font-size:28px; color:#f3f7f5;}
+  .ed-track{height:18px; border-radius:5px; margin-top:8px; background:#111c1f; position:relative;}
+  .ed-track b{position:absolute; top:2px; bottom:2px; border-radius:4px;}
+  @media(max-width:860px){.ed-box{grid-template-columns:1fr; padding:24px; gap:26px;}}
 </style>
 </head>
 <body>
@@ -285,6 +312,7 @@
     <a class="logo" href="#top" aria-label="Navaar Studio home"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#nvLogo"/></svg><span class="logo-text">Navaar<span>Studio</span></span></a>
     <div class="nav-links">
       <nav><ul>
+        <li><a href="editor.html">Editor</a></li>
         <li><a href="#studio">Studio</a></li>
         <li><a href="#templates">Templates</a></li>
         <li><a href="#pricing">Plans</a></li>
@@ -322,7 +350,7 @@
           <div class="auth-status" id="authStatus"></div>
         </div>
       </div>
-      <a href="#studio" class="btn btn-primary btn-small">Open Studio</a>
+      <a href="editor.html" class="btn btn-primary btn-small">Open Editor</a>
     </div>
   </div>
 </header>
@@ -330,18 +358,19 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Urdu video creation, thoughtfully made</div>
-      <h1>Give your Urdu words a cinematic life.</h1>
-      <p class="lead">Turn poetry, quotes and written ideas into beautiful short videos with graceful Urdu typography, atmosphere and motion — without a design learning curve.</p>
+      <div class="eyebrow">Free online video editor, Urdu first</div>
+      <h1>Edit videos your way, right in the browser.</h1>
+      <p class="lead">Trim, add text in Urdu or English, layer photos and music, then download. Or start from a poetry template and let the words do the work.</p>
       <div class="hero-actions">
-        <a href="#studio" class="btn btn-primary">Create your first video</a>
-        <a href="#templates" class="btn btn-outline">Explore templates</a>
+        <a href="editor.html" class="btn btn-primary">Open Editor</a>
+        <a href="#studio" class="btn btn-outline">Quick poetry video</a>
+        <a href="#templates" class="btn btn-outline">Templates</a>
       </div>
-      <div class="hero-foot">Designed for poetry, reflections, announcements and everyday creative ideas.</div>
+      <div class="hero-foot">Made for reels, shorts, poetry, promos and everyday projects.</div>
     </div>
 
     <div class="preview-card">
-      <div class="preview-top"><span class="brand">NAVAAR STUDIO</span><span>9:16 SHORT VIDEO</span></div>
+      <div class="preview-top"><span class="brand">NAVAAR STUDIO</span><span>VIDEO EDITOR</span></div>
       <div class="preview-rule"></div>
       <div class="preview-urdu">لفظوں کو منظر دو</div>
       <div class="preview-caption">Give your words a scene.</div>
@@ -352,21 +381,30 @@
 
 <div class="statbar">
   <div class="wrap">
-    <div><h4>Fast creation</h4><span>From line to scene</span></div>
-    <div><h4>Urdu-first controls</h4><span>Type with confidence</span></div>
-    <div><h4>HD export</h4><span>Ready for sharing</span></div>
-    <div><h4>No design experience</h4><span>Guided, not complicated</span></div>
+    <div><h4>Full timeline</h4><span>Trim, split, layer</span></div>
+    <div><h4>Urdu-first text</h4><span>Fonts you can upload</span></div>
+    <div><h4>Download anywhere</h4><span>Video, MP4, PNG</span></div>
+    <div><h4>Starts simple</h4><span>Templates in one click</span></div>
   </div>
 </div>
 
 
 
+<section class="ed" id="editorPromo"><div class="wrap"><div class="ed-box">
+  <div><h2>A full editor, no install.</h2><p>Timeline, text, shapes, stickers, filters, speed and volume. Upload your own photos, videos, audio and fonts, then download as video, MP4 or a single frame.</p>
+  <div class="ed-tools"><span>Timeline</span><span>Trim and split</span><span>Urdu text</span><span>Filters</span><span>Cartoon look</span><span>Templates</span><span>Download</span></div>
+  <a href="editor.html" class="btn btn-primary">Open Editor</a></div>
+  <div class="ed-mock" aria-hidden="true"><div class="ed-dots"><i></i><i></i><i></i></div><div class="ed-screen">لفظوں کو منظر دو</div>
+  <div class="ed-track"><b style="left:0;width:55%;background:#2c4b47"></b><b style="left:58%;width:30%;background:#6fd3b5"></b></div>
+  <div class="ed-track"><b style="left:12%;width:40%;background:#4a3a1c"></b></div><div class="ed-track"><b style="left:0;width:88%;background:#26363a"></b></div></div>
+</div></div></section>
+
 <section class="studio" id="studio">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow">Interactive studio</div>
-      <h2>Create a video around one meaningful line.</h2>
-      <p>Shape the atmosphere, then preview and export the composition — everything below is fully working, running right in your browser.</p>
+      <div class="eyebrow">Quick poetry video</div>
+      <h2>Make a text video from one line.</h2>
+      <p>Pick a mood, font and background, then preview and download. For full control with a timeline, open the editor.</p>
     </div>
 
     <div class="studio-grid">
@@ -518,8 +556,8 @@
 <section id="templates">
   <div class="wrap">
     <div class="section-head-row">
-      <div><div class="eyebrow">Start with a direction</div><h2>More ways to frame your story.</h2></div>
-      <p>Choose from a growing collection of long-form templates. One click loads the text, mood, typography, background and audio style into the studio.</p>
+      <div><div class="eyebrow">Start with a direction</div><h2>Templates for longer lines.</h2></div>
+      <p>One click loads the text, mood, typography, background and audio style into the quick poetry studio above. The editor also has its own templates in its left menu.</p>
     </div>
 
     <div class="grid-3" id="templateGrid">
@@ -634,7 +672,7 @@
       <div>
         <div class="eyebrow">Simple, transparent choices</div>
         <h2>A plan for every creative rhythm.</h2>
-        <p style="text-align:left; margin-top:10px;">Choose a sample plan structure that matches how often you create.</p>
+        <p style="text-align:left; margin-top:10px;">Pick the plan that matches how often you edit.</p>
       </div>
       <div class="pricing-toggle" id="billingToggle">
         <span class="active" data-mode="monthly">Monthly</span>
@@ -644,20 +682,20 @@
 
     <div class="pricing-grid">
       <div class="price-card">
-        <h3>Free</h3><p>For exploring the studio and making first drafts.</p>
+        <h3>Free</h3><p>Full editor with video downloads. Great for trying it out.</p>
         <div class="price"><span class="amount">$0</span> <span>/ month</span></div>
         <span class="billed-note">&nbsp;</span>
         <button class="btn btn-outline" style="width:100%;">Start with Free</button>
       </div>
       <div class="price-card featured">
         <span class="badge">Recommended</span>
-        <h3>Creator</h3><p>For regular video making and deeper creative control.</p>
+        <h3>Creator</h3><p>For regular editing and longer projects.</p>
         <div class="price"><span class="amount" data-monthly="12" data-annual="9">$12</span> <span>/ month</span></div>
         <span class="billed-note">Billed monthly</span>
         <button class="btn btn-primary" style="width:100%;" id="creatorBtn" data-plan="creator">Choose Creator</button>
       </div>
       <div class="price-card">
-        <h3>Studio</h3><p>For teams building a consistent creative output.</p>
+        <h3>Studio</h3><p>For teams that publish videos often.</p>
         <div class="price"><span class="amount" data-monthly="24" data-annual="19">$24</span> <span>/ month</span></div>
         <span class="billed-note">Billed monthly</span>
         <button class="btn btn-outline" style="width:100%;" id="studioBtn" data-plan="studio">Choose Studio</button>
@@ -675,7 +713,7 @@
 <footer>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Navaar Studio home"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#nvLogo"/></svg><span class="logo-text">Navaar<span>Studio</span></span></a>
-    <nav><ul><li><a href="#studio">Studio</a></li><li><a href="#templates">Templates</a></li><li><a href="#feedback">Feedback</a></li><li><a href="#pricing">Plans</a></li><li><a href="privacy.html">Privacy</a></li></ul></nav>
+    <nav><ul><li><a href="editor.html">Editor</a></li><li><a href="#studio">Studio</a></li><li><a href="#templates">Templates</a></li><li><a href="#feedback">Feedback</a></li><li><a href="#pricing">Plans</a></li><li><a href="privacy.html">Privacy</a></li></ul></nav>
     <div class="copy">2026 Navaar Studio</div>
   </div>
 </footer>
