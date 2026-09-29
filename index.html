@@ -155,7 +155,7 @@ footer ul{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--mu2)
 
 <header id="top"><div class="wrap">
   <a class="logo" href="#top"><svg viewBox="0 0 40 40"><use href="#lg"/></svg><span>Navaar<span>Studio</span></span></a>
-  <div class="hd-r"><button class="btn btn-o btn-s" id="hdSign" type="button">Sign in</button><button class="btn btn-o btn-s" id="hdOut" type="button" style="display:none">Log out</button><button id="menuBtn" type="button" aria-label="Menu">&#9776;</button></div>
+  <div class="hd-r"><button class="btn btn-o btn-s" id="hdSign" type="button">Sign in</button><button id="menuBtn" type="button" aria-label="Menu">&#9776;</button></div>
 </div></header>
 
 <section class="hero"><div class="wrap hero-grid">
@@ -286,6 +286,7 @@ footer ul{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--mu2)
   <a href="#about">About &amp; how it works</a><a href="#pricing">Plans</a><a href="#feedback">Feedback</a><a href="privacy.html">Privacy Policy</a>
   <div class="nb" id="mAbout">ⓘ Welcome guide</div>
   <small>Account</small>
+  <div class="muted" id="mMail" style="font-size:12.5px;margin:0 0 8px 2px"></div>
   <div class="nb" id="mSign">Sign in / Create account</div>
   <div class="nb lo" id="mOut">Log out</div>
 </aside>
@@ -392,12 +393,13 @@ $('go').onclick=async function(){
   if(r.data&&r.data.session)goHome();else ast.textContent='Account created. Check your email to confirm, then sign in.'};
 $('fg').onclick=async function(){if(!ready())return;var e=$('em').value.trim();if(!e)return ast.textContent='Enter your email first.';
   var r=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin+location.pathname});ast.textContent=r.error?r.error.message:'Password reset email sent.'};
-function syncAuth(){var on=!!user;$('mSign').style.display=on?'none':'block';$('mOut').style.display=on?'block':'none';
-  $('hdSign').style.display=on?'none':'inline-flex';$('hdOut').style.display=on?'inline-flex':'none';if(on)ov(auth,false)}
-$('hdOut').onclick=function(){$('mOut').onclick()};
-$('mOut').onclick=async function(){if(sb)await sb.auth.signOut();try{sessionStorage.setItem('nvSkip','1')}catch(e){}location.href=location.pathname};
-if(sb){sb.auth.onAuthStateChange(function(ev,s){user=s?s.user:null;syncAuth();if(ev!=='INITIAL_SESSION')renderSaved()});
-  sb.auth.getSession().then(function(r){if(r.data.session){user=r.data.session.user;syncAuth();renderSaved()}})}
+function stored(){try{for(var i=0;i<localStorage.length;i++){if(/^sb-.*-auth-token$/.test(localStorage.key(i)))return true}}catch(e){}return false}
+function syncAuth(){var on=!!user||stored();$('mMail').textContent=user&&user.email?'Signed in as '+user.email:(on?'Signed in':'');$('mSign').style.display=on?'none':'block';$('mOut').style.display=on?'block':'none';
+  $('hdSign').style.display=on?'none':'inline-flex';if(on)ov(auth,false)}
+$('mOut').onclick=async function(){try{if(sb)await Promise.race([sb.auth.signOut(),new Promise(function(r){setTimeout(r,2000)})])}catch(e){}
+  try{Object.keys(localStorage).forEach(function(k){if(/^sb-.*-auth-token/.test(k))localStorage.removeItem(k)});sessionStorage.setItem('nvSkip','1')}catch(e){}location.href=location.pathname};
+if(sb){sb.auth.onAuthStateChange(function(ev,s){user=s?s.user:null;syncAuth();if(ev!=='INITIAL_SESSION')setTimeout(renderSaved,0)});
+  sb.auth.getSession().then(function(r){if(r.data.session){user=r.data.session.user;syncAuth();renderSaved()}}).catch(function(){})}
 syncAuth();
 
 /* ---- helpers ---- */
