@@ -239,7 +239,11 @@ footer ul{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--mu2)
       <div class="help" style="margin-top:8px">Use audio you own or have rights to.</div>
       <label for="lay">Layout style</label>
       <select id="lay"><option value="bottom">Bottom caption</option><option value="center">Center focus</option><option value="top">Top title</option><option value="framed">Framed photo</option><option value="split">Split panel</option><option value="glass">Glass panel</option><option value="polaroid">Polaroid card</option><option value="spot">Spotlight</option><option value="cinematic">Cinematic full photo</option><option value="left">Left aligned story</option><option value="right">Right aligned Urdu</option><option value="minimal">Minimal clean</option><option value="lower">Lower third</option><option value="photoFirst">Photo first caption</option><option value="corner">Corner editorial</option><option value="vertical">Vertical side</option><option value="duotone">Duotone frame</option><option value="diagonal">Diagonal dynamic</option><option value="random">Random</option></select>
-      <div class="acts" style="margin-top:16px"><button class="btn btn-p" id="gen" type="button">Generate video</button></div>
+      <label for="aiTopic" style="margin-top:6px">AI poetry writer</label>
+      <div style="display:flex;gap:8px;margin-bottom:6px"><input id="aiTopic" placeholder="Topic: ماں، دوستی، محبت, hope..."><button class="btn btn-o btn-s" id="aiWrite" type="button" style="white-space:nowrap">✨ AI write</button></div>
+      <div class="help">AI writes original lines for your topic (sign in required).</div>
+      <div class="acts" style="margin-top:8px"><button class="btn btn-p" id="autoBtn" type="button">✨ Auto video</button><button class="btn btn-o" id="gen" type="button">Generate with my settings</button></div>
+      <div class="help" style="margin-top:8px">Auto video: add photos only. Lines, layout and timing are chosen for you.</div>
       <div class="st" id="st2"></div><video class="out" id="v2" controls playsinline></video><a class="dl" id="d2">Download video</a>
     </div>
     <div class="pv" style="padding:0;overflow:hidden"><canvas id="cv" width="540" height="960" style="width:100%;display:block;background:#0a1012"></canvas></div>
@@ -528,6 +532,18 @@ vertical:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);shade(c,W,H,.25);c.sav
 duotone:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);c.fillStyle='rgba(10,20,45,.35)';c.fillRect(0,0,W,H);c.strokeStyle='rgba(255,255,255,.8)';c.lineWidth=3;c.strokeRect(26,26,W-52,H-52);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,35,28);say(c,t,W/2,H/2+12,W-110,50)},
 diagonal:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);shade(c,W,H,.2);c.save();c.translate(W*.05,H*.64);c.rotate(-.08);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='left';c.font=r?'32px "Noto Nastaliq Urdu",serif':'26px Arial,sans-serif';sayL(c,t,0,0,W*.8,44);c.restore()}
 });
+var lyrEdited=false;$('lyr').addEventListener('input',function(){lyrEdited=true});
+$('autoBtn').onclick=function(){var st=$('st2');if(!photos.length)return st.textContent='Add at least one photo, then tap Auto video.';
+  if(!lyrEdited||!$('lyr').value.trim()){$('lyr').value=P[Math.floor(Math.random()*P.length)][1];$('lyr').style.direction='rtl'}
+  $('lay').value='random';$('gen').click()};
+$('aiWrite').onclick=async function(){var st=$('st2'),b=this,t=$('aiTopic').value.trim();
+  if(!user){st.textContent='Sign in to use AI writing.';openAuth('in');return}
+  if(t.length<2)return st.textContent='Type a topic first.';
+  b.disabled=true;st.textContent='AI is writing…';
+  try{var r=await fetch(CFG.API+'/api/ai/poetry',{method:'POST',headers:await hdr({'Content-Type':'application/json'}),body:JSON.stringify({topic:t})});
+    var d=await r.json().catch(function(){return{}});if(!r.ok||!d.text)throw new Error(d.error||'AI service is not connected yet.');
+    $('lyr').value=d.text;lyrEdited=true;$('lyr').style.direction=isU(d.text)?'rtl':'ltr';st.textContent='AI lines added. Tap Auto video or Generate.'}
+  catch(e){st.textContent=e.message}b.disabled=false};
 $('gen').onclick=async function(){var st=$('st2'),b=this;
   if(!photos.length)return st.textContent='Add at least one photo first.';
   var lines=$('lyr').value.split('\n').map(function(s){return s.trim()}).filter(Boolean);if(!lines.length)return st.textContent='Add at least one line of text.';
