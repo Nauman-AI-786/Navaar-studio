@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Photo to Cartoon &amp; Retro — Navaar Studio</title>
+<title>Photo Styles — Navaar Studio</title>
 <meta name="description" content="Turn your photo into a cartoon, anime, 3D or sketch style image for free with Navaar Studio.">
 <meta name="theme-color" content="#0c1214">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -37,8 +37,8 @@ select option{background:#141f22}
 <body>
 <div class="wrap">
   <div class="top"><b>Navaar Studio</b><a href="index.html">&larr; Home</a></div>
-  <h1>Photo to Cartoon &amp; Retro</h1>
-  <p>Upload a photo, pick a style, and get a cartoon, sketch or retro 80s version. AI styles need sign in; the old photo filter works instantly.</p>
+  <h1>Photo Styles</h1>
+  <p>Upload a photo and pick from 34 AI styles (cartoon, anime, painting, retro, costume scenes) or 16 instant filters. AI styles need sign in; filters work instantly and are free.</p>
 
   <div class="grid">
     <div class="panel">
@@ -47,12 +47,62 @@ select option{background:#141f22}
       <button class="btn btn-o" id="pbtn" type="button" style="margin-top:12px">Choose photo</button>
       <label for="sty">Style</label>
       <select id="sty">
-        <option value="cartoon">Cartoon</option>
-        <option value="anime">Anime</option>
-        <option value="pixar">3D Pixar style</option>
-        <option value="sketch">Pencil sketch</option>
-        <option value="retro80s">Retro 80s photo (AI)</option>
-        <option value="vintage">Old photo filter (instant, no AI)</option>
+        <optgroup label="Cartoon and art (AI)">
+          <option value="cartoon">Cartoon</option>
+          <option value="anime">Anime</option>
+          <option value="pixar">3D animated movie character</option>
+          <option value="chibi">Chibi cute</option>
+          <option value="comic">Comic book</option>
+          <option value="manga">Manga black and white</option>
+          <option value="sketch">Pencil sketch</option>
+          <option value="charcoal">Charcoal drawing</option>
+          <option value="watercolor">Watercolor painting</option>
+          <option value="oil">Oil painting</option>
+          <option value="popart">Pop art</option>
+          <option value="pixel">Pixel art</option>
+          <option value="clay">Claymation</option>
+          <option value="paper">Paper cut-out</option>
+          <option value="neon">Neon glow</option>
+          <option value="vector">Flat vector</option>
+          <option value="lowpoly">Low-poly 3D</option>
+          <option value="glass">Stained glass</option>
+          <option value="caricature">Caricature</option>
+          <option value="crayon">Crayon drawing</option>
+        </optgroup>
+        <optgroup label="Retro and scenes (AI)">
+          <option value="retro80s">Retro 80s photo</option>
+          <option value="retro70s">Retro 70s disco</option>
+          <option value="retro50s">Vintage 1950s photo</option>
+          <option value="victorian">Victorian portrait</option>
+          <option value="renaissance">Renaissance painting</option>
+          <option value="mughal">Mughal royal portrait</option>
+          <option value="superhero">Superhero</option>
+          <option value="astronaut">Astronaut</option>
+          <option value="knight">Medieval knight</option>
+          <option value="cowboy">Wild West cowboy</option>
+          <option value="cyberpunk">Cyberpunk city</option>
+          <option value="wizard">Fantasy wizard</option>
+          <option value="winter">Snowy winter</option>
+          <option value="beach">Beach sunset</option>
+        </optgroup>
+        <optgroup label="Instant filters (free, no AI, no login)">
+          <option value="f:vintage">Old film (80s look)</option>
+          <option value="f:bw">Black and white</option>
+          <option value="f:sepia">Sepia</option>
+          <option value="f:noir">Noir high contrast</option>
+          <option value="f:matte">Faded matte</option>
+          <option value="f:cool">Cool blue film</option>
+          <option value="f:sunset">Warm sunset</option>
+          <option value="f:vivid">Vivid pop</option>
+          <option value="f:cinematic">Cinematic teal-orange</option>
+          <option value="f:polaroid">Polaroid frame</option>
+          <option value="f:dreamy">Dreamy glow</option>
+          <option value="f:pixelate">Pixelate</option>
+          <option value="f:posterize">Posterize</option>
+          <option value="f:duo1">Duotone purple-orange</option>
+          <option value="f:duo2">Duotone teal-gold</option>
+          <option value="f:duo3">Duotone blue-pink</option>
+        </optgroup>
       </select>
       <button class="btn btn-p" id="go" type="button">Make cartoon</button>
       <div class="st" id="st"></div>
@@ -92,37 +142,54 @@ $('pin').onchange=function(){
   r.readAsDataURL(f)};
 
 
-// Instant vintage film look, runs fully in the browser (free, no AI, no login)
-function vintage(im){
-  var s=Math.min(1,1080/Math.max(im.width,im.height)),W=Math.round(im.width*s),H=Math.round(im.height*s);
-  var c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
-  x.drawImage(im,0,0,W,H);
-  var d=x.getImageData(0,0,W,H),p=d.data;
-  for(var i=0;i<p.length;i+=4){
-    var r=p[i],g=p[i+1],b=p[i+2],l=.3*r+.59*g+.11*b;
-    r=l+(r-l)*.8;g=l+(g-l)*.8;b=l+(b-l)*.8;            // slightly faded colour
-    r=r*1.08+12;g=g*1.0+6;b=b*.84;                      // warm film tint
-    r=r*.9+22;g=g*.9+20;b=b*.9+16;                      // lifted blacks
-    var n=(Math.random()-.5)*34;                        // film grain
-    p[i]=Math.max(0,Math.min(255,r+n));p[i+1]=Math.max(0,Math.min(255,g+n));p[i+2]=Math.max(0,Math.min(255,b+n))}
-  x.putImageData(d,0,0);
-  var v=x.createRadialGradient(W/2,H/2,Math.min(W,H)*.35,W/2,H/2,Math.max(W,H)*.75);   // vignette
-  v.addColorStop(0,'rgba(60,30,0,0)');v.addColorStop(1,'rgba(60,30,0,.45)');x.fillStyle=v;x.fillRect(0,0,W,H);
-  var k;x.globalAlpha=.5;                                // scratches
-  for(k=0;k<14;k++){x.strokeStyle='rgba(255,245,220,'+(.15+Math.random()*.3)+')';x.lineWidth=Math.random()*1.4+.3;
-    var sx=Math.random()*W;x.beginPath();x.moveTo(sx,0);x.lineTo(sx+(Math.random()-.5)*30,H);x.stroke()}
-  x.globalAlpha=1;
-  for(k=0;k<140;k++){x.fillStyle='rgba(255,250,235,'+(.2+Math.random()*.5)+')';                // dust
-    x.beginPath();x.arc(Math.random()*W,Math.random()*H,Math.random()*1.8+.3,0,7);x.fill()}
-  x.lineWidth=Math.max(8,W*.018);x.strokeStyle='rgba(235,220,185,.75)';x.strokeRect(0,0,W,H);   // worn paper edge
-  return c.toDataURL('image/jpeg',.92)}
+// Instant filters: run fully in the browser (free, no AI, no login)
+function cl(v){return v<0?0:v>255?255:v}
+function base(im){var s=Math.min(1,1080/Math.max(im.width,im.height)),W=Math.round(im.width*s),H=Math.round(im.height*s);
+  var c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');x.drawImage(im,0,0,W,H);return{c:c,x:x,W:W,H:H}}
+function grade(im,fn,post){var o=base(im),d=o.x.getImageData(0,0,o.W,o.H),p=d.data;
+  for(var i=0;i<p.length;i+=4){var r=p[i],g=p[i+1],b=p[i+2],l=.3*r+.59*g+.11*b,q=fn(r,g,b,l);p[i]=cl(q[0]);p[i+1]=cl(q[1]);p[i+2]=cl(q[2])}
+  o.x.putImageData(d,0,0);if(post)post(o.x,o.W,o.H,o.c);return o.c.toDataURL('image/jpeg',.92)}
+function lerp(a,b,t){return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t]}
+function duo(A,B){return function(r,g,b,l){return lerp(A,B,l/255)}}
+function small(c,W,H,f){var t=document.createElement('canvas');t.width=Math.max(8,Math.round(W/f));t.height=Math.max(8,Math.round(H/f));
+  t.getContext('2d').drawImage(c,0,0,t.width,t.height);return t}
+var FILT={
+ vintage:function(im){return grade(im,function(r,g,b,l){
+    r=l+(r-l)*.8;g=l+(g-l)*.8;b=l+(b-l)*.8;r=r*1.08+12;g=g*1.0+6;b=b*.84;r=r*.9+22;g=g*.9+20;b=b*.9+16;
+    var n=(Math.random()-.5)*34;return[r+n,g+n,b+n]},
+  function(x,W,H){var v=x.createRadialGradient(W/2,H/2,Math.min(W,H)*.35,W/2,H/2,Math.max(W,H)*.75),k;
+    v.addColorStop(0,'rgba(60,30,0,0)');v.addColorStop(1,'rgba(60,30,0,.45)');x.fillStyle=v;x.fillRect(0,0,W,H);
+    x.globalAlpha=.5;for(k=0;k<14;k++){x.strokeStyle='rgba(255,245,220,'+(.15+Math.random()*.3)+')';x.lineWidth=Math.random()*1.4+.3;
+      var sx=Math.random()*W;x.beginPath();x.moveTo(sx,0);x.lineTo(sx+(Math.random()-.5)*30,H);x.stroke()}
+    x.globalAlpha=1;for(k=0;k<140;k++){x.fillStyle='rgba(255,250,235,'+(.2+Math.random()*.5)+')';x.beginPath();x.arc(Math.random()*W,Math.random()*H,Math.random()*1.8+.3,0,7);x.fill()}
+    x.lineWidth=Math.max(8,W*.018);x.strokeStyle='rgba(235,220,185,.75)';x.strokeRect(0,0,W,H)})},
+ bw:function(im){return grade(im,function(r,g,b,l){return[l,l,l]})},
+ sepia:function(im){return grade(im,function(r,g,b,l){return[l*1.07+20,l*.95+8,l*.75]})},
+ noir:function(im){return grade(im,function(r,g,b,l){var v=(l-128)*1.7+128;return[v,v,v]},
+  function(x,W,H){var v=x.createRadialGradient(W/2,H/2,Math.min(W,H)*.3,W/2,H/2,Math.max(W,H)*.7);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.55)');x.fillStyle=v;x.fillRect(0,0,W,H)})},
+ matte:function(im){return grade(im,function(r,g,b){return[r*.85+35,g*.85+33,b*.85+38]})},
+ cool:function(im){return grade(im,function(r,g,b){return[r*.9,g+4,b*1.15+10]})},
+ sunset:function(im){return grade(im,function(r,g,b){return[r*1.15+15,g*.98+4,b*.8]})},
+ vivid:function(im){return grade(im,function(r,g,b,l){return[(l+(r-l)*1.5-128)*1.1+128,(l+(g-l)*1.5-128)*1.1+128,(l+(b-l)*1.5-128)*1.1+128]})},
+ cinematic:function(im){return grade(im,function(r,g,b,l){var t=l/255;return[r*(.9+.3*t),g*(.95+.05*t)+(1-t)*6,b*(1.15-.35*t)+(1-t)*10]})},
+ polaroid:function(im){return grade(im,function(r,g,b){return[r*.95+18,g*.95+14,b*.88+8]},
+  function(x,W,H){var m=Math.round(W*.05);x.fillStyle='#f4f0e6';x.fillRect(0,0,W,m);x.fillRect(0,0,m,H);x.fillRect(W-m,0,m,H);x.fillRect(0,H-m*3,W,m*3)})},
+ dreamy:function(im){return grade(im,function(r,g,b){return[r*1.05+8,g*1.03+6,b*1.05+10]},
+  function(x,W,H,c){var t=small(c,W,H,10);x.globalCompositeOperation='screen';x.globalAlpha=.45;x.imageSmoothingEnabled=true;x.drawImage(t,0,0,W,H);x.globalAlpha=1;x.globalCompositeOperation='source-over'})},
+ pixelate:function(im){return grade(im,function(r,g,b){return[r,g,b]},
+  function(x,W,H,c){var t=small(c,W,H,12);x.imageSmoothingEnabled=false;x.drawImage(t,0,0,W,H)})},
+ posterize:function(im){return grade(im,function(r,g,b){var q=function(v){return Math.round(v/85)*85};return[q(r),q(g),q(b)]})},
+ duo1:function(im){return grade(im,duo([43,16,85],[255,154,90]))},
+ duo2:function(im){return grade(im,duo([11,43,58],[242,211,138]))},
+ duo3:function(im){return grade(im,duo([26,26,64],[255,95,162]))}
+};
 
 $('go').onclick=async function(){
   var b=this;
   if(!photoData){st.textContent='Choose a photo first.';return}
-  if($('sty').value==='vintage'){
-    var v=vintage(origImg);$('out').innerHTML='';var vi=new Image();vi.src=v;$('out').appendChild(vi);
-    $('dl').href=v;$('dl').download='navaar-vintage.jpg';$('dl').style.display='inline-block';st.textContent='Done! Download it below.';return}
+  if($('sty').value.indexOf('f:')===0){
+    var key=$('sty').value.slice(2),v=FILT[key](origImg);$('out').innerHTML='';var vi=new Image();vi.src=v;$('out').appendChild(vi);
+    $('dl').href=v;$('dl').download='navaar-'+key+'.jpg';$('dl').style.display='inline-block';st.textContent='Done! Download it below.';return}
   if(!sb){st.textContent='Account service is not connected right now.';return}
   var s=await sb.auth.getSession();
   if(!s.data.session){st.textContent='Please sign in on the home page first, then come back.';return}
@@ -134,7 +201,7 @@ $('go').onclick=async function(){
     var d=await r.json().catch(function(){return{}});
     if(!r.ok||!d.image)throw new Error(d.error||'Could not make the cartoon.');
     $('out').innerHTML='';var o=new Image();o.src=d.image;$('out').appendChild(o);
-    $('dl').href=d.image;$('dl').style.display='inline-block';
+    $('dl').href=d.image;$('dl').download='navaar-'+$('sty').value+'.png';$('dl').style.display='inline-block';
     st.textContent='Done! Download it below.';
   }catch(e){st.textContent=e.message}
   b.disabled=false};
