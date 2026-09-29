@@ -71,6 +71,8 @@ const T=[
 {id:"pdfmark",cat:"PDF",n:"PDF Watermark & Page Numbers",d:"Add a text watermark and page numbers to every page.",k:"page number",x:1},
 {id:"pdf2img",cat:"PDF",n:"PDF to JPG / PNG",d:"Turn each PDF page into an image.",k:"pdf to jpg pdf to png",x:1},
 {id:"pdftext",cat:"PDF",n:"PDF Text Extractor",d:"Copy the selectable text out of a PDF. Scanned PDFs need OCR, which is not included.",k:"extract text",x:1},
+{id:"pdfmeta",cat:"PDF",n:"PDF Metadata Editor",d:"Set PDF title, author, subject and keywords in your browser.",k:"metadata title author subject keywords",x:2},
+{id:"pdfcompress",cat:"PDF",n:"PDF Optimize / Compress",d:"Re-save PDFs and optionally remove metadata. Browser image recompression is not performed.",k:"compress optimize pdf reduce metadata",x:2},
 {id:"qr",cat:"QR",n:"QR Code Generator",d:"URL, text, phone, email, WhatsApp, Wi-Fi and vCard. Colors, logo, PNG and SVG.",k:"qr code wifi whatsapp vcard",x:1,pop:1},
 {id:"qrscan",cat:"QR",n:"QR Code Scanner",d:"Scan a QR code with your camera or from an image.",k:"scan camera",x:1},
 {id:"barcode",cat:"QR",n:"Barcode Generator",d:"CODE128, EAN-13, EAN-8, UPC, CODE39 and ITF-14. Download PNG.",k:"ean upc code128",x:1}
@@ -81,14 +83,39 @@ const T=[
 {id:"recorder",cat:"Audio",n:"Voice & Audio Recorder",d:"Record from your microphone, then download it.",k:"microphone record voice",x:2},
 {id:"tts",cat:"Audio",n:"Text to Speech",d:"Speak Urdu, Hindi or English text with your device voices. Speed, pitch and volume.",k:"voice speech reader",x:2},
 {id:"urdutts",cat:"Urdu",n:"Urdu Text to Speech",d:"Listen to Urdu text read aloud (needs an Urdu voice on your device).",k:"urdu voice speech",x:2},
-{id:"urdupoetry",cat:"Urdu",n:"Urdu Poetry Maker",d:"Poetry on a designed background. Nastaliq and Naskh fonts, your own font, animation, PNG/JPG/video.",k:"urdu shayari calligraphy nastaliq",x:2,pop:1},
-{id:"urduquote",cat:"Urdu",n:"Urdu Quote Maker",d:"Square quote cards in Urdu.",k:"urdu quote calligraphy",x:2},
-{id:"urdustatus",cat:"Urdu",n:"Urdu Status Maker",d:"Vertical status for WhatsApp, Instagram and TikTok.",k:"urdu status story whatsapp",x:2},
-{id:"urduposter",cat:"Urdu",n:"Urdu Poster Maker",d:"Urdu posters and event flyers.",k:"urdu poster flyer",x:2},
-{id:"urduthumb",cat:"Urdu",n:"Urdu Thumbnail Maker",d:"YouTube thumbnails with Urdu text.",k:"urdu thumbnail youtube",x:2},
-{id:"design",cat:"Design",n:"Design Studio",d:"Poster, flyer, business card, invitation, social posts, banners. Text, shapes, images, layers, fonts.",k:"poster flyer business card invitation instagram story youtube thumbnail banner facebook linkedin tiktok whatsapp social media",x:2,pop:1}
+{id:"urdupoetry",cat:"Urdu",n:"Urdu Poetry Maker",d:"Editable Urdu poetry cards with RTL text, Nastaliq fonts, images, backgrounds and PNG/JPG export.",k:"urdu shayari calligraphy nastaliq",x:3,pop:1},
+{id:"urduquote",cat:"Urdu",n:"Urdu Quote Maker",d:"Editable square Urdu quote cards with real canvas text and export.",k:"urdu quote calligraphy",x:3},
+{id:"urdustatus",cat:"Urdu",n:"Urdu Status Maker",d:"Editable vertical WhatsApp, Instagram and TikTok status designs.",k:"urdu status story whatsapp",x:3},
+{id:"urduposter",cat:"Urdu",n:"Urdu Poster Maker",d:"Editable Urdu posters and event flyers with real export.",k:"urdu poster flyer",x:3},
+{id:"urduthumb",cat:"Urdu",n:"Urdu Thumbnail Maker",d:"Editable YouTube thumbnails with Urdu text, images and shapes.",k:"urdu thumbnail youtube",x:3},
+{id:"urdutext",cat:"Urdu",n:"Urdu Text Designer",d:"Design, move, resize, rotate and style Urdu + English text.",k:"urdu text designer rtl",x:3},
+{id:"urduanim",cat:"Urdu",n:"Urdu Text Animation",d:"Create editable Urdu text designs prepared for animation/video workflows.",k:"urdu animation text",x:3},
+{id:"urduname",cat:"Urdu",n:"Urdu Name Designer",d:"Create styled Urdu and English name designs with real canvas objects.",k:"urdu name design",x:3},
+{id:"design",cat:"Design",n:"Design Studio",d:"Real browser canvas editor for posters, flyers, cards, templates and social media designs.",k:"poster flyer business card invitation instagram story youtube thumbnail banner facebook linkedin tiktok whatsapp social media",x:3,pop:1},
+{id:"poster",cat:"Design",n:"Poster Maker",d:"Create an editable poster and export PNG/JPG.",x:3},
+{id:"flyer",cat:"Design",n:"Flyer Maker",d:"Create an editable flyer and export PNG/JPG.",x:3},
+{id:"businesscard",cat:"Design",n:"Business Card Maker",d:"Create a real editable business card at print-ready dimensions.",x:3},
+{id:"invitation",cat:"Design",n:"Invitation Maker",d:"Create editable invitation designs with text, images and shapes.",x:3},
+{id:"eventposter",cat:"Design",n:"Event Poster",d:"Create an editable event poster.",x:3},
+{id:"productad",cat:"Design",n:"Product Advertisement",d:"Create editable product advertisements with image, text and shapes.",x:3},
+{id:"quotecard",cat:"Design",n:"Quote Card",d:"Create editable quote cards.",x:3},
+{id:"poetrycard",cat:"Design",n:"Poetry Card",d:"Create editable poetry cards with Urdu RTL support.",x:3},
+{id:"instapost",cat:"Social Media",n:"Instagram Post",d:"1080×1080 editable Instagram post.",x:3},
+{id:"instastory",cat:"Social Media",n:"Instagram Story",d:"1080×1920 editable Instagram Story.",x:3},
+{id:"reelcover",cat:"Social Media",n:"Instagram Reel Cover",d:"1080×1920 editable Reel cover.",x:3},
+{id:"carousel",cat:"Social Media",n:"Instagram Carousel",d:"1080×1080 editable carousel canvas.",x:3},
+{id:"whatsappstatus",cat:"Social Media",n:"WhatsApp Status",d:"1080×1920 editable WhatsApp Status.",x:3},
+{id:"fbpost",cat:"Social Media",n:"Facebook Post",d:"1200×630 editable Facebook post.",x:3},
+{id:"fbstory",cat:"Social Media",n:"Facebook Story",d:"1080×1920 editable Facebook Story.",x:3},
+{id:"fbcover",cat:"Social Media",n:"Facebook Cover",d:"1640×856 editable Facebook Cover.",x:3},
+{id:"ytthumb",cat:"Social Media",n:"YouTube Thumbnail",d:"1280×720 editable YouTube thumbnail.",x:3},
+{id:"ytbanner",cat:"Social Media",n:"YouTube Channel Banner",d:"2560×1440 editable YouTube channel banner.",x:3},
+{id:"ytshorts",cat:"Social Media",n:"YouTube Shorts Cover",d:"1080×1920 editable Shorts cover.",x:3},
+{id:"tiktokcover",cat:"Social Media",n:"TikTok Cover",d:"1080×1920 editable TikTok cover.",x:3},
+{id:"linkedinpost",cat:"Social Media",n:"LinkedIn Post",d:"1200×627 editable LinkedIn post.",x:3},
+{id:"linkedinbanner",cat:"Social Media",n:"LinkedIn Banner",d:"1584×396 editable LinkedIn banner.",x:3}
 ];
-const CATS=['Text','Utilities','Developer','Image','PDF','QR','Audio','Design','Video','Urdu'],SOON=['AI'];
+const CATS=['Text','Utilities','Developer','Image','PDF','QR','Audio','Design','Social Media','Video','Urdu'],SOON=['AI'];
 const _L={},loadJS=u=>_L[u]||(_L[u]=new Promise((r,j)=>{const s=document.createElement('script');s.src=u;s.onload=r;s.onerror=()=>{delete _L[u];j()};document.head.appendChild(s)}));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>'&#'+c.charCodeAt(0)+';');
 function card(t){return`<div class="card"><a href="${t.href||'#'+t.id}" data-o="${t.id}"><b>${t.n}</b><span>${t.d}</span><i>${t.cat}</i></a><button class="fv" data-f="${t.id}" aria-label="Favorite ${t.n}">${fav.includes(t.id)?'♥':'♡'}</button></div>`}
@@ -102,7 +129,7 @@ function open(t){if(clean){clean();clean=null}document.title=t.n+' — Navaar St
  const F=t.f||[],ch={s:'text',n:'number',d:'date',c:'color'};
  $('#app').innerHTML=`<p><a href="#" class="mu">← All tools</a></p><h1 style="margin-top:6px">${t.n}</h1><p class="mu">${t.d}</p><div id="fm">${F.map((f,i)=>`<label>${f[1]}${f[0]=='t'?`<textarea data-i="${i}" dir="auto"></textarea>`:f[0]=='sel'?`<select data-i="${i}">${f[2].map(o=>`<option>${esc(o)}</option>`).join('')}</select>`:`<input data-i="${i}" type="${ch[f[0]]}" value="${esc(f[2]??'')}">`}</label>`).join('')}</div><div id="cu"></div>
  ${t.run?`<div class="row"><button class="b pri" id="go">${t.gen?'Generate':'Run'}</button><button class="b" id="cp">Copy</button><button class="b" id="dl">Download .txt</button><button class="b" id="rs">Reset</button></div><pre id="out" aria-live="polite"></pre><div id="st"></div>`:''}<p class="note">🔒 This tool runs entirely in your browser. Nothing is uploaded.</p>`;
- if(t.x){$('#cu').innerHTML='<p class="mu">Loading tool…</p>';loadJS('tools-files.js').then(()=>t.x==2?loadJS('tools-studio.js'):0).then(()=>NVX[t.id]($('#cu'))).catch(()=>{$('#cu').innerHTML='<p class="mu">Could not load this tool. Please check your internet connection and try again.</p>'});clean=null;return}
+ if(t.x){$('#cu').innerHTML='<p class="mu">Loading tool…</p>';loadJS('tools-files.js').then(()=>t.x==3?loadJS('design-studio.js'):t.x==2?loadJS('tools-studio.js'):0).then(()=>t.x==3?NAVAAR_DESIGN.mount($('#cu'),{preset:({design:'InstagramPost',poster:'Poster',flyer:'Flyer',businesscard:'BusinessCard',invitation:'Invitation',eventposter:'EventPoster',productad:'ProductAdvertisement',quotecard:'QuoteCard',poetrycard:'PoetryCard',instapost:'InstagramPost',instastory:'InstagramStory',reelcover:'InstagramReelCover',carousel:'InstagramCarousel',whatsappstatus:'WhatsAppStatus',fbpost:'FacebookPost',fbstory:'FacebookStory',fbcover:'FacebookCover',ytthumb:'YouTubeThumbnail',ytbanner:'YouTubeChannelBanner',ytshorts:'YouTubeShortsCover',tiktokcover:'TikTokCover',linkedinpost:'LinkedInPost',linkedinbanner:'LinkedInBanner',urdupoetry:'UrduPoetry',urduquote:'UrduQuote',urdustatus:'UrduStatus',urduposter:'UrduPoster',urduthumb:'UrduThumbnail',urdutext:'UrduTextDesigner',urduanim:'UrduTextAnimation',urduname:'UrduNameDesigner'})[t.id]||'InstagramPost',urdu:t.cat==='Urdu'}):NVX[t.id]($('#cu'))).catch(()=>{$('#cu').innerHTML='<p class="mu">Could not load this tool. Please check your internet connection and try again.</p>'});clean=null;return}
  if(t.cu){t.cu($('#cu'));return}
  const go=async()=>{const v=[...document.querySelectorAll('[data-i]')].map(e=>e.value);let r;try{r=await t.run(v)}catch(e){r='Something went wrong. Please check your input and try again.'}$('#out').textContent=r||'Result will appear here.'};
  const st=m=>{$('#st').textContent=m;setTimeout(()=>$('#st').textContent='',2200)},txt=()=>{const o=$('#out').textContent;return o=='Result will appear here.'?'':o};
