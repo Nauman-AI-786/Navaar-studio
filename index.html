@@ -329,6 +329,7 @@
         <li><a href="#studio">Studio</a></li>
         <li><a href="#templates">Templates</a></li>
         <li><a href="#pricing">Plans</a></li>
+        <li><a href="#feedback">Feedback</a></li>
       </ul></nav>
       <div class="auth-box" id="authBox">
         <button class="btn btn-outline btn-small" id="authToggleBtn" type="button">Sign in</button>
@@ -686,45 +687,6 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
 
 
 
-<section id="feedback" style="background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div class="wrap">
-    <div class="section-head-row">
-      <div><div class="eyebrow">Your voice matters</div><h2>Send feedback about Navaar Studio.</h2><p style="text-align:left;margin-top:10px;">Tell us what worked, what needs improvement, or what feature you want next. Your feedback is submitted securely to the studio database.</p></div>
-      <button class="btn btn-outline" id="feedbackFocusBtn" type="button">Write feedback</button>
-    </div>
-    <div class="feedback-shell">
-      <div class="feedback-card" id="feedbackFormCard">
-        <form id="feedbackForm">
-          <div class="feedback-grid">
-            <div class="feedback-field"><label for="feedbackName">Your name</label><input id="feedbackName" name="name" maxlength="80" placeholder="Your name" autocomplete="name"></div>
-            <div class="feedback-field"><label for="feedbackEmail">Email <span class="muted">(optional)</span></label><input id="feedbackEmail" name="email" type="email" maxlength="160" placeholder="you@example.com" autocomplete="email"></div>
-          </div>
-          <div class="feedback-grid">
-            <div class="feedback-field"><label for="feedbackCategory">Feedback type</label><select id="feedbackCategory" name="category"><option value="general">General feedback</option><option value="design">Design / layout</option><option value="templates">Templates</option><option value="video">Photo / video maker</option><option value="account">Login / account</option><option value="bug">Bug / problem</option><option value="feature">Feature request</option></select></div>
-            <div class="feedback-field"><label>Overall experience</label><div class="rating-row" aria-label="Rating"><input id="r5" name="rating" type="radio" value="5"><label for="r5">★</label><input id="r4" name="rating" type="radio" value="4"><label for="r4">★</label><input id="r3" name="rating" type="radio" value="3"><label for="r3">★</label><input id="r2" name="rating" type="radio" value="2"><label for="r2">★</label><input id="r1" name="rating" type="radio" value="1"><label for="r1">★</label></div></div>
-          </div>
-          <div class="feedback-field"><label for="feedbackMessage">Detailed feedback</label><textarea id="feedbackMessage" name="message" maxlength="2000" placeholder="Tell us what you liked, what was difficult, what should be changed, or which feature you want next..."></textarea></div>
-          <div class="hp-field" aria-hidden="true"><label>Website</label><input id="feedbackWebsite" tabindex="-1" autocomplete="off"></div>
-          <label style="display:flex;gap:9px;align-items:flex-start;font-weight:500;font-size:12px;"><input id="feedbackConsent" type="checkbox" style="margin-top:2px;accent-color:var(--accent);"> I agree that my feedback may be stored so the Navaar Studio team can review it.</label>
-          <button class="btn btn-primary" id="feedbackSubmit" type="submit" style="margin-top:16px;">Submit feedback</button>
-          <div class="feedback-status" id="feedbackStatus" role="status"></div>
-        </form>
-      </div>
-      <div class="feedback-card">
-        <div class="eyebrow">What you can tell us</div><h3 style="font-size:22px;margin-bottom:8px;">Make the next version better.</h3><p style="font-size:13.5px;">You can send praise, a problem report, a design suggestion, or a detailed feature request. No account is required to send feedback.</p>
-        <div class="feedback-points">
-          <div class="feedback-point"><div class="feature-icon" style="margin:0;">★</div><div><b>Rate your experience</b><span>Choose 1–5 stars so the team can understand your overall experience.</span></div></div>
-          <div class="feedback-point"><div class="feature-icon" style="margin:0;">✦</div><div><b>Request a feature</b><span>Tell us about templates, layouts, video tools or account features you want next.</span></div></div>
-          <div class="feedback-point"><div class="feature-icon" style="margin:0;">✓</div><div><b>Report a problem</b><span>Include the exact step that caused the issue so it can be investigated.</span></div></div>
-          <div class="feedback-point"><div class="feature-icon" style="margin:0;">↗</div><div><b>Optional contact</b><span>Add your email only if you want the team to be able to follow up.</span></div></div>
-        </div>
-      </div>
-    </div>
-    <div class="eyebrow" style="margin-top:44px;">What people are saying</div>
-    <div class="fb-list" id="feedbackList"><p class="muted" id="feedbackListEmpty">Loading feedback…</p></div>
-  </div>
-</section>
-
 <section id="pricing">
   <div class="wrap">
     <div class="section-head-row">
@@ -765,6 +727,45 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
   </div>
 </section>
 
+<section id="feedback" style="background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="section-head-row">
+      <div><div class="eyebrow">Your voice matters</div><h2>Send feedback about Navaar Studio.</h2><p style="text-align:left;margin-top:10px;">Tell us what worked, what needs improvement, or what feature you want next. Your feedback is submitted securely to the studio database.</p></div>
+      <button class="btn btn-outline" id="feedbackFocusBtn" type="button">Write feedback</button>
+    </div>
+    <div class="feedback-shell">
+      <div class="feedback-card" id="feedbackFormCard">
+        <form id="feedbackForm">
+          <div class="feedback-grid">
+            <div class="feedback-field"><label for="feedbackName">Your name</label><input id="feedbackName" name="name" maxlength="80" placeholder="Your name" autocomplete="name"></div>
+            <div class="feedback-field"><label for="feedbackEmail">Email <span class="muted">(optional)</span></label><input id="feedbackEmail" name="email" type="email" maxlength="160" placeholder="you@example.com" autocomplete="email"></div>
+          </div>
+          <div class="feedback-grid">
+            <div class="feedback-field"><label for="feedbackCategory">Feedback type</label><select id="feedbackCategory" name="category"><option value="general">General feedback</option><option value="design">Design / layout</option><option value="templates">Templates</option><option value="video">Photo / video maker</option><option value="account">Login / account</option><option value="bug">Bug / problem</option><option value="feature">Feature request</option></select></div>
+            <div class="feedback-field"><label>Overall experience</label><div class="rating-row" aria-label="Rating"><input id="r5" name="rating" type="radio" value="5"><label for="r5">★</label><input id="r4" name="rating" type="radio" value="4"><label for="r4">★</label><input id="r3" name="rating" type="radio" value="3"><label for="r3">★</label><input id="r2" name="rating" type="radio" value="2"><label for="r2">★</label><input id="r1" name="rating" type="radio" value="1"><label for="r1">★</label></div></div>
+          </div>
+          <div class="feedback-field"><label for="feedbackMessage">Detailed feedback</label><textarea id="feedbackMessage" name="message" maxlength="2000" placeholder="Tell us what you liked, what was difficult, what should be changed, or which feature you want next..."></textarea></div>
+          <div class="hp-field" aria-hidden="true"><label>Website</label><input id="feedbackWebsite" tabindex="-1" autocomplete="off"></div>
+          <label style="display:flex;gap:9px;align-items:flex-start;font-weight:500;font-size:12px;"><input id="feedbackConsent" type="checkbox" style="margin-top:2px;accent-color:var(--accent);"> I agree that my feedback may be stored so the Navaar Studio team can review it.</label>
+          <button class="btn btn-primary" id="feedbackSubmit" type="submit" style="margin-top:16px;">Submit feedback</button>
+          <div class="feedback-status" id="feedbackStatus" role="status"></div>
+        </form>
+      </div>
+      <div class="feedback-card">
+        <div class="eyebrow">What you can tell us</div><h3 style="font-size:22px;margin-bottom:8px;">Make the next version better.</h3><p style="font-size:13.5px;">You can send praise, a problem report, a design suggestion, or a detailed feature request. No account is required to send feedback.</p>
+        <div class="feedback-points">
+          <div class="feedback-point"><div class="feature-icon" style="margin:0;">★</div><div><b>Rate your experience</b><span>Choose 1–5 stars so the team can understand your overall experience.</span></div></div>
+          <div class="feedback-point"><div class="feature-icon" style="margin:0;">✦</div><div><b>Request a feature</b><span>Tell us about templates, layouts, video tools or account features you want next.</span></div></div>
+          <div class="feedback-point"><div class="feature-icon" style="margin:0;">✓</div><div><b>Report a problem</b><span>Include the exact step that caused the issue so it can be investigated.</span></div></div>
+          <div class="feedback-point"><div class="feature-icon" style="margin:0;">↗</div><div><b>Optional contact</b><span>Add your email only if you want the team to be able to follow up.</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="eyebrow" style="margin-top:44px;">What people are saying</div>
+    <div class="fb-list" id="feedbackList"><p class="muted" id="feedbackListEmpty">Loading feedback…</p></div>
+  </div>
+</section>
+
 
 
 
@@ -772,7 +773,7 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
 <footer>
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Navaar Studio home"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#nvLogo"/></svg><span class="logo-text">Navaar<span>Studio</span></span></a>
-    <nav><ul><li><a href="editor.html">Editor</a></li><li><a href="#studio">Studio</a></li><li><a href="#templates">Templates</a></li><li><a href="#feedback">Feedback</a></li><li><a href="#pricing">Plans</a></li><li><a href="privacy.html">Privacy</a></li></ul></nav>
+    <nav><ul><li><a href="editor.html">Editor</a></li><li><a href="#studio">Studio</a></li><li><a href="#templates">Templates</a></li><li><a href="#pricing">Plans</a></li><li><a href="#feedback">Feedback</a></li><li><a href="privacy.html">Privacy</a></li></ul></nav>
     <div class="copy">2026 Navaar Studio</div>
   </div>
 </footer>
@@ -1651,6 +1652,58 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
 document.querySelectorAll('.tp-arrows button').forEach(function(b){b.addEventListener('click',function(){g.scrollBy({left:(+b.dataset.d)*g.clientWidth*.8,behavior:'smooth'})})});
 document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x===c)});var k=c.dataset.f;g.querySelectorAll('.dir-card').forEach(function(d){d.style.display=(k==='all'||d.dataset.cat===k)?'':'none'});g.scrollTo({left:0})})});
 })();
+</script>
+
+<style>
+#nvMenuBtn{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:80;width:42px;height:48px;border:1px solid var(--border-strong,#2a353c);border-left:0;border-radius:0 14px 14px 0;background:var(--card,#151d22);color:var(--accent,#6fd3b5);font-size:24px;cursor:pointer}
+#nvSide{position:fixed;top:0;left:0;bottom:0;width:min(320px,86vw);z-index:120;background:var(--bg-alt,#11191d);border-right:1px solid var(--border,#2a353c);padding:20px 16px;overflow:auto;transform:translateX(-105%);transition:transform .25s}
+#nvSide.on{transform:none}#nvSide h3{margin:0 0 4px;font-size:18px}#nvSide small{color:var(--muted,#8fa1a6);display:block;margin:14px 0 6px;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
+#nvSide a,#nvSide button.nvl{display:block;width:100%;text-align:left;padding:10px 12px;margin-bottom:4px;border-radius:10px;color:var(--text,#e9f0ee);text-decoration:none;background:rgba(255,255,255,.035);border:0;font:inherit;font-size:14px;cursor:pointer}
+#nvSide a:hover{background:var(--accent-soft,rgba(111,211,181,.15))}#nvSide a span{display:block;font-size:11.5px;color:var(--muted,#8fa1a6)}
+#nvShade{position:fixed;inset:0;background:#0009;z-index:110;display:none}#nvShade.on{display:block}
+#nvIntro{position:fixed;inset:0;z-index:200;background:var(--bg,#0e1417);display:none;overflow:auto;padding:24px 16px}#nvIntro.on{display:block}
+#nvIntro .box{max-width:760px;margin:0 auto}#nvIntro h1{font-size:clamp(28px,7vw,44px);margin:8px 0 12px}#nvIntro p{color:var(--muted,#8fa1a6);line-height:1.7}
+#nvIntro .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:18px 0}
+#nvIntro .grid div{border:1px solid var(--border,#2a353c);border-radius:12px;padding:12px;background:var(--card,#151d22);font-size:13px}#nvIntro .grid b{display:block;color:var(--accent,#6fd3b5);margin-bottom:3px}
+</style>
+<button id="nvMenuBtn" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+<div id="nvShade"></div>
+<aside id="nvSide" aria-label="Website menu">
+<h3>Navaar Studio</h3><span style="color:var(--muted,#8fa1a6);font-size:12.5px">Urdu-first video creation</span>
+<small>Tools</small>
+<a href="editor.html">Full Video Editor<span>Timeline, trim, split, layers, filters, voiceover</span></a>
+<a href="#studio">Quick Poetry Video<span>One line to a shareable 9:16 video</span></a>
+<a href="#photoVideo">Photo + Lyrics Video<span>Photos, lyrics and your audio</span></a>
+<a href="#templates">Templates<span>Poetry, quotes, promos, announcements</span></a>
+<small>Site</small>
+<a href="#pricing">Plans &amp; Payment</a><a href="#feedback">Feedback</a><a href="privacy.html">Privacy Policy</a>
+<button class="nvl" id="nvAbout" type="button">&#9432; About this website</button>
+</aside>
+<div id="nvIntro" role="dialog" aria-modal="true" aria-label="Welcome"><div class="box">
+<div class="eyebrow">Welcome to Navaar Studio</div>
+<h1>Give your Urdu words a cinematic life.</h1>
+<p>Navaar Studio is a free online video maker built for Urdu and English poetry, quotes, lyrics, reels, shorts and promos. Everything runs in your browser. No install, no design skills needed.</p>
+<div class="grid">
+<div><b>Video Editor</b>Timeline, trim, split, text, shapes, stickers, drawing, filters, animations, speed, volume, voiceover and captions.</div>
+<div><b>Quick Poetry Video</b>Type one line, pick mood, font, background and sound, then export.</div>
+<div><b>Photo + Lyrics Video</b>Upload photos, write lyrics, add your audio and generate a lyric video.</div>
+<div><b>Templates</b>Ready poetry, quote, romantic, announcement and promo designs.</div>
+<div><b>Download</b>Save as .webm, .mp4, PNG frame or project file.</div>
+<div><b>Accounts &amp; Plans</b>Sign in to sync projects. Free plan to start, paid plans for more.</div>
+</div>
+<p>You can use it for: poetry and shayari videos, Instagram/TikTok/YouTube shorts, WhatsApp status, lyric videos, announcements, and business promos.</p>
+<button class="btn btn-primary" id="nvStart" type="button">Start creating</button>
+<button class="btn btn-outline" id="nvTour" type="button" style="margin-left:8px">Open menu</button>
+</div></div>
+<script>
+(function(){var $=function(i){return document.getElementById(i)},S=$('nvSide'),Sh=$('nvShade'),B=$('nvMenuBtn'),I=$('nvIntro');
+function menu(o){S.classList.toggle('on',o);Sh.classList.toggle('on',o);B.setAttribute('aria-expanded',o)}
+function intro(o){I.classList.toggle('on',o);document.body.style.overflow=o?'hidden':'';if(!o)try{sessionStorage.setItem('nvIntro','1')}catch(e){}}
+B.onclick=function(){menu(!S.classList.contains('on'))};Sh.onclick=function(){menu(false)};
+S.onclick=function(e){if(e.target.closest('a'))menu(false)};
+$('nvAbout').onclick=function(){menu(false);intro(true)};$('nvStart').onclick=function(){intro(false)};$('nvTour').onclick=function(){intro(false);menu(true)};
+document.addEventListener('keydown',function(e){if(e.key=='Escape'){menu(false);intro(false)}});
+var seen=false;try{seen=sessionStorage.getItem('nvIntro')}catch(e){}if(!seen)intro(true);})();
 </script>
 </body>
 </html>
