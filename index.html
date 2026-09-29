@@ -27,32 +27,25 @@
 
 <style>
   :root{
-    --bg: #0c1214;
-    --bg-alt: #0f181b;
-    --card: #141f22;
-    --border: rgba(121,217,189,0.13);
-    --border-strong: rgba(210,235,228,0.20);
-    --text: #f3f7f5;
-    --muted: #93a8a2;
-    --muted-2: #c3d2ce;
-    --accent: #79d9bd;
-    --accent-2: #d8b674;
-    --accent-soft: rgba(121,217,189,0.13);
-    --radius: 14px;
-    --maxw: 1180px;
+    --bg:#0c1214; --bg-alt:#0f181b; --card:#141f22;
+    --border:rgba(121,217,189,0.13); --border-strong:rgba(210,235,228,0.20);
+    --text:#f3f7f5; --muted:#93a8a2; --muted-2:#c3d2ce;
+    --accent:#79d9bd; --accent-2:#d8b674; --accent-soft:rgba(121,217,189,0.13);
+    --radius:14px; --maxw:1180px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    background: var(--bg); color: var(--text);
-    font-family: 'Inter','Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-    font-size:16px; line-height:1.65; text-rendering:optimizeLegibility; -webkit-font-smoothing: antialiased;
+    background:radial-gradient(1100px 520px at 78% -8%,rgba(121,217,189,.13),transparent 60%),radial-gradient(800px 420px at 4% 6%,rgba(216,182,116,.08),transparent 60%),var(--bg);
+    color:var(--text);
+    font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+    font-size:16px; line-height:1.65; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased;
   }
   a{color:inherit; text-decoration:none;}
   ul{list-style:none;}
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
-  .eyebrow{font-size:12px; letter-spacing:0.14em; color: var(--accent); font-weight:600; text-transform:uppercase; margin-bottom:14px;}
-  h1,h2,h3{font-family:'Plus Jakarta Sans','Inter','Segoe UI',Arial,sans-serif; font-weight:700; letter-spacing:-0.015em; color:var(--text);}
+  .eyebrow{font-size:12px; letter-spacing:.08em; color:var(--accent); font-weight:600; text-transform:uppercase; margin-bottom:14px;}
+  h1,h2,h3{font-family:'Plus Jakarta Sans','Inter','Segoe UI',Arial,sans-serif; font-weight:700; letter-spacing:-0.025em; color:var(--text);}
   h1{font-size:44px; line-height:1.12;}
   h2{font-size:32px; line-height:1.2;}
   h3{font-size:18px;}
@@ -60,90 +53,72 @@
   .muted{color:var(--muted);}
   button{font-family:inherit; border:none;}
 
-  .btn{display:inline-flex; align-items:center; justify-content:center; padding:12px 22px; border-radius:9px; font-size:14.5px; font-weight:600; cursor:pointer; border:1px solid transparent; transition: transform .15s ease, opacity .15s ease;}
-  .btn:hover{transform: translateY(-1px);}
+  .btn{display:inline-flex; align-items:center; justify-content:center; padding:12px 22px; border-radius:999px; font-size:14.5px; font-weight:600; cursor:pointer; border:1px solid transparent; transition:transform .15s ease, opacity .15s ease, box-shadow .15s ease;}
+  .btn:hover{transform:translateY(-1px);}
   .btn:disabled{opacity:.5; cursor:not-allowed; transform:none;}
-  .btn-primary{background: linear-gradient(135deg, var(--accent), #a8ecd6); color:#08201a;}
-  .btn-outline{background: transparent; border:1px solid var(--border-strong); color: var(--text);}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),#a8ecd6); color:#08201a; box-shadow:0 8px 26px -8px rgba(121,217,189,.55);}
+  .btn-primary:hover{box-shadow:0 12px 30px -8px rgba(121,217,189,.7);}
+  .btn-outline{background:rgba(255,255,255,.03); border:1px solid var(--border-strong); color:var(--text);}
+  .btn-outline:hover{border-color:var(--accent);}
   .btn-small{padding:9px 16px; font-size:13.5px;}
-  .btn-danger{background:transparent; border:1px solid rgba(255,120,120,.4); color:#ff9a9a; padding:6px 12px; font-size:12.5px; border-radius:7px;}
+  .btn-danger{background:transparent; border:1px solid rgba(255,120,120,.4); color:#ff9a9a; padding:6px 12px; font-size:12.5px; border-radius:7px; cursor:pointer;}
 
-  header{position:sticky; top:0; z-index:50; background: rgba(12,18,20,0.90); backdrop-filter: blur(10px); border-bottom:1px solid var(--border);}
-  header .wrap{display:flex; align-items:center; justify-content:space-between; height:72px;}
+  /* Header: logo + menu button only */
+  header{position:sticky; top:0; z-index:50; background:rgba(12,18,20,.72); backdrop-filter:blur(16px) saturate(1.3); border-bottom:1px solid var(--border);}
+  header .wrap{display:flex; align-items:center; justify-content:space-between; height:68px;}
   .logo{display:flex; align-items:center; gap:11px; font-family:'Plus Jakarta Sans','Inter',sans-serif; font-weight:800; font-size:18px; letter-spacing:.01em; color:var(--text);}
   .logo svg{width:36px; height:36px; flex:none; filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));}
   .logo-text span{font-weight:500; color:var(--accent); margin-left:3px;}
-  nav ul{display:flex; gap:34px; font-size:14.5px; color: var(--muted-2);}
-  nav a:hover{color:var(--text);}
-  .nav-links{display:flex; align-items:center; gap:34px;}
-  .auth-box{position:relative;}
+  #nvMenuBtn{width:42px; height:42px; border:1px solid var(--border-strong); border-radius:50%; background:var(--card); color:var(--accent); font-size:20px; line-height:1; padding:0; cursor:pointer;}
+  #nvMenuBtn:hover{border-color:var(--accent);}
+  #authToggleBtn{display:none;}
   .auth-panel{
-    display:none; position:absolute; top:44px; right:0; width:250px;
-    background: var(--card); border:1px solid var(--border-strong); border-radius:12px;
-    padding:16px; box-shadow:0 20px 40px -10px rgba(0,0,0,0.5); z-index:60;
-  }
-  .account-menu{display:none;position:absolute;top:44px;right:0;min-width:190px;background:var(--card);border:1px solid var(--border-strong);border-radius:12px;padding:8px;box-shadow:0 20px 40px -10px rgba(0,0,0,.5);z-index:60;}
-  .account-menu.open{display:block;}
-  .account-menu button,.account-menu a{display:block;width:100%;text-align:left;background:transparent;color:var(--text);padding:10px 12px;border-radius:8px;font-size:13.5px;cursor:pointer;}
-  .account-menu button:hover,.account-menu a:hover{background:rgba(255,255,255,.06);}
-  .account-menu .danger{color:#ff9a9a;}
-  @media (max-width:700px){
-    #templateGrid{display:flex !important;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:10px;-webkit-overflow-scrolling:touch;}
-    #templateGrid .dir-card{flex:0 0 78%;scroll-snap-align:start;}
-    #templateGrid .dir-thumb{height:150px;font-size:16px;}
-    .nav-links nav{display:none;}
-    .auth-panel{width:min(250px,calc(100vw - 32px));}
-  }
-  header .btn{white-space:nowrap;}
-  @media (max-width:700px){
-    header .wrap{height:64px;padding:0 16px;}
-    .nav-links{gap:10px;}
-    header .btn-primary{display:none;}
-    .logo{font-size:16px;gap:9px;}
-    .logo svg{width:32px;height:32px;}
+    display:none; position:fixed; top:76px; right:16px; width:min(300px,calc(100vw - 32px)); max-height:calc(100vh - 96px); overflow:auto;
+    background:var(--card); border:1px solid var(--border-strong); border-radius:12px;
+    padding:16px; box-shadow:0 20px 40px -10px rgba(0,0,0,.5); z-index:60;
   }
   .auth-panel.open{display:block;}
   .auth-panel label{font-size:11.5px; margin-bottom:5px;}
-  .auth-panel input{width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--border-strong); border-radius:8px; color:var(--text); padding:8px 10px; font-size:13px;}
+  .auth-panel input{width:100%; background:rgba(255,255,255,.04); border:1px solid var(--border-strong); border-radius:8px; color:var(--text); padding:8px 10px; font-size:13px;}
+  .auth-close{position:absolute; top:8px; right:10px; background:none; color:var(--muted); font-size:20px; line-height:1; cursor:pointer;}
   .auth-panel-actions{display:flex; gap:8px; margin-top:14px;}
   .auth-status{font-size:12px; color:var(--accent); margin-top:10px; min-height:14px;}
-  .auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:rgba(255,255,255,.04);padding:4px;border-radius:9px;margin-bottom:16px;}
-  .auth-tab{border:0;background:transparent;color:var(--muted);padding:8px 6px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;}
-  .auth-tab.active{background:var(--accent-soft);color:var(--text);}
-  .auth-title{font-size:18px;font-weight:700;margin-bottom:4px;}
-  .auth-subtitle{font-size:11.5px;color:var(--muted);line-height:1.5;margin-bottom:14px;}
-  .oauth-grid{display:grid;gap:8px;}
-  .oauth-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 10px;border:1px solid var(--border-strong);border-radius:8px;background:rgba(255,255,255,.035);color:var(--text);cursor:pointer;font-size:12.5px;font-weight:600;}
+  .auth-tabs{display:grid; grid-template-columns:1fr 1fr; gap:4px; background:rgba(255,255,255,.04); padding:4px; border-radius:9px; margin:14px 0 16px;}
+  .auth-tab{border:0; background:transparent; color:var(--muted); padding:8px 6px; border-radius:7px; font-size:12px; font-weight:600; cursor:pointer;}
+  .auth-tab.active{background:var(--accent-soft); color:var(--text);}
+  .auth-title{font-size:18px; font-weight:700; margin-bottom:4px;}
+  .auth-subtitle{font-size:11.5px; color:var(--muted); line-height:1.5; margin-bottom:14px;}
+  .oauth-grid{display:grid; gap:8px;}
+  .oauth-btn{width:100%; display:flex; align-items:center; justify-content:center; gap:8px; padding:9px 10px; border:1px solid var(--border-strong); border-radius:8px; background:rgba(255,255,255,.035); color:var(--text); cursor:pointer; font-size:12.5px; font-weight:600;}
   .oauth-btn:hover{background:rgba(255,255,255,.07);}
-  .oauth-icon{width:20px;height:20px;border-radius:5px;background:#fff;color:#222;display:inline-flex;align-items:center;justify-content:center;font-weight:800;}
-  #facebookBtn .oauth-icon{background:#1877f2;color:#fff;}
-  .auth-divider{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:10.5px;margin:14px 0;}
-  .auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--border);flex:1;}
-  .forgot-btn{background:none;border:0;color:var(--accent);font-size:11.5px;margin-top:10px;padding:0;cursor:pointer;}
-  .account-email{font-size:11px;color:var(--muted);padding:8px 0;}
-
+  .oauth-icon{width:20px; height:20px; border-radius:5px; background:#fff; color:#222; display:inline-flex; align-items:center; justify-content:center; font-weight:800;}
+  #facebookBtn .oauth-icon{background:#1877f2; color:#fff;}
+  .auth-divider{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:10.5px; margin:14px 0;}
+  .auth-divider:before,.auth-divider:after{content:""; height:1px; background:var(--border); flex:1;}
+  .forgot-btn{background:none; border:0; color:var(--accent); font-size:11.5px; margin-top:10px; padding:0; cursor:pointer;}
 
   .hero{padding:88px 0 64px;}
-  .hero-grid{display:grid; grid-template-columns:1.1fr 0.95fr; gap:56px; align-items:center;}
-  .hero p.lead{font-size:16.5px; max-width:460px; margin:18px 0 26px;}
-  .hero-actions{display:flex; gap:14px; margin-bottom:20px;}
+  .hero-grid{display:grid; grid-template-columns:1.1fr .95fr; gap:56px; align-items:center;}
+  .hero h1{font-size:clamp(36px,5.4vw,60px); line-height:1.06; letter-spacing:-.03em; max-width:15ch;}
+  .hero p.lead{font-size:16.5px; max-width:52ch; margin:18px 0 26px;}
+  .hero-actions{display:flex; gap:14px; margin-bottom:20px; flex-wrap:wrap;}
   .hero-foot{font-size:13.5px; color:var(--muted);}
 
-  .preview-card{background: linear-gradient(160deg, #182427, #0e1719); border:1px solid var(--border-strong); border-radius: 20px; padding:26px; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5); transition: background .4s ease;}
+  .preview-card{background:linear-gradient(160deg,#182427,#0e1719); border:1px solid var(--border-strong); border-radius:26px; padding:26px; box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(121,217,189,.16); transition:background .4s ease;}
   .preview-top{display:flex; justify-content:space-between; align-items:baseline; font-size:12px; letter-spacing:.08em; color:var(--muted); margin-bottom:18px;}
   .preview-top .brand{color:var(--text); font-weight:700; letter-spacing:.05em;}
   .preview-rule{width:38px; height:2px; background:var(--accent); margin-bottom:22px;}
-  .preview-urdu{font-size:32px; text-align:right; direction:rtl; color:var(--text); margin-bottom:18px; font-weight:600; word-wrap:break-word; transition: font-family .3s ease, font-style .3s ease;}
+  .preview-urdu{font-size:32px; text-align:right; direction:rtl; color:var(--text); margin-bottom:18px; font-weight:600; word-wrap:break-word; white-space:pre-line;}
   .preview-caption{color:var(--muted-2); font-size:14px; margin-bottom:30px;}
   .preview-bottom{display:flex; align-items:center; justify-content:space-between;}
-  .play-dot{width:34px; height:34px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--muted-2); background:transparent; cursor:pointer;}
+  .play-dot{width:34px; height:34px; border-radius:50%; border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--muted-2);}
   .preview-bottom .time{font-size:12.5px; color:var(--muted);}
-  .font-classic{font-family: 'Noto Nastaliq Urdu','Jameel Noori Nastaleeq', serif; line-height:2.1;}
-  .font-modern{font-family: 'Inter','Noto Sans Arabic','Segoe UI', Arial, sans-serif; font-weight:600;}
-  .font-serif-en{font-family: Georgia, 'Times New Roman', serif; font-style:italic;}
-  .font-sans-en{font-family: Arial, sans-serif; letter-spacing:.02em;}
+  .font-classic{font-family:'Noto Nastaliq Urdu','Jameel Noori Nastaleeq',serif; line-height:2.1;}
+  .font-modern{font-family:'Inter','Noto Sans Arabic','Segoe UI',Arial,sans-serif; font-weight:600;}
+  .font-serif-en{font-family:Georgia,'Times New Roman',serif; font-style:italic;}
+  .font-sans-en{font-family:Arial,sans-serif; letter-spacing:.02em;}
 
-  .statbar{border-top:1px solid var(--border); border-bottom:1px solid var(--border); background: var(--bg-alt);}
+  .statbar{border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--bg-alt);}
   .statbar .wrap{display:grid; grid-template-columns:repeat(4,1fr); padding:34px 32px; text-align:center;}
   .statbar h4{font-size:15px; font-weight:600; margin-bottom:4px;}
   .statbar span{font-size:13px; color:var(--muted);}
@@ -153,91 +128,84 @@
   .section-head h2{margin-bottom:14px;}
   .section-head-row{display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:44px;}
   .section-head-row p{max-width:280px; font-size:14px; text-align:right;}
-  .center{text-align:center; margin-left:auto; margin-right:auto;}
 
-  .grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
-  .feature-card{background: var(--card); border:1px solid var(--border); border-radius: var(--radius); padding:24px 20px;}
-  .feature-icon{width:36px; height:36px; border-radius:9px; background: var(--accent-soft); color: var(--accent); display:flex; align-items:center; justify-content:center; font-size:15px; margin-bottom:18px;}
-  .feature-card h3{margin-bottom:8px; font-size:15.5px;}
-  .feature-card p{font-size:13.5px;}
+  .feature-icon{width:36px; height:36px; border-radius:9px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:15px; margin-bottom:18px;}
 
-  .studio{background: var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
+  .studio{background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
   .studio-grid{display:grid; grid-template-columns:1fr 1fr; gap:26px; align-items:start;}
-  .panel{background: var(--card); border:1px solid var(--border); border-radius: var(--radius); padding:26px;}
+  .panel{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:26px;}
   label{display:block; font-size:12.5px; color:var(--muted-2); margin-bottom:8px; font-weight:600;}
   .field-row{display:flex; justify-content:space-between; align-items:baseline;}
   .field-row .count{font-size:12px; color:var(--muted);}
-  textarea{width:100%; min-height:100px; background: rgba(255,255,255,0.03); border:1px solid var(--border-strong); border-radius:10px; color:var(--text); padding:14px; font-size:16px; direction:rtl; resize:vertical; margin:8px 0 10px; font-family:inherit;}
+  textarea{width:100%; min-height:100px; background:rgba(255,255,255,.03); border:1px solid var(--border-strong); border-radius:10px; color:var(--text); padding:14px; font-size:16px; direction:rtl; resize:vertical; margin:8px 0 10px; font-family:inherit;}
   .helper{font-size:12.5px; color:var(--muted); margin-bottom:20px;}
   .select-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px;}
-  select{width:100%; background: rgba(255,255,255,0.03); border:1px solid var(--border-strong); border-radius:9px; color:var(--text); padding:10px 12px; font-size:14px;}
+  select{width:100%; background:rgba(255,255,255,.03); border:1px solid var(--border-strong); border-radius:9px; color:var(--text); padding:10px 12px; font-size:14px;}
+  select option{background:#141f22; color:#f3f7f5;}
   .panel-actions{display:flex; gap:12px; flex-wrap:wrap;}
   .status-line{font-size:12.5px; color:var(--accent); margin-top:12px; min-height:16px;}
   .export-video{width:100%; border-radius:10px; margin-top:14px; display:none; background:#000;}
   .download-link{display:none; margin-top:10px; font-size:13px; color:var(--accent); font-weight:600;}
 
-  .saved-panel{margin-top:22px; background: var(--card); border:1px solid var(--border); border-radius: var(--radius); padding:22px 26px;}
+  .saved-panel{margin-top:22px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:22px 26px;}
   .saved-panel-head{display:flex; justify-content:space-between; align-items:flex-start;}
   .saved-panel .count{font-size:12.5px; color:var(--muted);}
   .saved-list{margin-top:16px; display:flex; flex-direction:column; gap:10px;}
-  .saved-item{display:flex; justify-content:space-between; align-items:center; gap:14px; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:9px; padding:10px 14px;}
+  .saved-item{display:flex; justify-content:space-between; align-items:center; gap:14px; background:rgba(255,255,255,.03); border:1px solid var(--border); border-radius:9px; padding:10px 14px;}
   .saved-item .txt{direction:rtl; font-size:14px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   .saved-item .meta{font-size:11.5px; color:var(--muted); white-space:nowrap;}
   .saved-item .row-actions{display:flex; gap:8px; align-items:center;}
   .load-link{font-size:12.5px; color:var(--accent); font-weight:600; cursor:pointer;}
 
-  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  .dir-card{border-radius: var(--radius); overflow:hidden; border:1px solid var(--border); background: var(--card);}
-  .dir-thumb{height:190px; display:flex; align-items:flex-end; padding:18px; font-size:18px; line-height:1.55; font-weight:600; direction:rtl;}
-  /* Feedback */
-  .feedback-shell{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:start;}
-  .feedback-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:28px;}
-  .feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .feedback-field{margin-bottom:14px;}
-  .feedback-field input,.feedback-field select,.feedback-field textarea{width:100%;background:rgba(255,255,255,.035);border:1px solid var(--border-strong);border-radius:10px;color:var(--text);padding:11px 12px;font:inherit;}
-  .feedback-field textarea{min-height:130px;direction:ltr;margin:0;resize:vertical;}
-  .feedback-field input:focus,.feedback-field select:focus,.feedback-field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
-  .rating-row{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:5px;}
-  .rating-row input{display:none;}
-  .rating-row label{font-size:25px;color:#5f7570;cursor:pointer;margin:0;line-height:1;}
-  .rating-row label:hover,.rating-row label:hover~label,.rating-row input:checked~label{color:#ffd166;}
-  .feedback-points{display:grid;gap:12px;margin-top:20px;}
-  .feedback-point{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,.025);}
-  .feedback-point b{display:block;margin-bottom:3px;font-size:13.5px;}
-  .feedback-point span{font-size:12.5px;color:var(--muted);}
-  .feedback-status{min-height:20px;font-size:12.5px;color:var(--accent);margin-top:12px;}
-  .hp-field{position:absolute;left:-9999px;opacity:0;height:0;width:0;pointer-events:none;}
-  .fb-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:28px;}
-  .fb-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;}
-  .fb-item .fb-top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px;font-size:13px;}
-  .fb-item .fb-stars{color:#f5b942;letter-spacing:2px;font-size:14px;}
-  .fb-item .fb-msg{font-size:13.5px;color:var(--muted-2);white-space:pre-wrap;word-break:break-word;}
-  .fb-item .fb-meta{font-size:11.5px;color:var(--muted);margin-top:10px;}
-  @media (max-width:900px){.feedback-shell{grid-template-columns:1fr;}.feedback-grid{grid-template-columns:1fr;}}
+  /* Editor promo */
+  .ed{padding:76px 0 8px;}
+  .ed-box{display:grid; grid-template-columns:1.05fr 1fr; gap:44px; align-items:center; padding:38px; border:1px solid var(--border); border-radius:26px; background:linear-gradient(160deg,rgba(121,217,189,.09),rgba(20,31,34,.6) 55%);}
+  .ed-box h2{margin-bottom:12px;}
+  .ed-tools{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 26px;}
+  .ed-tools span{padding:6px 13px; border:1px solid var(--border-strong); border-radius:999px; font-size:13px; color:var(--muted-2);}
+  .ed-mock{background:#0a1012; border:1px solid var(--border-strong); border-radius:16px; padding:12px; box-shadow:0 30px 60px -30px #000;}
+  .ed-dots{display:flex; gap:6px; margin-bottom:10px;}
+  .ed-dots i{width:9px; height:9px; border-radius:50%; background:#2a3a3d;}
+  .ed-screen{height:150px; border-radius:10px; background:linear-gradient(135deg,#123b3a,#3a2b17); display:flex; align-items:center; justify-content:center; font-family:'Noto Nastaliq Urdu',serif; font-size:28px; color:#f3f7f5;}
+  .ed-track{height:18px; border-radius:5px; margin-top:8px; background:#111c1f; position:relative;}
+  .ed-track b{position:absolute; top:2px; bottom:2px; border-radius:4px;}
 
-  .dir-thumb.t1{background: linear-gradient(135deg,#1d3a38,#0d1719);}
-  .dir-thumb.t2{background: linear-gradient(135deg,#1f3140,#0d171f); direction:ltr; font-size:16px; line-height:1.5; font-weight:500;}
-  .dir-thumb.t3{background: linear-gradient(135deg,#3d3620,#171409); direction:ltr; font-size:16px; line-height:1.5; font-weight:500;}
-  .dir-thumb.t4{background: linear-gradient(135deg,#3b2a3a,#150f16); font-size:20px;}
-  .dir-thumb.t5{background: linear-gradient(135deg,#163a33,#0b1917); font-size:20px;}
-  .dir-thumb.t6{background: linear-gradient(135deg,#22303a,#0e151b); direction:ltr; font-size:16px; line-height:1.5; font-weight:500;}
+  /* Templates */
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  #templateGrid{display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 16px; scrollbar-width:none; -webkit-overflow-scrolling:touch;}
+  #templateGrid::-webkit-scrollbar{display:none;}
+  #templateGrid .dir-card{flex:0 0 clamp(260px,29%,340px); scroll-snap-align:start;}
+  .dir-card{border-radius:18px; overflow:hidden; border:1px solid var(--border); background:var(--card);}
+  .dir-thumb{height:190px; display:flex; align-items:flex-end; padding:18px; font-size:18px; line-height:1.55; font-weight:600;}
+  .dir-thumb.t1{background:linear-gradient(135deg,#1d3a38,#0d1719);}
+  .dir-thumb.t2{background:linear-gradient(135deg,#1f3140,#0d171f); font-size:16px; line-height:1.5; font-weight:500;}
+  .dir-thumb.t3{background:linear-gradient(135deg,#3d3620,#171409); font-size:16px; line-height:1.5; font-weight:500;}
+  .dir-thumb.t4{background:linear-gradient(135deg,#3b2a3a,#150f16); font-size:20px;}
+  .dir-thumb.t5{background:linear-gradient(135deg,#163a33,#0b1917); font-size:20px;}
+  .dir-thumb.t6{background:linear-gradient(135deg,#22303a,#0e151b); font-size:16px; line-height:1.5; font-weight:500;}
+  .dir-thumb.pt{font-family:'Noto Nastaliq Urdu',serif; font-size:19px; line-height:2.1; justify-content:center; align-items:center; text-align:center; white-space:pre-line;}
   .dir-body{padding:18px 20px 22px;}
   .dir-body h3{margin-bottom:6px;}
   .dir-body p{font-size:13px; margin-bottom:14px;}
   .use-link{font-size:13px; color:var(--accent); font-weight:600; cursor:pointer; background:none; padding:0;}
+  .edit-link{display:inline-block; margin-left:10px; font-size:13px; color:var(--accent);}
+  .edit-link:hover{text-decoration:underline;}
+  .tp-bar{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin:6px 0 18px;}
+  .chips{display:flex; gap:8px; flex-wrap:wrap;}
+  .chip{background:transparent; border:1px solid var(--border-strong); color:var(--muted-2); border-radius:999px; padding:8px 15px; font:inherit; font-size:13px; cursor:pointer;}
+  .chip.on{background:var(--accent); border-color:var(--accent); color:#0b1a15; font-weight:700;}
+  .tp-arrows{display:flex; gap:8px;}
+  .tp-arrows button{width:42px; height:42px; border-radius:50%; border:1px solid var(--border-strong); background:rgba(255,255,255,.03); color:var(--text); font-size:22px; cursor:pointer;}
+  .tp-arrows button:hover{border-color:var(--accent);}
 
-  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:40px;}
-  .step-num{font-size:34px; font-weight:700; color:var(--accent-2); margin-bottom:14px;}
-  .step h3{margin-bottom:8px;}
-  .step p{font-size:14px;}
-
+  /* Pricing */
   .pricing-toggle{display:inline-flex; border:1px solid var(--border-strong); border-radius:8px; overflow:hidden; cursor:pointer;}
   .pricing-toggle span{padding:7px 16px; font-size:13px; color:var(--muted);}
   .pricing-toggle span.active{background:var(--accent-2); color:#1b1608; font-weight:600;}
   .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  .price-card{background: var(--card); border:1px solid var(--border); border-radius: var(--radius); padding:28px 26px; position:relative;}
-  .price-card.featured{border-color: var(--accent-2);}
-  .badge{position:absolute; top:-12px; left:26px; background: var(--accent); color:#08201a; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px;}
+  .price-card{background:var(--card); border:1px solid var(--border); border-radius:18px; padding:28px 26px; position:relative;}
+  .price-card.featured{border-color:var(--accent-2);}
+  .badge{position:absolute; top:-12px; left:26px; background:var(--accent); color:#08201a; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px;}
   .price-card h3{margin-bottom:6px;}
   .price-card p{font-size:13px; margin-bottom:20px;}
   .price{font-size:34px; font-weight:700; margin-bottom:6px;}
@@ -246,75 +214,87 @@
   .billed-note{font-size:11.5px; color:var(--muted); margin-bottom:20px; display:block;}
   .pricing-note{text-align:center; font-size:12.5px; color:var(--muted); margin-top:26px;}
 
-  .faq-item{border-bottom:1px solid var(--border);}
-  .faq-q{padding:18px 4px; font-size:15px; font-weight:500; display:flex; align-items:center; gap:10px; cursor:pointer; color: var(--muted-2); user-select:none;}
-  .faq-q:hover{color:var(--text);}
-  .faq-q::before{content:"▸"; color:var(--accent); font-size:12px; transition: transform .2s ease;}
-  .faq-item.open .faq-q::before{transform: rotate(90deg);}
-  .faq-a{max-height:0; overflow:hidden; font-size:14px; color:var(--muted); padding:0 4px; transition: max-height .25s ease, padding .25s ease;}
-  .faq-item.open .faq-a{max-height:200px; padding:0 4px 18px 20px;}
-
-  .cta-band{background: linear-gradient(135deg,#1d3a38,#0f1c1e); border-radius:24px; padding:70px 40px; text-align:center;}
-  .cta-band .eyebrow{justify-content:center; display:flex;}
-  .cta-band h2{margin-bottom:14px;}
-  .cta-band p{max-width:480px; margin:0 auto 28px;}
+  /* Feedback */
+  .feedback-shell{display:grid; grid-template-columns:1.05fr .95fr; gap:24px; align-items:start;}
+  .feedback-card{background:var(--card); border:1px solid var(--border); border-radius:18px; padding:28px;}
+  .feedback-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .feedback-field{margin-bottom:14px;}
+  .feedback-field input,.feedback-field select,.feedback-field textarea{width:100%; background:rgba(255,255,255,.035); border:1px solid var(--border-strong); border-radius:10px; color:var(--text); padding:11px 12px; font:inherit;}
+  .feedback-field textarea{min-height:130px; direction:ltr; margin:0; resize:vertical;}
+  .feedback-field input:focus,.feedback-field select:focus,.feedback-field textarea:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+  .rating-row{display:flex; flex-direction:row-reverse; justify-content:flex-end; gap:5px;}
+  .rating-row input{display:none;}
+  .rating-row label{font-size:25px; color:#5f7570; cursor:pointer; margin:0; line-height:1;}
+  .rating-row label:hover,.rating-row label:hover~label,.rating-row input:checked~label{color:#ffd166;}
+  .feedback-points{display:grid; gap:12px; margin-top:20px;}
+  .feedback-point{display:flex; gap:12px; align-items:flex-start; padding:14px; border:1px solid var(--border); border-radius:12px; background:rgba(255,255,255,.025);}
+  .feedback-point b{display:block; margin-bottom:3px; font-size:13.5px;}
+  .feedback-point span{font-size:12.5px; color:var(--muted);}
+  .feedback-status{min-height:20px; font-size:12.5px; color:var(--accent); margin-top:12px;}
+  .hp-field{position:absolute; left:-9999px; opacity:0; height:0; width:0; pointer-events:none;}
+  .fb-list{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; margin-top:28px;}
+  .fb-item{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px;}
+  .fb-item .fb-top{display:flex; justify-content:space-between; gap:8px; align-items:center; margin-bottom:8px; font-size:13px;}
+  .fb-item .fb-stars{color:#f5b942; letter-spacing:2px; font-size:14px;}
+  .fb-item .fb-msg{font-size:13.5px; color:var(--muted-2); white-space:pre-wrap; word-break:break-word;}
+  .fb-item .fb-meta{font-size:11.5px; color:var(--muted); margin-top:10px;}
 
   footer{border-top:1px solid var(--border); padding:34px 0;}
   footer .wrap{display:flex; justify-content:space-between; align-items:center;}
-  footer nav ul{gap:26px; font-size:13.5px;}
+  footer nav ul{display:flex; gap:26px; font-size:13.5px; color:var(--muted-2);}
+  footer nav a:hover{color:var(--text);}
   footer .copy{font-size:13px; color:var(--muted);}
 
-  @media (max-width: 900px){
+  /* Side menu */
+  #nvSide{position:fixed; top:0; right:0; bottom:0; width:min(320px,86vw); z-index:120; background:var(--bg-alt); border-left:1px solid var(--border); padding:20px 16px; overflow:auto; transform:translateX(105%); transition:transform .25s; display:flex; flex-direction:column;}
+  #nvSide.on{transform:none;}
+  #nvSide h3{margin:0 0 4px; font-size:18px;}
+  #nvSide small{color:var(--muted); display:block; margin:16px 0 6px; text-transform:uppercase; letter-spacing:.08em; font-size:11px;}
+  #nvSide a,#nvSide button.nvl{display:block; width:100%; text-align:left; padding:10px 12px; margin-bottom:4px; border-radius:10px; color:var(--text); background:rgba(255,255,255,.035); border:0; font:inherit; font-size:14px; cursor:pointer;}
+  #nvSide a:hover,#nvSide button.nvl:hover{background:var(--accent-soft);}
+  #nvSide a span{display:block; font-size:11.5px; color:var(--muted);}
+  #nvSide .nvl.out{color:#ff9a9a; border:1px solid rgba(255,120,120,.3); background:transparent; margin-top:auto;}
+  #nvSide .nvspace{flex:1;}
+  #nvShade{position:fixed; inset:0; background:#0009; z-index:110; display:none;}
+  #nvShade.on{display:block;}
+
+  /* Intro */
+  #nvIntro{position:fixed; inset:0; z-index:200; background:var(--bg); display:none; overflow:auto; padding:24px 16px;}
+  #nvIntro.on{display:block;}
+  #nvIntro .box{max-width:760px; margin:0 auto;}
+  #nvIntro h1{font-size:clamp(28px,7vw,44px); margin:8px 0 12px;}
+  #nvIntro p{color:var(--muted); line-height:1.7; margin-bottom:12px;}
+  #nvIntro .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:10px; margin:18px 0;}
+  #nvIntro .grid div{border:1px solid var(--border); border-radius:12px; padding:12px; background:var(--card); font-size:13px; color:var(--muted-2);}
+  #nvIntro .grid b{display:block; color:var(--accent); margin-bottom:3px;}
+
+  @media (max-width:900px){
     h1{font-size:32px;}
-    .hero-grid, .studio-grid{grid-template-columns:1fr;}
-    .grid-4{grid-template-columns:repeat(2,1fr);}
-    .grid-3, .pricing-grid, .steps{grid-template-columns:1fr;}
+    .hero-grid,.studio-grid{grid-template-columns:1fr;}
+    .grid-3,.pricing-grid{grid-template-columns:1fr;}
     .statbar .wrap{grid-template-columns:repeat(2,1fr); gap:24px;}
-    nav ul{display:none;}
     .section-head-row{flex-direction:column; align-items:flex-start;}
     .section-head-row p{text-align:left;}
     footer .wrap{flex-direction:column; gap:16px; text-align:center;}
+    footer nav ul{flex-wrap:wrap; justify-content:center; gap:14px 20px;}
+    .feedback-shell,.feedback-grid{grid-template-columns:1fr;}
   }
-
-  /* ===== Navaar new look ===== */
-  body{background:radial-gradient(1100px 520px at 78% -8%,rgba(121,217,189,.13),transparent 60%),radial-gradient(800px 420px at 4% 6%,rgba(216,182,116,.08),transparent 60%),var(--bg);}
-  header{background:rgba(12,18,20,.72); backdrop-filter:blur(16px) saturate(1.3);}
-  header .wrap{height:68px;}
-  .btn{border-radius:999px;}
-  .btn-primary{box-shadow:0 8px 26px -8px rgba(121,217,189,.55);}
-  .btn-primary:hover{box-shadow:0 12px 30px -8px rgba(121,217,189,.7);}
-  .btn-outline{background:rgba(255,255,255,.03);}
-  .btn-outline:hover{border-color:var(--accent);}
-  .hero h1{font-size:clamp(36px,5.4vw,60px); line-height:1.06; letter-spacing:-.03em; max-width:15ch;}
-  .hero .lead{max-width:52ch;}
-  .preview-card{border-radius:26px; box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(121,217,189,.16);}
-  .eyebrow{letter-spacing:.08em;}
-  h2{letter-spacing:-.025em;}
-  .card,.plan,.tpl,.feature{border-radius:18px;}
-  .ed{padding:76px 0 8px;}
-  .ed-box{display:grid; grid-template-columns:1.05fr 1fr; gap:44px; align-items:center; padding:38px; border:1px solid var(--border); border-radius:26px; background:linear-gradient(160deg,rgba(121,217,189,.09),rgba(20,31,34,.6) 55%);}
-  .ed-box h2{margin-bottom:12px;}
-  .ed-tools{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 26px;}
-  .ed-tools span{padding:6px 13px; border:1px solid var(--border-strong); border-radius:999px; font-size:13px; color:var(--muted-2);}
-  .ed-mock{background:#0a1012; border:1px solid var(--border-strong); border-radius:16px; padding:12px; box-shadow:0 30px 60px -30px #000;}
-  .ed-dots{display:flex; gap:6px; margin-bottom:10px;} .ed-dots i{width:9px;height:9px;border-radius:50%;background:#2a3a3d;}
-  .ed-screen{height:150px; border-radius:10px; background:linear-gradient(135deg,#123b3a,#3a2b17); display:flex; align-items:center; justify-content:center; font-family:'Noto Nastaliq Urdu',serif; font-size:28px; color:#f3f7f5;}
-  .ed-track{height:18px; border-radius:5px; margin-top:8px; background:#111c1f; position:relative;}
-  .ed-track b{position:absolute; top:2px; bottom:2px; border-radius:4px;}
-  @media(max-width:860px){.ed-box{grid-template-columns:1fr; padding:24px; gap:26px;}}
-
-  #templateGrid{display:flex!important;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  #templateGrid::-webkit-scrollbar{display:none}
-  #templateGrid .dir-card{flex:0 0 clamp(260px,29%,340px);scroll-snap-align:start}
-  @media(max-width:860px){#templateGrid .dir-card{flex:0 0 78%}}
-  .dir-thumb.pt{font-family:'Noto Nastaliq Urdu',serif;font-size:19px;line-height:2.1;justify-content:center;align-items:center;text-align:center;white-space:pre-line;direction:rtl}
-  .tp-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:6px 0 18px}
-  .chips{display:flex;gap:8px;flex-wrap:wrap}
-  .chip{background:transparent;border:1px solid var(--border-strong);color:var(--muted-2);border-radius:999px;padding:8px 15px;font:inherit;font-size:13px;cursor:pointer}
-  .chip.on{background:var(--accent);border-color:var(--accent);color:#0b1a15;font-weight:700}
-  .tp-arrows{display:flex;gap:8px}.tp-arrows button{width:42px;height:42px;border-radius:50%;border:1px solid var(--border-strong);background:rgba(255,255,255,.03);color:var(--text);font-size:22px;cursor:pointer}
-  .tp-arrows button:hover{border-color:var(--accent)}
-  .edit-link{display:inline-block;margin-left:10px;font-size:13px;color:var(--accent);text-decoration:none}.edit-link:hover{text-decoration:underline}
+  @media (max-width:860px){
+    .ed-box{grid-template-columns:1fr; padding:24px; gap:26px;}
+    #templateGrid .dir-card{flex:0 0 78%;}
+  }
+  @media (max-width:700px){
+    header .wrap{height:64px; padding:0 16px;}
+    .logo{font-size:16px; gap:9px;}
+    .logo svg{width:32px; height:32px;}
+    .wrap{padding:0 18px;}
+    .statbar .wrap{padding:26px 18px;}
+    section{padding:56px 0;}
+    .hero{padding:44px 0 36px;}
+    .select-grid{grid-template-columns:1fr;}
+    .panel{padding:18px;}
+    #templateGrid .dir-thumb{height:150px; font-size:16px;}
+  }
 </style>
 </head>
 <body>
@@ -324,38 +304,25 @@
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Navaar Studio home"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#nvLogo"/></svg><span class="logo-text">Navaar<span>Studio</span></span></a>
     <div class="nav-links">
-      <nav><ul>
-        <li><a href="editor.html">Editor</a></li>
-        <li><a href="tools.html">Tools</a></li>
-        <li><a href="#studio">Studio</a></li>
-        <li><a href="#templates">Templates</a></li>
-        <li><a href="#pricing">Plans</a></li>
-        <li><a href="#feedback">Feedback</a></li>
-      </ul></nav>
+      <button id="nvMenuBtn" type="button" aria-label="Open menu" aria-expanded="false">&#9776;</button>
       <div class="auth-box" id="authBox">
-        <button class="btn btn-outline btn-small" id="authToggleBtn" type="button">Sign in</button>
-        <div class="account-menu" id="accountMenu">
-          <a href="privacy.html">Privacy Policy</a>
-          <button class="danger" id="signOutBtn" type="button">Sign out</button>
-        </div>
+        <button id="authToggleBtn" type="button" tabindex="-1" aria-hidden="true">Sign in</button>
         <div class="auth-panel" id="authPanel">
+          <button class="auth-close" id="authClose" type="button" aria-label="Close">&times;</button>
           <div class="auth-tabs">
             <button class="auth-tab active" id="loginTab" type="button">Sign in</button>
             <button class="auth-tab" id="signupTab" type="button">Create account</button>
           </div>
           <div class="auth-title" id="authTitle">Welcome back</div>
           <div class="auth-subtitle" id="authSubtitle">Sign in to save projects and use your account anywhere.</div>
-
           <div class="oauth-grid">
             <button class="oauth-btn" id="googleBtn" type="button"><span class="oauth-icon">G</span> Continue with Google</button>
             <button class="oauth-btn" id="facebookBtn" type="button"><span class="oauth-icon">f</span> Continue with Facebook</button>
           </div>
-
           <div class="auth-divider"><span>or continue with email</span></div>
-
-          <label>Email</label>
+          <label for="authEmail">Email</label>
           <input type="email" id="authEmail" placeholder="you@example.com" autocomplete="email">
-          <label style="margin-top:10px;">Password</label>
+          <label for="authPassword" style="margin-top:10px;">Password</label>
           <input type="password" id="authPassword" placeholder="••••••••" autocomplete="current-password">
           <div class="auth-panel-actions">
             <button class="btn btn-primary btn-small" id="signInBtn" type="button">Sign in</button>
@@ -365,7 +332,6 @@
           <div class="auth-status" id="authStatus"></div>
         </div>
       </div>
-      <a href="editor.html" class="btn btn-primary btn-small">Open Editor</a>
     </div>
   </div>
 </header>
@@ -383,7 +349,6 @@
       </div>
       <div class="hero-foot">Made for reels, shorts, poetry, promos and everyday projects.</div>
     </div>
-
     <div class="preview-card">
       <div class="preview-top"><span class="brand">NAVAAR STUDIO</span><span>VIDEO EDITOR</span></div>
       <div class="preview-rule"></div>
@@ -403,8 +368,6 @@
   </div>
 </div>
 
-
-
 <section class="ed" id="editorPromo"><div class="wrap"><div class="ed-box">
   <div><h2>A full editor, no install.</h2><p>Timeline, text, shapes, stickers, filters, speed and volume. Upload your own photos, videos, audio and fonts, then download as video, MP4 or a single frame.</p>
   <div class="ed-tools"><span>Timeline</span><span>Trim and split</span><span>Urdu text</span><span>Captions</span><span>Crop</span><span>Draw</span><span>Voiceover</span><span>Animations</span><span>Filters</span><span>Poetry templates</span><span>Download</span></div>
@@ -421,15 +384,13 @@
       <h2>Make a text video from one line.</h2>
       <p>Pick a mood, font and background, then preview and download. For full control with a timeline, open the editor.</p>
     </div>
-
     <div class="studio-grid">
       <div class="panel">
-        <div class="field-row"><label>Your poetry or quote</label><span class="count" id="charCount">18 / 180</span></div>
+        <div class="field-row"><label for="textInput">Your poetry or quote</label><span class="count" id="charCount">18 / 180</span></div>
         <textarea id="textInput" maxlength="180">لفظوں کو منظر دو</textarea>
         <div class="helper">Urdu and English text are both supported. Keep it concise for a stronger visual result.</div>
-
         <div class="select-grid">
-          <div><label>Visual mood</label>
+          <div><label for="moodSelect">Visual mood</label>
             <select id="moodSelect">
               <option value="cinematic">Cinematic poetry</option>
               <option value="editorial">Editorial calm</option>
@@ -439,7 +400,7 @@
               <option value="announcement">Bold announcement</option>
             </select>
           </div>
-          <div><label>Typography</label>
+          <div><label for="typeSelect">Typography</label>
             <select id="typeSelect">
               <option value="classic">Urdu classic</option>
               <option value="modern">Urdu modern</option>
@@ -447,7 +408,7 @@
               <option value="sansen">English sans</option>
             </select>
           </div>
-          <div><label>Background</label>
+          <div><label for="bgSelect">Background</label>
             <select id="bgSelect">
               <option value="cinematic">Cinematic gradient</option>
               <option value="dusk">Warm dusk</option>
@@ -457,37 +418,34 @@
               <option value="slate">Slate</option>
             </select>
           </div>
-          <div><label>Voice or music</label>
+          <div><label for="voiceSelect">Voice or music</label>
             <select id="voiceSelect">
-              <option value="ambient">Quiet ambient</option>
-              <option value="piano">Warm piano</option>
-              <option value="strings">Uplifting strings</option>
+              <option value="ambient">Quiet ambient (not in export yet)</option>
+              <option value="piano">Warm piano (not in export yet)</option>
+              <option value="strings">Uplifting strings (not in export yet)</option>
               <option value="none">Captions only, no audio</option>
             </select>
           </div>
         </div>
-
         <div class="panel-actions">
-          <button class="btn btn-outline" id="saveBtn">Save project</button>
-          <button class="btn btn-primary" id="exportBtn">Export HD preview</button>
+          <button class="btn btn-outline" id="saveBtn" type="button">Save project</button>
+          <button class="btn btn-primary" id="exportBtn" type="button">Export HD preview</button>
         </div>
         <div class="status-line" id="statusLine"></div>
-        <video class="export-video" id="exportVideo" controls></video>
+        <video class="export-video" id="exportVideo" controls playsinline></video>
         <a class="download-link" id="downloadLink" download="navaar-video-preview.webm">Download this video (.webm)</a>
       </div>
-
       <div class="preview-card" id="previewCard">
         <div class="preview-top"><span class="brand">NAVAAR STUDIO</span><span id="moodLabel">CINEMATIC POETRY</span></div>
         <div class="preview-rule"></div>
         <div class="preview-urdu font-classic" id="previewText">لفظوں کو منظر دو</div>
         <div class="preview-caption">Give your words a scene.</div>
         <div class="preview-bottom">
-          <div class="play-dot" id="playBtn">▶</div>
+          <div class="play-dot">▶</div>
           <div class="time" id="voiceLabel">Quiet ambient · 9:16</div>
         </div>
       </div>
     </div>
-
     <div class="saved-panel">
       <div class="saved-panel-head">
         <div>
@@ -506,9 +464,8 @@
     <div class="section-head">
       <div class="eyebrow">Photo + lyrics video maker</div>
       <h2>Turn your photos and words into a short video.</h2>
-      <p>Upload your own photos, write the poetry or lyrics that should appear on screen, add your own audio file, then export a real, downloadable short video — photos gently move behind your words while the exported frame keeps the background clean.</p>
+      <p>Upload your own photos, write the poetry or lyrics that should appear on screen, add your own audio file, then export a real, downloadable short video. Photos gently move behind your words.</p>
     </div>
-
     <div class="studio-grid">
       <div class="panel">
         <label>Your photos</label>
@@ -517,8 +474,8 @@
         <span class="helper" style="margin:0 0 0 10px;">Used as a slideshow background, in the order added.</span>
         <div id="photoThumbs" style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;"></div>
 
-        <label style="margin-top:22px;">Poetry or lyrics</label>
-        <textarea id="lyricsInput" style="direction:rtl; min-height:120px;" placeholder="ایک سطر فی لائن لکھیں">لفظوں کو منظر دو
+        <label for="lyricsInput" style="margin-top:22px;">Poetry or lyrics</label>
+        <textarea id="lyricsInput" style="min-height:120px;" placeholder="ایک سطر فی لائن لکھیں">لفظوں کو منظر دو
 تم سا کوئی نہیں
 دل کو سکون دو</textarea>
         <div class="helper">Write one line per row. Each line appears on screen in turn, timed evenly across the video.</div>
@@ -527,9 +484,9 @@
         <input type="file" id="audioInput" accept="audio/*" style="display:none;">
         <button class="btn btn-outline btn-small" id="audioBtn" type="button">Add audio file</button>
         <span id="audioName" style="font-size:12.5px; color:var(--muted); margin-left:10px;"></span>
-        <div class="helper" style="margin-top:10px;">Use a track you own or have rights to — this page can't supply licensed songs, only play back a file you provide.</div>
+        <div class="helper" style="margin-top:10px;">Use a track you own or have rights to. This page only plays back a file you provide.</div>
 
-        <label style="margin-top:18px;">Layout style</label>
+        <label for="layoutSelect" style="margin-top:18px;">Layout style</label>
         <select id="layoutSelect">
           <option value="bottom">Bottom caption — clean</option>
           <option value="center">Center focus — elegant</option>
@@ -551,16 +508,15 @@
           <option value="diagonal">Diagonal — dynamic</option>
           <option value="random">Random stylish layout</option>
         </select>
-        <div class="helper" style="margin-top:8px;">Choose a modern layout. The exported video keeps the photo visible and uses clean text without a colored background panel.</div>
+        <div class="helper" style="margin-top:8px;">Choose a modern layout. The exported video keeps the photo visible with clean text.</div>
 
         <div class="panel-actions" style="margin-top:6px;">
-          <button class="btn btn-primary" id="generateVideoBtn">Generate video</button>
+          <button class="btn btn-primary" id="generateVideoBtn" type="button">Generate video</button>
         </div>
         <div class="status-line" id="videoStatus"></div>
-        <video class="export-video" id="photoExportVideo" controls></video>
+        <video class="export-video" id="photoExportVideo" controls playsinline></video>
         <a class="download-link" id="photoDownloadLink" download="navaar-photo-video.webm">Download this video (.webm)</a>
       </div>
-
       <div class="preview-card" style="padding:0; overflow:hidden;">
         <canvas id="videoCanvas" width="540" height="960" style="width:100%; display:block; border-radius:20px;"></canvas>
       </div>
@@ -574,119 +530,80 @@
       <div><div class="eyebrow">Swipe to browse</div><h2>Templates and poetry.</h2></div>
       <p>Classic couplets from Ghalib, Mir, Iqbal and other great poets, plus empty style cards for your own verse. Use one in the quick studio, or open it in the full editor.</p>
     </div>
-
-    <div class="tp-bar"><div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="poetry">Classic poetry</button><button class="chip" data-f="style">Your own verse</button><button class="chip" data-f="other">Quotes and more</button></div><div class="tp-arrows"><button aria-label="Previous" data-d="-1">‹</button><button aria-label="Next" data-d="1">›</button></div></div>
+    <div class="tp-bar"><div class="chips"><button class="chip on" data-f="all" type="button">All</button><button class="chip" data-f="poetry" type="button">Classic poetry</button><button class="chip" data-f="style" type="button">Your own verse</button><button class="chip" data-f="other" type="button">Quotes and more</button></div><div class="tp-arrows"><button aria-label="Previous" data-d="-1" type="button">‹</button><button aria-label="Next" data-d="1" type="button">›</button></div></div>
     <div class="grid-3" id="templateGrid">
 <div class="dir-card" data-cat="poetry" data-text="ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے&#10;بہت نکلے مرے ارمان لیکن پھر بھی کم نکلے" data-mood="cinematic" data-type="classic" data-bg="cinematic" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#12303a,#0a0f11);color:#eaf6f3">ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے
-بہت نکلے مرے ارمان لیکن پھر بھی کم نکلے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=0">Edit in Editor</a></div></div>
+بہت نکلے مرے ارمان لیکن پھر بھی کم نکلے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=0">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="ہم کو معلوم ہے جنت کی حقیقت لیکن&#10;دل کے خوش رکھنے کو غالبؔ یہ خیال اچھا ہے" data-mood="cinematic" data-type="classic" data-bg="midnight" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#2a1a33,#0a0f11);color:#f3e6ff">ہم کو معلوم ہے جنت کی حقیقت لیکن
-دل کے خوش رکھنے کو غالبؔ یہ خیال اچھا ہے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=1">Edit in Editor</a></div></div>
+دل کے خوش رکھنے کو غالبؔ یہ خیال اچھا ہے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=1">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="عشق نے غالبؔ نکما کر دیا&#10;ورنہ ہم بھی آدمی تھے کام کے" data-mood="cinematic" data-type="classic" data-bg="teal" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#33201a,#0a0f11);color:#ffe9d6">عشق نے غالبؔ نکما کر دیا
-ورنہ ہم بھی آدمی تھے کام کے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=2">Edit in Editor</a></div></div>
+ورنہ ہم بھی آدمی تھے کام کے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=2">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="بازیچۂ اطفال ہے دنیا مرے آگے&#10;ہوتا ہے شب و روز تماشا مرے آگے" data-mood="cinematic" data-type="classic" data-bg="rose" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#10261f,#0a0f11);color:#dff7ec">بازیچۂ اطفال ہے دنیا مرے آگے
-ہوتا ہے شب و روز تماشا مرے آگے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=3">Edit in Editor</a></div></div>
+ہوتا ہے شب و روز تماشا مرے آگے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=3">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="ان کے دیکھے سے جو آ جاتی ہے منہ پر رونق&#10;وہ سمجھتے ہیں کہ بیمار کا حال اچھا ہے" data-mood="cinematic" data-type="classic" data-bg="slate" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#20242e,#0a0f11);color:#e6ecf7">ان کے دیکھے سے جو آ جاتی ہے منہ پر رونق
-وہ سمجھتے ہیں کہ بیمار کا حال اچھا ہے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=4">Edit in Editor</a></div></div>
+وہ سمجھتے ہیں کہ بیمار کا حال اچھا ہے</div><div class="dir-body"><h3>Mirza Ghalib</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=4">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="ابتدائے عشق ہے روتا ہے کیا&#10;آگے آگے دیکھیے ہوتا ہے کیا" data-mood="cinematic" data-type="classic" data-bg="cinematic" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#3a1420,#0a0f11);color:#ffd6df">ابتدائے عشق ہے روتا ہے کیا
-آگے آگے دیکھیے ہوتا ہے کیا</div><div class="dir-body"><h3>Mir Taqi Mir</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=5">Edit in Editor</a></div></div>
+آگے آگے دیکھیے ہوتا ہے کیا</div><div class="dir-body"><h3>Mir Taqi Mir</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=5">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="دیکھ تو دل کہ جاں سے اٹھتا ہے&#10;یہ دھواں سا کہاں سے اٹھتا ہے" data-mood="cinematic" data-type="classic" data-bg="midnight" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#12303a,#0a0f11);color:#eaf6f3">دیکھ تو دل کہ جاں سے اٹھتا ہے
-یہ دھواں سا کہاں سے اٹھتا ہے</div><div class="dir-body"><h3>Mir Taqi Mir</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=6">Edit in Editor</a></div></div>
+یہ دھواں سا کہاں سے اٹھتا ہے</div><div class="dir-body"><h3>Mir Taqi Mir</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=6">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="نازکی اس کے لب کی کیا کہیے&#10;پنکھڑی اک گلاب کی سی ہے" data-mood="cinematic" data-type="classic" data-bg="teal" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#2a1a33,#0a0f11);color:#f3e6ff">نازکی اس کے لب کی کیا کہیے
-پنکھڑی اک گلاب کی سی ہے</div><div class="dir-body"><h3>Mir Taqi Mir</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=7">Edit in Editor</a></div></div>
+پنکھڑی اک گلاب کی سی ہے</div><div class="dir-body"><h3>Mir Taqi Mir</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=7">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="ستاروں سے آگے جہاں اور بھی ہیں&#10;ابھی عشق کے امتحاں اور بھی ہیں" data-mood="cinematic" data-type="classic" data-bg="rose" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#33201a,#0a0f11);color:#ffe9d6">ستاروں سے آگے جہاں اور بھی ہیں
-ابھی عشق کے امتحاں اور بھی ہیں</div><div class="dir-body"><h3>Allama Iqbal</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=8">Edit in Editor</a></div></div>
+ابھی عشق کے امتحاں اور بھی ہیں</div><div class="dir-body"><h3>Allama Iqbal</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=8">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="خودی کو کر بلند اتنا کہ ہر تقدیر سے پہلے&#10;خدا بندے سے خود پوچھے بتا تیری رضا کیا ہے" data-mood="cinematic" data-type="classic" data-bg="slate" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#10261f,#0a0f11);color:#dff7ec">خودی کو کر بلند اتنا کہ ہر تقدیر سے پہلے
-خدا بندے سے خود پوچھے بتا تیری رضا کیا ہے</div><div class="dir-body"><h3>Allama Iqbal</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=9">Edit in Editor</a></div></div>
+خدا بندے سے خود پوچھے بتا تیری رضا کیا ہے</div><div class="dir-body"><h3>Allama Iqbal</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=9">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="تو شاہیں ہے پرواز ہے کام تیرا&#10;ترے سامنے آسماں اور بھی ہیں" data-mood="cinematic" data-type="classic" data-bg="cinematic" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#20242e,#0a0f11);color:#e6ecf7">تو شاہیں ہے پرواز ہے کام تیرا
-ترے سامنے آسماں اور بھی ہیں</div><div class="dir-body"><h3>Allama Iqbal</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=10">Edit in Editor</a></div></div>
+ترے سامنے آسماں اور بھی ہیں</div><div class="dir-body"><h3>Allama Iqbal</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=10">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="خوب پردہ ہے کہ چلمن سے لگے بیٹھے ہیں&#10;صاف چھپتے بھی نہیں سامنے آتے بھی نہیں" data-mood="cinematic" data-type="classic" data-bg="midnight" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#3a1420,#0a0f11);color:#ffd6df">خوب پردہ ہے کہ چلمن سے لگے بیٹھے ہیں
-صاف چھپتے بھی نہیں سامنے آتے بھی نہیں</div><div class="dir-body"><h3>Dagh Dehlvi</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=11">Edit in Editor</a></div></div>
+صاف چھپتے بھی نہیں سامنے آتے بھی نہیں</div><div class="dir-body"><h3>Dagh Dehlvi</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=11">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="اردو ہے جس کا نام ہمیں جانتے ہیں داغؔ&#10;سارے جہاں میں دھوم ہماری زباں کی ہے" data-mood="cinematic" data-type="classic" data-bg="teal" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#12303a,#0a0f11);color:#eaf6f3">اردو ہے جس کا نام ہمیں جانتے ہیں داغؔ
-سارے جہاں میں دھوم ہماری زباں کی ہے</div><div class="dir-body"><h3>Dagh Dehlvi</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=12">Edit in Editor</a></div></div>
+سارے جہاں میں دھوم ہماری زباں کی ہے</div><div class="dir-body"><h3>Dagh Dehlvi</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=12">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="تم مرے پاس ہوتے ہو گویا&#10;جب کوئی دوسرا نہیں ہوتا" data-mood="cinematic" data-type="classic" data-bg="rose" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#2a1a33,#0a0f11);color:#f3e6ff">تم مرے پاس ہوتے ہو گویا
-جب کوئی دوسرا نہیں ہوتا</div><div class="dir-body"><h3>Momin Khan Momin</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=13">Edit in Editor</a></div></div>
+جب کوئی دوسرا نہیں ہوتا</div><div class="dir-body"><h3>Momin Khan Momin</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=13">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="لگتا نہیں ہے دل مرا اجڑے دیار میں&#10;کس کی بنی ہے عالمِ ناپائیدار میں" data-mood="cinematic" data-type="classic" data-bg="slate" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#33201a,#0a0f11);color:#ffe9d6">لگتا نہیں ہے دل مرا اجڑے دیار میں
-کس کی بنی ہے عالمِ ناپائیدار میں</div><div class="dir-body"><h3>Bahadur Shah Zafar</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=14">Edit in Editor</a></div></div>
+کس کی بنی ہے عالمِ ناپائیدار میں</div><div class="dir-body"><h3>Bahadur Shah Zafar</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=14">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="poetry" data-text="اب تو گھبرا کے یہ کہتے ہیں کہ مر جائیں گے&#10;مر کے بھی چین نہ پایا تو کدھر جائیں گے" data-mood="cinematic" data-type="classic" data-bg="cinematic" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#10261f,#0a0f11);color:#dff7ec">اب تو گھبرا کے یہ کہتے ہیں کہ مر جائیں گے
-مر کے بھی چین نہ پایا تو کدھر جائیں گے</div><div class="dir-body"><h3>Ibrahim Zauq</h3><p>Classic couplet, public domain.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=15">Edit in Editor</a></div></div>
+مر کے بھی چین نہ پایا تو کدھر جائیں گے</div><div class="dir-body"><h3>Ibrahim Zauq</h3><p>Classic couplet, public domain.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=15">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="style" data-text="یہاں اپنا کلام لکھیں&#10;Write your own verse here" data-mood="cinematic" data-type="classic" data-bg="midnight" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#0b0d10,#0a0f11);color:#e9e4dc">یہاں اپنا کلام لکھیں
-Write your own verse here</div><div class="dir-body"><h3>Dark and raw</h3><p>Empty style. Paste your own verse.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=16">Edit in Editor</a></div></div>
+Write your own verse here</div><div class="dir-body"><h3>Dark and raw</h3><p>Empty style. Paste your own verse.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=16">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="style" data-text="یہاں اپنا کلام لکھیں&#10;Write your own verse here" data-mood="cinematic" data-type="classic" data-bg="teal" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#3a1420,#0a0f11);color:#ffd6df">یہاں اپنا کلام لکھیں
-Write your own verse here</div><div class="dir-body"><h3>Soft romance</h3><p>Empty style. Paste your own verse.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=17">Edit in Editor</a></div></div>
+Write your own verse here</div><div class="dir-body"><h3>Soft romance</h3><p>Empty style. Paste your own verse.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=17">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="style" data-text="یہاں اپنا کلام لکھیں&#10;Write your own verse here" data-mood="cinematic" data-type="classic" data-bg="rose" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#3b0f12,#0a0f11);color:#ffe3e0">یہاں اپنا کلام لکھیں
-Write your own verse here</div><div class="dir-body"><h3>Bold red</h3><p>Empty style. Paste your own verse.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=18">Edit in Editor</a></div></div>
+Write your own verse here</div><div class="dir-body"><h3>Bold red</h3><p>Empty style. Paste your own verse.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=18">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="style" data-text="یہاں اپنا کلام لکھیں&#10;Write your own verse here" data-mood="cinematic" data-type="classic" data-bg="slate" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#2b2110,#0a0f11);color:#f2d38a">یہاں اپنا کلام لکھیں
-Write your own verse here</div><div class="dir-body"><h3>Golden classic</h3><p>Empty style. Paste your own verse.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=19">Edit in Editor</a></div></div>
+Write your own verse here</div><div class="dir-body"><h3>Golden classic</h3><p>Empty style. Paste your own verse.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=19">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="style" data-text="یہاں اپنا کلام لکھیں&#10;Write your own verse here" data-mood="cinematic" data-type="classic" data-bg="cinematic" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#0f2a3d,#0a0f11);color:#dbeeff">یہاں اپنا کلام لکھیں
-Write your own verse here</div><div class="dir-body"><h3>Quiet blue</h3><p>Empty style. Paste your own verse.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=20">Edit in Editor</a></div></div>
+Write your own verse here</div><div class="dir-body"><h3>Quiet blue</h3><p>Empty style. Paste your own verse.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=20">Edit in Editor</a></div></div>
 <div class="dir-card" data-cat="style" data-text="یہاں اپنا کلام لکھیں&#10;Write your own verse here" data-mood="cinematic" data-type="classic" data-bg="midnight" data-voice="ambient"><div class="dir-thumb pt" style="background:linear-gradient(135deg,#f4f1ea,#0a0f11);color:#1c1c22">یہاں اپنا کلام لکھیں
-Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empty style. Paste your own verse.</p><button class="use-link">Use template</button> <a class="edit-link" href="editor.html?poem=21">Edit in Editor</a></div></div>
+Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empty style. Paste your own verse.</p><button class="use-link" type="button">Use template</button> <a class="edit-link" href="editor.html?poem=21">Edit in Editor</a></div></div>
 
-      <div class="dir-card" data-cat="other" data-text="لفظوں کی روشنی میں کبھی کبھی پوری دنیا روشن ہو جاتی ہے، بس دل سے دیکھنے کی ضرورت ہوتی ہے۔" data-mood="cinematic" data-type="classic" data-bg="cinematic" data-voice="ambient">
-        <div class="dir-thumb t1">لفظوں کی روشنی میں کبھی کبھی پوری دنیا روشن ہو جاتی ہے، بس دل سے دیکھنے کی ضرورت ہوتی ہے۔</div>
-        <div class="dir-body"><h3>Long Urdu Poetry</h3><p>Full-line cinematic composition for detailed Urdu writing.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="Make room for meaning, because the quietest words can sometimes stay with us the longest." data-mood="editorial" data-type="serifen" data-bg="slate" data-voice="none">
-        <div class="dir-thumb t2">Make room for meaning, because the quietest words can sometimes stay with us the longest.</div>
-        <div class="dir-body"><h3>Editorial Full Line</h3><p>A spacious modern layout for longer English quotes.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="Begin before you feel ready, keep moving with patience, and let every small step become part of the story." data-mood="motion" data-type="sansen" data-bg="dusk" data-voice="strings">
-        <div class="dir-thumb t3">Begin before you feel ready, keep moving with patience, and let every small step become part of the story.</div>
-        <div class="dir-body"><h3>Modern Motivation</h3><p>Clean typography with a longer motivational message.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="تم سا کوئی نہیں، تمہاری باتوں میں وہ سکون ہے جو خاموش لمحوں کو بھی خوبصورت بنا دیتا ہے۔" data-mood="romantic" data-type="classic" data-bg="rose" data-voice="piano">
-        <div class="dir-thumb t4">تم سا کوئی نہیں، تمہاری باتوں میں وہ سکون ہے جو خاموش لمحوں کو بھی خوبصورت بنا دیتا ہے۔</div>
-        <div class="dir-body"><h3>Romantic Story</h3><p>Long-form Urdu text with elegant spacing.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="دل کو سکون دو، اپنے رب پر بھروسہ رکھو، اور ہر مشکل کے بعد آنے والی آسانی کو یاد رکھو۔" data-mood="spiritual" data-type="modern" data-bg="teal" data-voice="ambient">
-        <div class="dir-thumb t5">دل کو سکون دو، اپنے رب پر بھروسہ رکھو، اور ہر مشکل کے بعد آنے والی آسانی کو یاد رکھو۔</div>
-        <div class="dir-body"><h3>Spiritual Reflection</h3><p>Calm, readable layout for longer reflective text.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="Something meaningful is here. Give your announcement enough space to breathe, then let the message speak clearly to the people who need it." data-mood="announcement" data-type="sansen" data-bg="midnight" data-voice="none">
-        <div class="dir-thumb t6">Something meaningful is here. Give your announcement enough space to breathe, then let the message speak clearly.</div>
-        <div class="dir-body"><h3>Clean Announcement</h3><p>Professional full-width message composition.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="آج کا دن کل کی یاد بن جائے گا، اس لیے ہر خوبصورت لمحے کو دل سے جیو اور اپنے لفظوں میں محفوظ کر لو۔" data-mood="editorial" data-type="modern" data-bg="midnight" data-voice="piano">
-        <div class="dir-thumb t1">آج کا دن کل کی یاد بن جائے گا، اس لیے ہر خوبصورت لمحے کو دل سے جیو اور اپنے لفظوں میں محفوظ کر لو۔</div>
-        <div class="dir-body"><h3>Memory Lines</h3><p>Modern Urdu layout for stories and memories.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="Your next chapter does not need permission to begin. Start with one honest sentence and keep going until it becomes your story." data-mood="motion" data-type="sansen" data-bg="teal" data-voice="none">
-        <div class="dir-thumb t2">Your next chapter does not need permission to begin. Start with one honest sentence and keep going.</div>
-        <div class="dir-body"><h3>Story Starter</h3><p>Wide modern text treatment for narrative content.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="خاموشی بھی ایک زبان ہے، کبھی کبھی دل کی سب سے سچی بات لفظوں کے بغیر بھی سمجھ آ جاتی ہے۔" data-mood="romantic" data-type="classic" data-bg="rose" data-voice="ambient">
-        <div class="dir-thumb t4">خاموشی بھی ایک زبان ہے، کبھی کبھی دل کی سب سے سچی بات لفظوں کے بغیر بھی سمجھ آ جاتی ہے۔</div>
-        <div class="dir-body"><h3>Quiet Thoughts</h3><p>Soft Urdu layout for emotional writing.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="Keep your message simple, keep your design clean, and let the image and words work together without unnecessary decoration." data-mood="editorial" data-type="serifen" data-bg="slate" data-voice="none">
-        <div class="dir-thumb t6">Keep your message simple, keep your design clean, and let the image and words work together.</div>
-        <div class="dir-body"><h3>Minimal Message</h3><p>Modern, uncluttered composition for clear communication.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="ہر راستہ آسان نہیں ہوتا، مگر مسلسل چلنے والا شخص ایک دن اپنی منزل کے قریب ضرور پہنچ جاتا ہے۔" data-mood="motion" data-type="modern" data-bg="dusk" data-voice="strings">
-        <div class="dir-thumb t3">ہر راستہ آسان نہیں ہوتا، مگر مسلسل چلنے والا شخص ایک دن اپنی منزل کے قریب ضرور پہنچ جاتا ہے۔</div>
-        <div class="dir-body"><h3>Journey Quote</h3><p>Full-line motivational Urdu template.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="A beautiful idea becomes more powerful when the design gets out of its way. Choose your words, choose your image, and let the moment breathe." data-mood="cinematic" data-type="serifen" data-bg="cinematic" data-voice="ambient">
-        <div class="dir-thumb t5">A beautiful idea becomes more powerful when the design gets out of its way. Let the moment breathe.</div>
-        <div class="dir-body"><h3>Elegant Quote</h3><p>Large modern composition with generous breathing room.</p><button class="use-link">Use template</button></div>
-      </div>
-      <div class="dir-card" data-cat="other" data-text="آج کا دن ایک نئی شروعات ہے، اپنے خوابوں کو وقت دو، اپنے سفر پر یقین رکھو، اور ہر چھوٹی کامیابی کو دل سے محسوس کرو۔" data-mood="motion" data-type="classic" data-bg="midnight" data-voice="strings"><div class="dir-thumb t1">آج کا دن ایک نئی شروعات ہے، اپنے خوابوں کو وقت دو، اپنے سفر پر یقین رکھو۔</div><div class="dir-body"><h3>New Beginning</h3><p>Long Urdu motivation with a confident cinematic feel.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="Some moments deserve to be remembered slowly. Let the picture breathe, let the words stay simple, and let the feeling become the story." data-mood="editorial" data-type="serifen" data-bg="slate" data-voice="piano"><div class="dir-thumb t2">Some moments deserve to be remembered slowly. Let the picture breathe.</div><div class="dir-body"><h3>Memory Film</h3><p>Elegant English copy for photo memories.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="محبت ہمیشہ شور نہیں کرتی، کبھی ایک خاموش خیال، ایک نظر، یا ایک چھوٹا سا لمحہ پوری کہانی کہہ دیتا ہے۔" data-mood="romantic" data-type="modern" data-bg="rose" data-voice="piano"><div class="dir-thumb t4">محبت ہمیشہ شور نہیں کرتی، کبھی ایک خاموش لمحہ پوری کہانی کہہ دیتا ہے۔</div><div class="dir-body"><h3>Silent Love</h3><p>Soft romantic Urdu lines with modern typography.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="ہر مشکل وقت ہمیں کچھ سکھاتا ہے۔ صبر رکھو، کوشش جاری رکھو، اور یاد رکھو کہ راستے بدل سکتے ہیں مگر منزل کی امید باقی رہ سکتی ہے۔" data-mood="spiritual" data-type="modern" data-bg="teal" data-voice="ambient"><div class="dir-thumb t5">ہر مشکل وقت ہمیں کچھ سکھاتا ہے۔ صبر رکھو، کوشش جاری رکھو۔</div><div class="dir-body"><h3>Patience</h3><p>Reflective Urdu template for calm messages.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="Your brand deserves a message that feels clear, confident and memorable. Say what matters, show what matters, and make every frame useful." data-mood="announcement" data-type="sansen" data-bg="cinematic" data-voice="none"><div class="dir-thumb t6">Your brand deserves a message that feels clear, confident and memorable.</div><div class="dir-body"><h3>Brand Message</h3><p>Professional social content for businesses and creators.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="زندگی کی خوبصورتی یہ ہے کہ ہر دن ہمیں دوبارہ کوشش کرنے کا موقع دیتا ہے، بس دل میں امید اور قدموں میں حرکت ہونی چاہیے۔" data-mood="motion" data-type="classic" data-bg="dusk" data-voice="strings"><div class="dir-thumb t3">زندگی کی خوبصورتی یہ ہے کہ ہر دن ہمیں دوبارہ کوشش کرنے کا موقع دیتا ہے۔</div><div class="dir-body"><h3>Life Notes</h3><p>Warm motivational Urdu for reels and stories.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="A good story does not need more decoration. It needs a clear voice, a strong image, and enough space for the audience to feel something real." data-mood="cinematic" data-type="serifen" data-bg="midnight" data-voice="ambient"><div class="dir-thumb t1">A good story needs a clear voice, a strong image, and room to breathe.</div><div class="dir-body"><h3>Story Film</h3><p>Minimal cinematic English layout for creators.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="ایک خوبصورت خیال تب اور بھی خوبصورت لگتا ہے جب اسے سادہ الفاظ، مناسب تصویر اور صاف ڈیزائن کے ساتھ پیش کیا جائے۔" data-mood="editorial" data-type="modern" data-bg="slate" data-voice="none"><div class="dir-thumb t6">ایک خوبصورت خیال تب اور بھی خوبصورت لگتا ہے جب اسے سادہ انداز میں پیش کیا جائے۔</div><div class="dir-body"><h3>Simple Idea</h3><p>Clean Urdu composition for informative posts.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="May your next step be lighter than the last, your purpose clearer than before, and your courage strong enough to keep creating when nobody is watching." data-mood="motion" data-type="sansen" data-bg="teal" data-voice="strings"><div class="dir-thumb t5">May your next step be lighter, your purpose clearer, your courage stronger.</div><div class="dir-body"><h3>Keep Creating</h3><p>Creator-focused English motivation template.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="دل کی بات ہمیشہ لمبی نہیں ہوتی، کبھی چند لفظ ہی کافی ہوتے ہیں کہ سامنے والا آپ کے احساس کو سمجھ لے۔" data-mood="romantic" data-type="classic" data-bg="rose" data-voice="ambient"><div class="dir-thumb t4">دل کی بات ہمیشہ لمبی نہیں ہوتی، کبھی چند لفظ ہی کافی ہوتے ہیں۔</div><div class="dir-body"><h3>Heart Talk</h3><p>Short-to-long Urdu emotional composition.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="Important announcement: a new chapter is beginning. Save the date, share the message, and stay connected for what comes next." data-mood="announcement" data-type="sansen" data-bg="midnight" data-voice="none"><div class="dir-thumb t2">Important announcement: a new chapter is beginning. Stay connected.</div><div class="dir-body"><h3>Announcement</h3><p>Clear layout for launches, updates and events.</p><button class="use-link">Use template</button></div></div>
-      <div class="dir-card" data-cat="other" data-text="اللہ پر بھروسہ رکھو، نیت صاف رکھو، کوشش جاری رکھو، اور اپنے دل کو اس یقین سے مضبوط رکھو کہ آسانی کا وقت بھی آتا ہے۔" data-mood="spiritual" data-type="modern" data-bg="teal" data-voice="piano"><div class="dir-thumb t5">اللہ پر بھروسہ رکھو، نیت صاف رکھو، کوشش جاری رکھو۔</div><div class="dir-body"><h3>Trust & Hope</h3><p>Spiritual Urdu template with gentle pacing.</p><button class="use-link">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="لفظوں کی روشنی میں کبھی کبھی پوری دنیا روشن ہو جاتی ہے، بس دل سے دیکھنے کی ضرورت ہوتی ہے۔" data-mood="cinematic" data-type="classic" data-bg="cinematic" data-voice="ambient"><div class="dir-thumb t1">لفظوں کی روشنی میں کبھی کبھی پوری دنیا روشن ہو جاتی ہے، بس دل سے دیکھنے کی ضرورت ہوتی ہے۔</div><div class="dir-body"><h3>Long Urdu Poetry</h3><p>Full-line cinematic composition for detailed Urdu writing.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="Make room for meaning, because the quietest words can sometimes stay with us the longest." data-mood="editorial" data-type="serifen" data-bg="slate" data-voice="none"><div class="dir-thumb t2">Make room for meaning, because the quietest words can sometimes stay with us the longest.</div><div class="dir-body"><h3>Editorial Full Line</h3><p>A spacious modern layout for longer English quotes.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="Begin before you feel ready, keep moving with patience, and let every small step become part of the story." data-mood="motion" data-type="sansen" data-bg="dusk" data-voice="strings"><div class="dir-thumb t3">Begin before you feel ready, keep moving with patience, and let every small step become part of the story.</div><div class="dir-body"><h3>Modern Motivation</h3><p>Clean typography with a longer motivational message.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="تم سا کوئی نہیں، تمہاری باتوں میں وہ سکون ہے جو خاموش لمحوں کو بھی خوبصورت بنا دیتا ہے۔" data-mood="romantic" data-type="classic" data-bg="rose" data-voice="piano"><div class="dir-thumb t4">تم سا کوئی نہیں، تمہاری باتوں میں وہ سکون ہے جو خاموش لمحوں کو بھی خوبصورت بنا دیتا ہے۔</div><div class="dir-body"><h3>Romantic Story</h3><p>Long-form Urdu text with elegant spacing.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="دل کو سکون دو، اپنے رب پر بھروسہ رکھو، اور ہر مشکل کے بعد آنے والی آسانی کو یاد رکھو۔" data-mood="spiritual" data-type="modern" data-bg="teal" data-voice="ambient"><div class="dir-thumb t5">دل کو سکون دو، اپنے رب پر بھروسہ رکھو، اور ہر مشکل کے بعد آنے والی آسانی کو یاد رکھو۔</div><div class="dir-body"><h3>Spiritual Reflection</h3><p>Calm, readable layout for longer reflective text.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="Something meaningful is here. Give your announcement enough space to breathe, then let the message speak clearly to the people who need it." data-mood="announcement" data-type="sansen" data-bg="midnight" data-voice="none"><div class="dir-thumb t6">Something meaningful is here. Give your announcement enough space to breathe, then let the message speak clearly.</div><div class="dir-body"><h3>Clean Announcement</h3><p>Professional full-width message composition.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="آج کا دن کل کی یاد بن جائے گا، اس لیے ہر خوبصورت لمحے کو دل سے جیو اور اپنے لفظوں میں محفوظ کر لو۔" data-mood="editorial" data-type="modern" data-bg="midnight" data-voice="piano"><div class="dir-thumb t1">آج کا دن کل کی یاد بن جائے گا، اس لیے ہر خوبصورت لمحے کو دل سے جیو اور اپنے لفظوں میں محفوظ کر لو۔</div><div class="dir-body"><h3>Memory Lines</h3><p>Modern Urdu layout for stories and memories.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="Your next chapter does not need permission to begin. Start with one honest sentence and keep going until it becomes your story." data-mood="motion" data-type="sansen" data-bg="teal" data-voice="none"><div class="dir-thumb t2">Your next chapter does not need permission to begin. Start with one honest sentence and keep going.</div><div class="dir-body"><h3>Story Starter</h3><p>Wide modern text treatment for narrative content.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="خاموشی بھی ایک زبان ہے، کبھی کبھی دل کی سب سے سچی بات لفظوں کے بغیر بھی سمجھ آ جاتی ہے۔" data-mood="romantic" data-type="classic" data-bg="rose" data-voice="ambient"><div class="dir-thumb t4">خاموشی بھی ایک زبان ہے، کبھی کبھی دل کی سب سے سچی بات لفظوں کے بغیر بھی سمجھ آ جاتی ہے۔</div><div class="dir-body"><h3>Quiet Thoughts</h3><p>Soft Urdu layout for emotional writing.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="Keep your message simple, keep your design clean, and let the image and words work together without unnecessary decoration." data-mood="editorial" data-type="serifen" data-bg="slate" data-voice="none"><div class="dir-thumb t6">Keep your message simple, keep your design clean, and let the image and words work together.</div><div class="dir-body"><h3>Minimal Message</h3><p>Modern, uncluttered composition for clear communication.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="ہر راستہ آسان نہیں ہوتا، مگر مسلسل چلنے والا شخص ایک دن اپنی منزل کے قریب ضرور پہنچ جاتا ہے۔" data-mood="motion" data-type="modern" data-bg="dusk" data-voice="strings"><div class="dir-thumb t3">ہر راستہ آسان نہیں ہوتا، مگر مسلسل چلنے والا شخص ایک دن اپنی منزل کے قریب ضرور پہنچ جاتا ہے۔</div><div class="dir-body"><h3>Journey Quote</h3><p>Full-line motivational Urdu template.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="A beautiful idea becomes more powerful when the design gets out of its way. Choose your words, choose your image, and let the moment breathe." data-mood="cinematic" data-type="serifen" data-bg="cinematic" data-voice="ambient"><div class="dir-thumb t5">A beautiful idea becomes more powerful when the design gets out of its way. Let the moment breathe.</div><div class="dir-body"><h3>Elegant Quote</h3><p>Large modern composition with generous breathing room.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="آج کا دن ایک نئی شروعات ہے، اپنے خوابوں کو وقت دو، اپنے سفر پر یقین رکھو، اور ہر چھوٹی کامیابی کو دل سے محسوس کرو۔" data-mood="motion" data-type="classic" data-bg="midnight" data-voice="strings"><div class="dir-thumb t1">آج کا دن ایک نئی شروعات ہے، اپنے خوابوں کو وقت دو، اپنے سفر پر یقین رکھو۔</div><div class="dir-body"><h3>New Beginning</h3><p>Long Urdu motivation with a confident cinematic feel.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="Some moments deserve to be remembered slowly. Let the picture breathe, let the words stay simple, and let the feeling become the story." data-mood="editorial" data-type="serifen" data-bg="slate" data-voice="piano"><div class="dir-thumb t2">Some moments deserve to be remembered slowly. Let the picture breathe.</div><div class="dir-body"><h3>Memory Film</h3><p>Elegant English copy for photo memories.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="محبت ہمیشہ شور نہیں کرتی، کبھی ایک خاموش خیال، ایک نظر، یا ایک چھوٹا سا لمحہ پوری کہانی کہہ دیتا ہے۔" data-mood="romantic" data-type="modern" data-bg="rose" data-voice="piano"><div class="dir-thumb t4">محبت ہمیشہ شور نہیں کرتی، کبھی ایک خاموش لمحہ پوری کہانی کہہ دیتا ہے۔</div><div class="dir-body"><h3>Silent Love</h3><p>Soft romantic Urdu lines with modern typography.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="ہر مشکل وقت ہمیں کچھ سکھاتا ہے۔ صبر رکھو، کوشش جاری رکھو، اور یاد رکھو کہ راستے بدل سکتے ہیں مگر منزل کی امید باقی رہ سکتی ہے۔" data-mood="spiritual" data-type="modern" data-bg="teal" data-voice="ambient"><div class="dir-thumb t5">ہر مشکل وقت ہمیں کچھ سکھاتا ہے۔ صبر رکھو، کوشش جاری رکھو۔</div><div class="dir-body"><h3>Patience</h3><p>Reflective Urdu template for calm messages.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="Your brand deserves a message that feels clear, confident and memorable. Say what matters, show what matters, and make every frame useful." data-mood="announcement" data-type="sansen" data-bg="cinematic" data-voice="none"><div class="dir-thumb t6">Your brand deserves a message that feels clear, confident and memorable.</div><div class="dir-body"><h3>Brand Message</h3><p>Professional social content for businesses and creators.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="زندگی کی خوبصورتی یہ ہے کہ ہر دن ہمیں دوبارہ کوشش کرنے کا موقع دیتا ہے، بس دل میں امید اور قدموں میں حرکت ہونی چاہیے۔" data-mood="motion" data-type="classic" data-bg="dusk" data-voice="strings"><div class="dir-thumb t3">زندگی کی خوبصورتی یہ ہے کہ ہر دن ہمیں دوبارہ کوشش کرنے کا موقع دیتا ہے۔</div><div class="dir-body"><h3>Life Notes</h3><p>Warm motivational Urdu for reels and stories.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="A good story does not need more decoration. It needs a clear voice, a strong image, and enough space for the audience to feel something real." data-mood="cinematic" data-type="serifen" data-bg="midnight" data-voice="ambient"><div class="dir-thumb t1">A good story needs a clear voice, a strong image, and room to breathe.</div><div class="dir-body"><h3>Story Film</h3><p>Minimal cinematic English layout for creators.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="ایک خوبصورت خیال تب اور بھی خوبصورت لگتا ہے جب اسے سادہ الفاظ، مناسب تصویر اور صاف ڈیزائن کے ساتھ پیش کیا جائے۔" data-mood="editorial" data-type="modern" data-bg="slate" data-voice="none"><div class="dir-thumb t6">ایک خوبصورت خیال تب اور بھی خوبصورت لگتا ہے جب اسے سادہ انداز میں پیش کیا جائے۔</div><div class="dir-body"><h3>Simple Idea</h3><p>Clean Urdu composition for informative posts.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="May your next step be lighter than the last, your purpose clearer than before, and your courage strong enough to keep creating when nobody is watching." data-mood="motion" data-type="sansen" data-bg="teal" data-voice="strings"><div class="dir-thumb t5">May your next step be lighter, your purpose clearer, your courage stronger.</div><div class="dir-body"><h3>Keep Creating</h3><p>Creator-focused English motivation template.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="دل کی بات ہمیشہ لمبی نہیں ہوتی، کبھی چند لفظ ہی کافی ہوتے ہیں کہ سامنے والا آپ کے احساس کو سمجھ لے۔" data-mood="romantic" data-type="classic" data-bg="rose" data-voice="ambient"><div class="dir-thumb t4">دل کی بات ہمیشہ لمبی نہیں ہوتی، کبھی چند لفظ ہی کافی ہوتے ہیں۔</div><div class="dir-body"><h3>Heart Talk</h3><p>Short-to-long Urdu emotional composition.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="Important announcement: a new chapter is beginning. Save the date, share the message, and stay connected for what comes next." data-mood="announcement" data-type="sansen" data-bg="midnight" data-voice="none"><div class="dir-thumb t2">Important announcement: a new chapter is beginning. Stay connected.</div><div class="dir-body"><h3>Announcement</h3><p>Clear layout for launches, updates and events.</p><button class="use-link" type="button">Use template</button></div></div>
+<div class="dir-card" data-cat="other" data-text="اللہ پر بھروسہ رکھو، نیت صاف رکھو، کوشش جاری رکھو، اور اپنے دل کو اس یقین سے مضبوط رکھو کہ آسانی کا وقت بھی آتا ہے۔" data-mood="spiritual" data-type="modern" data-bg="teal" data-voice="piano"><div class="dir-thumb t5">اللہ پر بھروسہ رکھو، نیت صاف رکھو، کوشش جاری رکھو۔</div><div class="dir-body"><h3>Trust &amp; Hope</h3><p>Spiritual Urdu template with gentle pacing.</p><button class="use-link" type="button">Use template</button></div></div>
     </div>
   </div>
 </section>
-
-
 
 <section id="pricing">
   <div class="wrap">
@@ -701,29 +618,28 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
         <span data-mode="annual">Annual</span>
       </div>
     </div>
-
     <div class="pricing-grid">
       <div class="price-card">
         <h3>Free</h3><p>Full editor with video downloads. Great for trying it out.</p>
         <div class="price"><span class="amount">$0</span> <span>/ month</span></div>
         <span class="billed-note">&nbsp;</span>
-        <button class="btn btn-outline" style="width:100%;">Start with Free</button>
+        <button class="btn btn-outline" id="freeBtn" type="button" style="width:100%;">Start with Free</button>
       </div>
       <div class="price-card featured">
         <span class="badge">Recommended</span>
         <h3>Creator</h3><p>For regular editing and longer projects.</p>
         <div class="price"><span class="amount" data-monthly="12" data-annual="9">$12</span> <span>/ month</span></div>
         <span class="billed-note">Billed monthly</span>
-        <button class="btn btn-primary" style="width:100%;" id="creatorBtn" data-plan="creator">Choose Creator</button>
+        <button class="btn btn-primary" style="width:100%;" id="creatorBtn" data-plan="creator" type="button">Choose Creator</button>
       </div>
       <div class="price-card">
         <h3>Studio</h3><p>For teams that publish videos often.</p>
         <div class="price"><span class="amount" data-monthly="24" data-annual="19">$24</span> <span>/ month</span></div>
         <span class="billed-note">Billed monthly</span>
-        <button class="btn btn-outline" style="width:100%;" id="studioBtn" data-plan="studio">Choose Studio</button>
+        <button class="btn btn-outline" style="width:100%;" id="studioBtn" data-plan="studio" type="button">Choose Studio</button>
       </div>
     </div>
-    <div class="pricing-note">Sample prototype pricing only. No payment flow is included on this page.</div>
+    <div class="pricing-note">Free needs no payment. Sign in to choose a paid plan.</div>
     <div class="pricing-note" id="checkoutStatus" style="color:var(--accent);"></div>
   </div>
 </section>
@@ -731,7 +647,7 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
 <section id="feedback" style="background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
   <div class="wrap">
     <div class="section-head-row">
-      <div><div class="eyebrow">Your voice matters</div><h2>Send feedback about Navaar Studio.</h2><p style="text-align:left;margin-top:10px;">Tell us what worked, what needs improvement, or what feature you want next. Your feedback is submitted securely to the studio database.</p></div>
+      <div><div class="eyebrow">Your voice matters</div><h2>Send feedback about Navaar Studio.</h2><p style="text-align:left;margin-top:10px;">Tell us what worked, what needs improvement, or what feature you want next.</p></div>
       <button class="btn btn-outline" id="feedbackFocusBtn" type="button">Write feedback</button>
     </div>
     <div class="feedback-shell">
@@ -746,8 +662,8 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
             <div class="feedback-field"><label>Overall experience</label><div class="rating-row" aria-label="Rating"><input id="r5" name="rating" type="radio" value="5"><label for="r5">★</label><input id="r4" name="rating" type="radio" value="4"><label for="r4">★</label><input id="r3" name="rating" type="radio" value="3"><label for="r3">★</label><input id="r2" name="rating" type="radio" value="2"><label for="r2">★</label><input id="r1" name="rating" type="radio" value="1"><label for="r1">★</label></div></div>
           </div>
           <div class="feedback-field"><label for="feedbackMessage">Detailed feedback</label><textarea id="feedbackMessage" name="message" maxlength="2000" placeholder="Tell us what you liked, what was difficult, what should be changed, or which feature you want next..."></textarea></div>
-          <div class="hp-field" aria-hidden="true"><label>Website</label><input id="feedbackWebsite" tabindex="-1" autocomplete="off"></div>
-          <label style="display:flex;gap:9px;align-items:flex-start;font-weight:500;font-size:12px;"><input id="feedbackConsent" type="checkbox" style="margin-top:2px;accent-color:var(--accent);"> I agree that my feedback may be stored so the Navaar Studio team can review it.</label>
+          <div class="hp-field" aria-hidden="true"><label for="feedbackWebsite">Website</label><input id="feedbackWebsite" tabindex="-1" autocomplete="off"></div>
+          <label style="display:flex;gap:9px;align-items:flex-start;font-weight:500;font-size:12px;"><input id="feedbackConsent" type="checkbox" style="margin-top:2px;accent-color:var(--accent);"> <span>I agree that my name, rating and feedback may be stored and shown publicly on this page.</span></label>
           <button class="btn btn-primary" id="feedbackSubmit" type="submit" style="margin-top:16px;">Submit feedback</button>
           <div class="feedback-status" id="feedbackStatus" role="status"></div>
         </form>
@@ -763,13 +679,9 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
       </div>
     </div>
     <div class="eyebrow" style="margin-top:44px;">What people are saying</div>
-    <div class="fb-list" id="feedbackList"><p class="muted" id="feedbackListEmpty">Loading feedback…</p></div>
+    <div class="fb-list" id="feedbackList"><p class="muted">Loading feedback…</p></div>
   </div>
 </section>
-
-
-
-
 
 <footer>
   <div class="wrap">
@@ -779,29 +691,67 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
   </div>
 </footer>
 
+<!-- Side menu: all links, Sign in, and Log out (last) -->
+<div id="nvShade"></div>
+<aside id="nvSide" aria-label="Website menu">
+  <h3>Navaar Studio</h3><span style="color:var(--muted);font-size:12.5px">Urdu-first video creation</span>
+  <small>Tools</small>
+  <a href="editor.html">Editor<span>Timeline, trim, split, layers, filters, voiceover</span></a>
+  <a href="tools.html">Tools<span>Text, calculators, developer tools</span></a>
+  <a href="#studio">Studio<span>One line to a shareable 9:16 video</span></a>
+  <a href="#photoVideo">Photo + Lyrics Video<span>Photos, lyrics and your audio</span></a>
+  <a href="#templates">Templates<span>Poetry, quotes, promos, announcements</span></a>
+  <small>Site</small>
+  <a href="#pricing">Plans</a>
+  <a href="#feedback">Feedback</a>
+  <a href="privacy.html">Privacy Policy</a>
+  <button class="nvl" id="nvAbout" type="button">&#9432; About this website</button>
+  <small>Account</small>
+  <button class="nvl" id="nvSignIn" type="button">Sign in / Create account</button>
+  <div class="nvspace"></div>
+  <button class="nvl out" id="nvLogOut" type="button" style="display:none">Log out</button>
+</aside>
+
+<!-- Welcome intro -->
+<div id="nvIntro" role="dialog" aria-modal="true" aria-label="Welcome"><div class="box">
+  <div class="eyebrow">Welcome to Navaar Studio</div>
+  <h1>Give your Urdu words a cinematic life.</h1>
+  <p>Navaar Studio is a free online video maker built for Urdu and English poetry, quotes, lyrics, reels, shorts and promos. Everything runs in your browser. No install, no design skills needed.</p>
+  <div class="grid">
+    <div><b>Video Editor</b>Timeline, trim, split, text, shapes, stickers, drawing, filters, animations, speed, volume, voiceover and captions.</div>
+    <div><b>Quick Poetry Video</b>Type one line, pick mood, font and background, then export.</div>
+    <div><b>Photo + Lyrics Video</b>Upload photos, write lyrics, add your audio and generate a lyric video.</div>
+    <div><b>Templates</b>Ready poetry, quote, romantic, announcement and promo designs.</div>
+    <div><b>Download</b>Save your video as .webm or .mp4, a PNG frame or a project file.</div>
+    <div><b>Accounts &amp; Plans</b>Sign in to sync projects. Free plan to start, paid plans for more.</div>
+  </div>
+  <p>Use it for poetry and shayari videos, Instagram, TikTok and YouTube shorts, WhatsApp status, lyric videos, announcements and business promos.</p>
+  <button class="btn btn-primary" id="nvStart" type="button">Start creating</button>
+  <button class="btn btn-outline" id="nvTour" type="button" style="margin-left:8px">Open menu</button>
+</div></div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
-  /* ====== Fill these in with your own values (see backend README.md) ====== */
   var CONFIG = {
     SUPABASE_URL: 'https://zcungofmmaagqcinafhb.supabase.co',
     SUPABASE_ANON_KEY: 'sb_publishable_7ydxbZOzF0v2X58P7Pk_jg_za4pBQ3s',
     BACKEND_URL: 'https://navaar-backend-production.up.railway.app'
   };
+  var $ = function(i){ return document.getElementById(i); };
+  var RTL = /[\u0600-\u06FF]/;
+  function isUrdu(s){ return RTL.test(s); }
   var sb = null;
   try {
-    if (window.supabase && CONFIG.SUPABASE_URL.indexOf('YOUR-PROJECT') === -1) {
-      sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
-    }
+    if (window.supabase) sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
   } catch(e){}
-  var currentUser = null; // set once signed in
+  var currentUser = null;
 
-  // Every backend call carries the signed-in user's login token so the server knows who is asking.
   async function authHeaders(extra){
     var h = Object.assign({}, extra || {});
     try{
       var r = await sb.auth.getSession();
-      if(r.data && r.data.session){ h['Authorization'] = 'Bearer ' + r.data.session.access_token; }
+      if(r.data && r.data.session) h['Authorization'] = 'Bearer ' + r.data.session.access_token;
     } catch(e){}
     return h;
   }
@@ -812,37 +762,19 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
   }
 
   var BG = {
-    cinematic: ['#141c42','#0d1330'],
-    dusk:      ['#5b3a1a','#2b1710'],
-    teal:      ['#123f3a','#0a1f1e'],
-    midnight:  ['#0d1440','#070a1f'],
-    rose:      ['#4a1530','#160a18'],
-    slate:     ['#2a3049','#12162a']
+    cinematic:['#141c42','#0d1330'], dusk:['#5b3a1a','#2b1710'], teal:['#123f3a','#0a1f1e'],
+    midnight:['#0d1440','#070a1f'], rose:['#4a1530','#160a18'], slate:['#2a3049','#12162a']
   };
   var FONT_CLASS = { classic:'font-classic', modern:'font-modern', serifen:'font-serif-en', sansen:'font-sans-en' };
   var MOOD_LABEL = { cinematic:'CINEMATIC POETRY', editorial:'EDITORIAL CALM', motion:'FORWARD MOTION', romantic:'ROMANTIC WARMTH', spiritual:'SPIRITUAL STILLNESS', announcement:'BOLD ANNOUNCEMENT' };
   var VOICE_LABEL = { ambient:'Quiet ambient', piano:'Warm piano', strings:'Uplifting strings', none:'No audio' };
 
-  /* ---- Auth: email/password + Google + Facebook ---- */
-  var authToggleBtn = document.getElementById('authToggleBtn');
-  var authPanel = document.getElementById('authPanel');
-  var authEmail = document.getElementById('authEmail');
-  var authPassword = document.getElementById('authPassword');
-  var authStatus = document.getElementById('authStatus');
-  var signInBtn = document.getElementById('signInBtn');
-  var signUpBtn = document.getElementById('signUpBtn');
-  var googleBtn = document.getElementById('googleBtn');
-  var facebookBtn = document.getElementById('facebookBtn');
-  var forgotBtn = document.getElementById('forgotBtn');
-  var loginTab = document.getElementById('loginTab');
-  var signupTab = document.getElementById('signupTab');
-  var authTitle = document.getElementById('authTitle');
-  var authSubtitle = document.getElementById('authSubtitle');
-
-  var authMode = 'login';
+  /* ---- Auth (panel opened from the side menu) ---- */
+  var authPanel = $('authPanel'), authEmail = $('authEmail'), authPassword = $('authPassword'), authStatus = $('authStatus');
+  var signInBtn = $('signInBtn'), signUpBtn = $('signUpBtn'), forgotBtn = $('forgotBtn');
+  var loginTab = $('loginTab'), signupTab = $('signupTab'), authTitle = $('authTitle'), authSubtitle = $('authSubtitle');
 
   function setAuthMode(mode){
-    authMode = mode;
     var login = mode === 'login';
     loginTab.classList.toggle('active', login);
     signupTab.classList.toggle('active', !login);
@@ -850,71 +782,40 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
     signUpBtn.style.display = login ? 'none' : 'inline-flex';
     forgotBtn.style.display = login ? 'block' : 'none';
     authTitle.textContent = login ? 'Welcome back' : 'Create your account';
-    authSubtitle.textContent = login
-      ? 'Sign in to save projects and use your account anywhere.'
-      : 'Create a free account, then continue with email or Google/Facebook.';
+    authSubtitle.textContent = login ? 'Sign in to save projects and use your account anywhere.' : 'Create a free account, then continue with email or Google/Facebook.';
     authStatus.textContent = '';
   }
-
   loginTab.addEventListener('click', function(){ setAuthMode('login'); });
   signupTab.addEventListener('click', function(){ setAuthMode('signup'); });
-
-  authToggleBtn.addEventListener('click', function(){
-    if(currentUser){
-      document.getElementById('accountMenu').classList.toggle('open');
-      return;
-    }
-    authPanel.classList.toggle('open');
-  });
-
-  document.getElementById('signOutBtn').addEventListener('click', function(){
-    if(sb) sb.auth.signOut();
-    currentUser = null;
-    document.getElementById('accountMenu').classList.remove('open');
-    updateAuthUI();
-    renderSaved();
-  });
-  document.addEventListener('click', function(e){
-    var box = document.getElementById('authBox');
-    if(box && !box.contains(e.target)) document.getElementById('accountMenu').classList.remove('open');
-  });
+  $('authClose').addEventListener('click', function(){ authPanel.classList.remove('open'); });
+  window.nvOpenAuth = function(){ setAuthMode('login'); authPanel.classList.add('open'); };
 
   function updateAuthUI(){
-    if(currentUser){
-      authToggleBtn.textContent = '☰';
-      authToggleBtn.setAttribute('aria-label','Menu');
-      authPanel.classList.remove('open');
-    } else {
-      authToggleBtn.textContent = 'Sign in';
-      authToggleBtn.removeAttribute('aria-label');
-      document.getElementById('accountMenu').classList.remove('open');
-    }
+    if(currentUser) authPanel.classList.remove('open');
+    window.nvLoggedIn = !!currentUser;
+    if(window.nvSyncAuth) window.nvSyncAuth();
   }
+  window.nvSignOut = function(){
+    if(sb) sb.auth.signOut();
+    currentUser = null;
+    updateAuthUI();
+    renderSaved();
+  };
 
   function requireSupabase(){
-    if(!sb){
-      authStatus.textContent = 'Account service is not connected. Check the Supabase settings in CONFIG.';
-      return false;
-    }
+    if(!sb){ authStatus.textContent = 'Account service is not connected right now.'; return false; }
     return true;
   }
-
   async function oauthLogin(provider){
     if(!requireSupabase()) return;
     authStatus.textContent = 'Opening ' + (provider === 'google' ? 'Google' : 'Facebook') + '…';
     try{
-      var result = await sb.auth.signInWithOAuth({
-        provider: provider,
-        options: { redirectTo: window.location.origin + window.location.pathname }
-      });
+      var result = await sb.auth.signInWithOAuth({ provider: provider, options: { redirectTo: window.location.origin + window.location.pathname } });
       if(result.error) authStatus.textContent = result.error.message;
-    }catch(e){
-      authStatus.textContent = e.message || 'Could not start social sign in.';
-    }
+    }catch(e){ authStatus.textContent = e.message || 'Could not start social sign in.'; }
   }
-
-  googleBtn.addEventListener('click', function(){ oauthLogin('google'); });
-  facebookBtn.addEventListener('click', function(){ oauthLogin('facebook'); });
+  $('googleBtn').addEventListener('click', function(){ oauthLogin('google'); });
+  $('facebookBtn').addEventListener('click', function(){ oauthLogin('facebook'); });
 
   signUpBtn.addEventListener('click', async function(){
     if(!requireSupabase()) return;
@@ -924,15 +825,11 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
     var result = await sb.auth.signUp({ email: email, password: password });
     if(result.error){ authStatus.textContent = result.error.message; return; }
     if(result.data && result.data.session){
-      currentUser = result.data.user;
-      updateAuthUI();
-      renderSaved();
-      authStatus.textContent = '';
+      currentUser = result.data.user; updateAuthUI(); renderSaved(); authStatus.textContent = '';
     } else {
       authStatus.textContent = 'Account created. Check your email to confirm, then sign in.';
     }
   });
-
   signInBtn.addEventListener('click', async function(){
     if(!requireSupabase()) return;
     var email = authEmail.value.trim(), password = authPassword.value;
@@ -940,20 +837,14 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
     authStatus.textContent = 'Signing in…';
     var result = await sb.auth.signInWithPassword({ email: email, password: password });
     if(result.error){ authStatus.textContent = result.error.message; return; }
-    currentUser = result.data.user;
-    updateAuthUI();
-    renderSaved();
-    authStatus.textContent = '';
+    currentUser = result.data.user; updateAuthUI(); renderSaved(); authStatus.textContent = '';
   });
-
   forgotBtn.addEventListener('click', async function(){
     if(!requireSupabase()) return;
     var email = authEmail.value.trim();
     if(!email){ authStatus.textContent = 'Enter your email first.'; return; }
     authStatus.textContent = 'Sending password reset email…';
-    var result = await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + window.location.pathname
-    });
+    var result = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
     authStatus.textContent = result.error ? result.error.message : 'Password reset email sent. Check your inbox.';
   });
 
@@ -964,50 +855,34 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
       if(event !== 'INITIAL_SESSION') renderSaved();
     });
     sb.auth.getSession().then(function(res){
-      if(res.data && res.data.session){
-        currentUser = res.data.session.user;
-        updateAuthUI();
-        renderSaved();
-      }
+      if(res.data && res.data.session){ currentUser = res.data.session.user; updateAuthUI(); renderSaved(); }
     });
   }
 
-  var textInput = document.getElementById('textInput');
-  var moodSelect = document.getElementById('moodSelect');
-  var typeSelect = document.getElementById('typeSelect');
-  var bgSelect = document.getElementById('bgSelect');
-  var voiceSelect = document.getElementById('voiceSelect');
-  var charCount = document.getElementById('charCount');
-  var previewCard = document.getElementById('previewCard');
-  var previewText = document.getElementById('previewText');
-  var moodLabel = document.getElementById('moodLabel');
-  var voiceLabel = document.getElementById('voiceLabel');
-  var statusLine = document.getElementById('statusLine');
-
-  function isUrdu(str){ return /[\u0600-\u06FF]/.test(str); }
-
-  function applyBackground(el, key){
-    var pair = BG[key] || BG.cinematic;
-    el.style.background = 'linear-gradient(160deg,' + pair[0] + ',' + pair[1] + ')';
-  }
+  /* ---- Quick poetry studio ---- */
+  var textInput = $('textInput'), moodSelect = $('moodSelect'), typeSelect = $('typeSelect'), bgSelect = $('bgSelect'), voiceSelect = $('voiceSelect');
+  var charCount = $('charCount'), previewCard = $('previewCard'), previewText = $('previewText'), moodLabel = $('moodLabel'), voiceLabel = $('voiceLabel'), statusLine = $('statusLine');
 
   function render(){
     var text = textInput.value || ' ';
+    var urdu = isUrdu(text);
     charCount.textContent = textInput.value.length + ' / 180';
     previewText.textContent = text;
-    previewText.style.direction = isUrdu(text) ? 'rtl' : 'ltr';
-    previewText.style.textAlign = isUrdu(text) ? 'right' : 'left';
+    previewText.style.direction = urdu ? 'rtl' : 'ltr';
+    previewText.style.textAlign = urdu ? 'right' : 'left';
     previewText.className = 'preview-urdu ' + FONT_CLASS[typeSelect.value];
+    textInput.style.direction = urdu || !textInput.value ? 'rtl' : 'ltr';
     moodLabel.textContent = MOOD_LABEL[moodSelect.value];
     voiceLabel.textContent = VOICE_LABEL[voiceSelect.value] + ' · 9:16';
-    applyBackground(previewCard, bgSelect.value);
+    var pair = BG[bgSelect.value] || BG.cinematic;
+    previewCard.style.background = 'linear-gradient(160deg,' + pair[0] + ',' + pair[1] + ')';
   }
-  [textInput, moodSelect, typeSelect, bgSelect, voiceSelect].forEach(function(el){
-    el.addEventListener('input', render);
-  });
+  [textInput, moodSelect, typeSelect, bgSelect, voiceSelect].forEach(function(el){ el.addEventListener('input', render); });
   render();
 
-  /* Templates */
+  /* Template direction follows language */
+  document.querySelectorAll('.dir-thumb').forEach(function(el){ el.style.direction = isUrdu(el.textContent) ? 'rtl' : 'ltr'; });
+
   document.querySelectorAll('#templateGrid .use-link').forEach(function(btn){
     btn.addEventListener('click', function(){
       var card = btn.closest('.dir-card');
@@ -1017,20 +892,15 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
       bgSelect.value = card.getAttribute('data-bg');
       voiceSelect.value = card.getAttribute('data-voice');
       render();
-      document.getElementById('studio').scrollIntoView({behavior:'smooth'});
+      $('studio').scrollIntoView({behavior:'smooth'});
       statusLine.textContent = 'Template loaded into the studio.';
     });
   });
 
-  /* Saved projects: backend-synced when signed in, localStorage as a guest fallback */
+  /* Saved projects */
   var STORAGE_KEY = 'navaar_saved_projects';
-  function loadLocalProjects(){
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-    catch(e){ return []; }
-  }
-  function saveLocalProjects(list){
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch(e){}
-  }
+  function loadLocalProjects(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; } }
+  function saveLocalProjects(list){ try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch(e){} }
 
   async function fetchProjects(){
     if(currentUser && sb){
@@ -1040,7 +910,7 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
         var rows = await res.json();
         return rows.map(function(r){ return { id:r.id, text:r.text, mood:r.mood, typography:r.typography, background:r.background, voice:r.voice, date:r.created_at }; });
       } catch(e){
-        statusLine && (statusLine.textContent = 'Could not reach the backend — showing local projects instead.');
+        statusLine.textContent = 'Could not reach the backend — showing local projects instead.';
         return loadLocalProjects();
       }
     }
@@ -1049,10 +919,9 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
 
   async function renderSaved(){
     var list = await fetchProjects();
-    var savedList = document.getElementById('savedList');
-    var savedCount = document.getElementById('savedCount');
-    var emptyText = document.getElementById('savedEmptyText');
-    savedCount.textContent = list.length + ' / 999';
+    var savedList = $('savedList');
+    $('savedCount').textContent = list.length + ' / 999';
+    var emptyText = $('savedEmptyText');
     emptyText.style.display = list.length ? 'none' : 'block';
     emptyText.textContent = currentUser
       ? 'No saved projects yet. Your next meaningful line can be the first.'
@@ -1062,9 +931,8 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
       var row = document.createElement('div');
       row.className = 'saved-item';
       var d = new Date(p.date);
-      row.innerHTML = '<div class="txt">' + esc(p.text) + '</div>' +
-        '<div class="meta">' + d.toLocaleDateString() + '</div>' +
-        '<div class="row-actions"><span class="load-link" data-id="'+p.id+'">Load</span><button class="btn-danger" data-del="'+p.id+'">Delete</button></div>';
+      row.innerHTML = '<div class="txt">' + esc(p.text) + '</div><div class="meta">' + d.toLocaleDateString() + '</div>' +
+        '<div class="row-actions"><span class="load-link" data-id="' + esc(p.id) + '">Load</span><button class="btn-danger" type="button" data-del="' + esc(p.id) + '">Delete</button></div>';
       savedList.appendChild(row);
     });
     savedList.querySelectorAll('.load-link').forEach(function(el){
@@ -1073,8 +941,7 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
         if(!p) return;
         textInput.value = p.text; moodSelect.value = p.mood; typeSelect.value = p.typography;
         bgSelect.value = p.background; voiceSelect.value = p.voice;
-        render();
-        statusLine.textContent = 'Saved project loaded.';
+        render(); statusLine.textContent = 'Saved project loaded.';
       });
     });
     savedList.querySelectorAll('[data-del]').forEach(function(el){
@@ -1090,297 +957,145 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
     });
   }
 
-  document.getElementById('saveBtn').addEventListener('click', async function(){
+  $('saveBtn').addEventListener('click', async function(){
     if(!textInput.value.trim()){ statusLine.textContent = 'Add a line of text before saving.'; return; }
     var entry = { text: textInput.value, mood: moodSelect.value, typography: typeSelect.value, background: bgSelect.value, voice: voiceSelect.value };
-
     if(currentUser && sb){
       try{
-        var res = await fetch(CONFIG.BACKEND_URL + '/api/projects', {
-          method:'POST', headers: await authHeaders({ 'Content-Type':'application/json' }),
-          body: JSON.stringify(entry)
-        });
+        var res = await fetch(CONFIG.BACKEND_URL + '/api/projects', { method:'POST', headers: await authHeaders({ 'Content-Type':'application/json' }), body: JSON.stringify(entry) });
         if(!res.ok) throw new Error('save failed');
         statusLine.textContent = 'Project saved to your account.';
       } catch(e){
         statusLine.textContent = 'Could not reach the backend — saved to this browser instead.';
-        var list = loadLocalProjects(); list.push(Object.assign({ id: Date.now(), date: Date.now() }, entry)); saveLocalProjects(list);
+        var l1 = loadLocalProjects(); l1.push(Object.assign({ id: Date.now(), date: Date.now() }, entry)); saveLocalProjects(l1);
       }
     } else {
-      var list2 = loadLocalProjects();
-      list2.push(Object.assign({ id: Date.now(), date: Date.now() }, entry));
-      saveLocalProjects(list2);
+      var l2 = loadLocalProjects(); l2.push(Object.assign({ id: Date.now(), date: Date.now() }, entry)); saveLocalProjects(l2);
       statusLine.textContent = 'Saved to this browser. Sign in to sync across devices.';
     }
     renderSaved();
   });
   renderSaved();
 
-  /* Export: records the actual animated preview to a real downloadable video file. */
-  document.getElementById('exportBtn').addEventListener('click', function(){
-    var exportBtn = document.getElementById('exportBtn');
-    var exportVideo = document.getElementById('exportVideo');
-    var downloadLink = document.getElementById('downloadLink');
-
-    if(!('MediaRecorder' in window)){
-      statusLine.textContent = 'Your browser does not support in-browser video recording.';
-      return;
-    }
-    exportBtn.disabled = true;
-    statusLine.textContent = 'Recording your animated preview…';
-    downloadLink.style.display = 'none';
-    exportVideo.style.display = 'none';
-
-    var W = 540, H = 960;
-    var canvas = document.createElement('canvas');
-    canvas.width = W; canvas.height = H;
-    var ctx = canvas.getContext('2d');
-    var pair = BG[bgSelect.value] || BG.cinematic;
-    var text = textInput.value || 'Navaar Studio';
-    var rtl = isUrdu(text);
-
-    var duration = 4000; var start = null;
-
-    function frame(ts){
-      if(start === null) start = ts;
-      var t = (ts - start) / duration;
-      var angle = t * Math.PI * 2;
-
-      var grad = ctx.createLinearGradient(0,0, W + 80*Math.cos(angle), H + 80*Math.sin(angle));
-      grad.addColorStop(0, pair[0]);
-      grad.addColorStop(1, pair[1]);
-      ctx.fillStyle = grad;
-      ctx.fillRect(0,0,W,H);
-
-      // soft moving glow
-      var gx = W/2 + Math.cos(angle)*80, gy = H*0.35 + Math.sin(angle)*60;
-      var glow = ctx.createRadialGradient(gx,gy,10, gx,gy,320);
-      glow.addColorStop(0,'rgba(82,217,208,0.18)');
-      glow.addColorStop(1,'rgba(82,217,208,0)');
-      ctx.fillStyle = glow;
-      ctx.fillRect(0,0,W,H);
-
-      ctx.fillStyle = 'rgba(255,255,255,0.55)';
-      ctx.font = '12px Arial';
-      ctx.textAlign = 'left';
-      ctx.fillText('NAVAAR STUDIO', 36, 50);
-
-      ctx.strokeStyle = '#52d9d0';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(36,80); ctx.lineTo(74,80); ctx.stroke();
-
-      ctx.fillStyle = '#eef1fb';
-      ctx.font = (rtl ? '42px "Noto Nastaliq Urdu", serif' : '36px Georgia, serif');
-      ctx.textAlign = rtl ? 'right' : 'left';
-      wrapText(ctx, text, rtl ? W-36 : 36, 440, W-72, 52, rtl);
-
-      ctx.fillStyle = 'rgba(238,241,251,0.7)';
-      ctx.font = '16px Arial';
-      ctx.textAlign = 'left';
-      ctx.fillText('Give your words a scene.', 36, H-90);
-
-      if(t < 1){ requestAnimationFrame(frame); }
-    }
-    function wrapText(ctx, txt, x, y, maxWidth, lineHeight, rtl){
-      var words = txt.split(' ');
-      var line = '';
-      var lines = [];
-      for(var i=0;i<words.length;i++){
-        var test = line + words[i] + ' ';
-        if(ctx.measureText(test).width > maxWidth && line !== ''){
-          lines.push(line); line = words[i] + ' ';
-        } else { line = test; }
-      }
-      lines.push(line);
-      lines.forEach(function(ln, i){ ctx.fillText(ln.trim(), x, y + i*lineHeight); });
-    }
-
-    requestAnimationFrame(frame);
-
-    var stream = canvas.captureStream(30);
-    var chunks = [];
-    var mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
-    var recorder;
-    try {
-      recorder = new MediaRecorder(stream, { mimeType: mimeType });
-    } catch(e){
-      statusLine.textContent = 'Recording is not supported in this browser.';
-      exportBtn.disabled = false;
-      return;
-    }
-    recorder.ondataavailable = function(e){ if(e.data && e.data.size) chunks.push(e.data); };
-    recorder.onstop = function(){
-      var blob = new Blob(chunks, { type: mimeType });
-      var url = URL.createObjectURL(blob);
-      exportVideo.src = url;
-      exportVideo.style.display = 'block';
-      downloadLink.href = url;
-      downloadLink.style.display = 'inline-block';
-      statusLine.textContent = 'Preview ready — play it back or download the file.';
-      exportBtn.disabled = false;
-    };
-    recorder.start();
-    setTimeout(function(){ recorder.stop(); }, duration + 150);
-  });
-
-  /* FAQ accordion */
-  document.querySelectorAll('.faq-item .faq-q').forEach(function(q){
-    q.addEventListener('click', function(){
-      q.closest('.faq-item').classList.toggle('open');
-    });
-  });
-
-  /* Pricing toggle */
+  /* Pricing */
   var currentBilling = 'monthly';
-  document.getElementById('billingToggle').addEventListener('click', function(e){
+  $('billingToggle').addEventListener('click', function(e){
     var target = e.target.closest('span');
     if(!target) return;
     var mode = target.getAttribute('data-mode');
     currentBilling = mode;
     document.querySelectorAll('#billingToggle span').forEach(function(s){ s.classList.toggle('active', s === target); });
-    document.querySelectorAll('.amount[data-monthly]').forEach(function(el){
-      el.textContent = '$' + el.getAttribute('data-' + mode);
-    });
-    document.querySelectorAll('.billed-note').forEach(function(el){
-      if(el.previousElementSibling) return;
-    });
-    document.querySelectorAll('.price-card .billed-note').forEach(function(el){
-      if(el.parentElement.querySelector('.amount[data-monthly]')){
-        el.textContent = mode === 'annual' ? 'Billed annually' : 'Billed monthly';
+    document.querySelectorAll('.amount[data-monthly]').forEach(function(el){ el.textContent = '$' + el.getAttribute('data-' + mode); });
+    document.querySelectorAll('.price-card').forEach(function(card){
+      if(card.querySelector('.amount[data-monthly]')){
+        card.querySelector('.billed-note').textContent = mode === 'annual' ? 'Billed annually' : 'Billed monthly';
       }
     });
   });
+  $('freeBtn').addEventListener('click', function(){ location.href = 'editor.html'; });
 
-  var checkoutStatus = document.getElementById('checkoutStatus');
-  [document.getElementById('creatorBtn'), document.getElementById('studioBtn')].forEach(function(btn){
+  var checkoutStatus = $('checkoutStatus');
+  [$('creatorBtn'), $('studioBtn')].forEach(function(btn){
     btn.addEventListener('click', async function(){
       if(!currentUser){
         checkoutStatus.textContent = 'Sign in first, then choose a plan.';
-        authPanel.classList.add('open');
-        return;
-      }
-      if(!CONFIG.BACKEND_URL || CONFIG.BACKEND_URL.indexOf('your-backend-url') !== -1){
-        checkoutStatus.textContent = 'Backend not connected yet — set BACKEND_URL in CONFIG at the top of the script.';
+        window.nvOpenAuth();
         return;
       }
       checkoutStatus.textContent = 'Opening secure checkout…';
       try{
         var res = await fetch(CONFIG.BACKEND_URL + '/api/checkout', {
-          method: 'POST', headers: await authHeaders({ 'Content-Type': 'application/json' }),
+          method:'POST', headers: await authHeaders({ 'Content-Type':'application/json' }),
           body: JSON.stringify({ plan: btn.getAttribute('data-plan'), billing: currentBilling })
         });
         var data = await res.json();
-        if(data.url){ window.location.href = data.url; }
-        else { checkoutStatus.textContent = data.error || 'Could not start checkout.'; }
-      } catch(e){
-        checkoutStatus.textContent = 'Could not reach the backend.';
-      }
+        if(data.url) window.location.href = data.url;
+        else checkoutStatus.textContent = data.error || 'Could not start checkout.';
+      } catch(e){ checkoutStatus.textContent = 'Could not reach the backend.'; }
     });
   });
 
-
-  /* ---- Feedback form ---- */
-  var feedbackForm = document.getElementById('feedbackForm');
-  var feedbackStatus = document.getElementById('feedbackStatus');
-  var feedbackSubmit = document.getElementById('feedbackSubmit');
-  var feedbackFocusBtn = document.getElementById('feedbackFocusBtn');
-  feedbackFocusBtn.addEventListener('click', function(){ document.getElementById('feedbackFormCard').scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(function(){ document.getElementById('feedbackMessage').focus(); },450); });
+  /* Feedback */
+  var feedbackForm = $('feedbackForm'), feedbackStatus = $('feedbackStatus'), feedbackSubmit = $('feedbackSubmit');
+  $('feedbackFocusBtn').addEventListener('click', function(){
+    $('feedbackFormCard').scrollIntoView({behavior:'smooth', block:'center'});
+    setTimeout(function(){ $('feedbackMessage').focus(); }, 450);
+  });
   feedbackForm.addEventListener('submit', async function(e){
     e.preventDefault();
-    var name=document.getElementById('feedbackName').value.trim();
-    var email=document.getElementById('feedbackEmail').value.trim();
-    var category=document.getElementById('feedbackCategory').value;
-    var message=document.getElementById('feedbackMessage').value.trim();
-    var consent=document.getElementById('feedbackConsent').checked;
-    var honeypot=document.getElementById('feedbackWebsite').value.trim();
-    var ratingEl=document.querySelector('input[name="rating"]:checked');
-    var rating=ratingEl ? Number(ratingEl.value) : 0;
+    var name = $('feedbackName').value.trim(), email = $('feedbackEmail').value.trim();
+    var category = $('feedbackCategory').value, message = $('feedbackMessage').value.trim();
+    var consent = $('feedbackConsent').checked, honeypot = $('feedbackWebsite').value.trim();
+    var ratingEl = document.querySelector('input[name="rating"]:checked');
+    var rating = ratingEl ? Number(ratingEl.value) : 0;
     if(honeypot) return;
-    if(name.length<2){ feedbackStatus.textContent='Please enter your name.'; return; }
-    if(!message || message.length<10){ feedbackStatus.textContent='Please write at least 10 characters of feedback.'; return; }
-    if(!consent){ feedbackStatus.textContent='Please confirm that your feedback may be stored.'; return; }
-    if(!CONFIG.BACKEND_URL || CONFIG.BACKEND_URL.indexOf('your-backend-url')!==-1){ feedbackStatus.textContent='Feedback service is not connected yet. Set BACKEND_URL in CONFIG.'; return; }
-    feedbackSubmit.disabled=true;feedbackStatus.textContent='Sending your feedback…';
+    if(name.length < 2){ feedbackStatus.textContent = 'Please enter your name.'; return; }
+    if(message.length < 10){ feedbackStatus.textContent = 'Please write at least 10 characters of feedback.'; return; }
+    if(!consent){ feedbackStatus.textContent = 'Please confirm that your feedback may be stored.'; return; }
+    feedbackSubmit.disabled = true; feedbackStatus.textContent = 'Sending your feedback…';
     try{
-      var res=await fetch(CONFIG.BACKEND_URL+'/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,category:category,rating:rating,message:message,website:honeypot})});
-      var data=await res.json().catch(function(){return {};});
-      if(!res.ok) throw new Error(data.error||'Could not submit feedback.');
-      feedbackForm.reset();feedbackStatus.textContent='Thank you — your feedback was submitted successfully.';loadFeedbackList();
-    }catch(err){ feedbackStatus.textContent=err.message||'Could not submit feedback. Please try again.'; }
-    feedbackSubmit.disabled=false;
+      var res = await fetch(CONFIG.BACKEND_URL + '/api/feedback', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ name:name, email:email, category:category, rating:rating, message:message, website:honeypot }) });
+      var data = await res.json().catch(function(){ return {}; });
+      if(!res.ok) throw new Error(data.error || 'Could not submit feedback.');
+      feedbackForm.reset(); feedbackStatus.textContent = 'Thank you — your feedback was submitted successfully.'; loadFeedbackList();
+    }catch(err){ feedbackStatus.textContent = err.message || 'Could not submit feedback. Please try again.'; }
+    feedbackSubmit.disabled = false;
   });
 
-  /* ---- Public feedback list ---- */
   async function loadFeedbackList(){
-    var box=document.getElementById('feedbackList');
-    if(!box) return;
+    var box = $('feedbackList');
     try{
-      var res=await fetch(CONFIG.BACKEND_URL+'/api/feedback');
-      var items=await res.json();
-      if(!res.ok||!Array.isArray(items)) throw new Error('bad');
-      box.innerHTML='';
-      if(!items.length){ var p=document.createElement('p'); p.className='muted'; p.textContent='No feedback yet. Be the first to write one!'; box.appendChild(p); return; }
+      var res = await fetch(CONFIG.BACKEND_URL + '/api/feedback');
+      var items = await res.json();
+      if(!res.ok || !Array.isArray(items)) throw new Error('bad');
+      box.innerHTML = '';
+      if(!items.length){ var p = document.createElement('p'); p.className = 'muted'; p.textContent = 'No feedback yet. Be the first to write one!'; box.appendChild(p); return; }
       items.forEach(function(it){
-        var card=document.createElement('div'); card.className='fb-item';
-        var top=document.createElement('div'); top.className='fb-top';
-        var nm=document.createElement('b'); nm.textContent=it.name||'Guest';
-        var st=document.createElement('span'); st.className='fb-stars';
-        var r=Number(it.rating)||0; st.textContent=r>0?('★'.repeat(r)+'☆'.repeat(5-r)):'';
+        var card = document.createElement('div'); card.className = 'fb-item';
+        var top = document.createElement('div'); top.className = 'fb-top';
+        var nm = document.createElement('b'); nm.textContent = it.name || 'Guest';
+        var st = document.createElement('span'); st.className = 'fb-stars';
+        var r = Math.max(0, Math.min(5, Number(it.rating) || 0)); st.textContent = r > 0 ? ('★'.repeat(r) + '☆'.repeat(5 - r)) : '';
         top.appendChild(nm); top.appendChild(st);
-        var msg=document.createElement('div'); msg.className='fb-msg'; msg.textContent=it.message||'';
-        var meta=document.createElement('div'); meta.className='fb-meta';
-        var d=it.created_at?new Date(it.created_at).toLocaleDateString():'';
-        meta.textContent=[it.type,d].filter(Boolean).join(' • ');
+        var msg = document.createElement('div'); msg.className = 'fb-msg'; msg.textContent = it.message || '';
+        var meta = document.createElement('div'); meta.className = 'fb-meta';
+        var d = it.created_at ? new Date(it.created_at).toLocaleDateString() : '';
+        meta.textContent = [it.type, d].filter(Boolean).join(' • ');
         card.appendChild(top); card.appendChild(msg); card.appendChild(meta);
         box.appendChild(card);
       });
-    }catch(e){ box.innerHTML=''; var p2=document.createElement('p'); p2.className='muted'; p2.textContent='Feedback could not be loaded right now.'; box.appendChild(p2); }
+    }catch(e){ box.innerHTML = ''; var p2 = document.createElement('p'); p2.className = 'muted'; p2.textContent = 'Feedback could not be loaded right now.'; box.appendChild(p2); }
   }
   loadFeedbackList();
 
   /* ---- Photo + lyrics video maker ---- */
-  var photos = [];
-  var audioFile = null, audioEl = null;
+  var photos = [], audioFile = null, audioEl = null;
+  var photoInput = $('photoInput'), photoThumbs = $('photoThumbs'), lyricsInput = $('lyricsInput');
+  var audioInput = $('audioInput'), audioName = $('audioName'), generateVideoBtn = $('generateVideoBtn'), videoStatus = $('videoStatus');
+  var videoCanvas = $('videoCanvas'), vctx = videoCanvas.getContext('2d');
+  var photoExportVideo = $('photoExportVideo'), photoDownloadLink = $('photoDownloadLink');
 
-  var photoInput = document.getElementById('photoInput');
-  var photoBtn = document.getElementById('photoBtn');
-  var photoThumbs = document.getElementById('photoThumbs');
-  var lyricsInput = document.getElementById('lyricsInput');
-  var audioInput = document.getElementById('audioInput');
-  var audioBtn = document.getElementById('audioBtn');
-  var audioName = document.getElementById('audioName');
-  var generateVideoBtn = document.getElementById('generateVideoBtn');
-  var videoStatus = document.getElementById('videoStatus');
-  var videoCanvas = document.getElementById('videoCanvas');
-  var vctx = videoCanvas.getContext('2d');
-  var photoExportVideo = document.getElementById('photoExportVideo');
-  var photoDownloadLink = document.getElementById('photoDownloadLink');
+  $('photoBtn').addEventListener('click', function(){ photoInput.click(); });
+  $('audioBtn').addEventListener('click', function(){ audioInput.click(); });
 
-  photoBtn.addEventListener('click', function(){ photoInput.click(); });
-  audioBtn.addEventListener('click', function(){ audioInput.click(); });
+  lyricsInput.addEventListener('input', function(){ lyricsInput.style.direction = isUrdu(lyricsInput.value) || !lyricsInput.value ? 'rtl' : 'ltr'; });
 
   function renderThumbs(){
     photoThumbs.innerHTML = '';
     photos.forEach(function(p, i){
-      var wrap = document.createElement('div');
-      wrap.style.position = 'relative';
+      var wrap = document.createElement('div'); wrap.style.position = 'relative';
       var img = document.createElement('img');
-      img.src = p.src; img.style.width = '56px'; img.style.height = '56px';
-      img.style.objectFit = 'cover'; img.style.borderRadius = '8px';
-      img.style.border = '1px solid var(--border-strong)';
+      img.src = p.src; img.alt = 'Photo ' + (i + 1);
+      img.style.cssText = 'width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--border-strong);';
       var del = document.createElement('button');
-      del.textContent = '×';
-      del.type = 'button';
+      del.textContent = '×'; del.type = 'button'; del.setAttribute('aria-label', 'Remove photo');
       del.style.cssText = 'position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:#ff5a5a;color:#fff;font-size:11px;line-height:1;cursor:pointer;border:none;';
-      del.addEventListener('click', function(){ photos.splice(i,1); renderThumbs(); });
-      wrap.appendChild(img); wrap.appendChild(del);
-      photoThumbs.appendChild(wrap);
+      del.addEventListener('click', function(){ photos.splice(i, 1); renderThumbs(); });
+      wrap.appendChild(img); wrap.appendChild(del); photoThumbs.appendChild(wrap);
     });
   }
-
   photoInput.addEventListener('change', function(){
-    var files = Array.prototype.slice.call(photoInput.files || []);
-    files.forEach(function(file){
+    Array.prototype.slice.call(photoInput.files || []).forEach(function(file){
       var reader = new FileReader();
       reader.onload = function(e){
         var img = new Image();
@@ -1391,496 +1106,67 @@ Write your own verse here</div><div class="dir-body"><h3>Clean white</h3><p>Empt
     });
     photoInput.value = '';
   });
-
   audioInput.addEventListener('change', function(){
     var file = audioInput.files && audioInput.files[0];
     if(!file) return;
-    audioFile = file;
-    audioName.textContent = file.name;
-    if(audioEl){ audioEl.pause(); }
-    audioEl = new Audio();
-    audioEl.src = URL.createObjectURL(file);
-    audioEl.crossOrigin = 'anonymous';
+    audioFile = file; audioName.textContent = file.name;
+    if(audioEl) audioEl.pause();
+    audioEl = new Audio(); audioEl.src = URL.createObjectURL(file);
   });
-
   function ensureAudioReady(){
     return new Promise(function(resolve){
       if(!audioEl || !audioFile){ resolve(0); return; }
       if(audioEl.readyState >= 1 && !isNaN(audioEl.duration)){ resolve(audioEl.duration); return; }
-      audioEl.addEventListener('loadedmetadata', function handler(){
-        audioEl.removeEventListener('loadedmetadata', handler);
-        resolve(audioEl.duration || 0);
-      });
+      audioEl.addEventListener('loadedmetadata', function h(){ audioEl.removeEventListener('loadedmetadata', h); resolve(audioEl.duration || 0); });
       audioEl.addEventListener('error', function(){ resolve(0); });
     });
   }
 
-  function drawCover(ctx, img, W, H, zoom){
-    drawCoverRect(ctx, img, 0, 0, W, H, zoom);
-  }
   function drawCoverRect(ctx, img, x, y, w, h, zoom){
-    var ir = img.width / img.height, cr = w / h;
-    var sw, sh, sx, sy;
+    var ir = img.width / img.height, cr = w / h, sw, sh;
     if(ir > cr){ sh = img.height; sw = sh * cr; } else { sw = img.width; sh = sw / cr; }
-    sx = (img.width - sw) / 2; sy = (img.height - sh) / 2;
+    var sx = (img.width - sw) / 2, sy = (img.height - sh) / 2;
     var zsw = sw / zoom, zsh = sh / zoom;
-    var zsx = sx + (sw - zsw) / 2, zsy = sy + (sh - zsh) / 2;
-    ctx.drawImage(img, zsx, zsy, zsw, zsh, x, y, w, h);
+    ctx.drawImage(img, sx + (sw - zsw) / 2, sy + (sh - zsh) / 2, zsw, zsh, x, y, w, h);
   }
+  function drawCover(ctx, img, W, H, zoom){ drawCoverRect(ctx, img, 0, 0, W, H, zoom); }
 
-  function brandLabel(ctx, x, y, align){
-    ctx.fillStyle = 'rgba(255,255,255,0.6)';
-    ctx.font = '12px Arial';
-    ctx.textAlign = align || 'left';
-    ctx.fillText('NAVAAR STUDIO', x, y);
-  }
-
-  var LAYOUTS = {
-    bottom: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha; ctx.fillStyle='#fff'; ctx.textAlign='center';
-      ctx.font=rtl?'38px "Noto Nastaliq Urdu", serif':'30px Georgia, serif';
-      wrapCentered(ctx,text,W/2,H-150,W-90,48); ctx.globalAlpha=1;
-    },
-    center: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha; ctx.fillStyle='#fff'; ctx.textAlign='center';
-      ctx.font=rtl?'44px "Noto Nastaliq Urdu", serif':'34px Georgia, serif';
-      wrapCentered(ctx,text,W/2,H/2+20,W-100,52); ctx.globalAlpha=1;
-    },
-    top: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha; ctx.fillStyle='#fff'; ctx.textAlign='center';
-      ctx.font=rtl?'38px "Noto Nastaliq Urdu", serif':'30px Georgia, serif';
-      wrapCentered(ctx,text,W/2,170,W-100,46); ctx.globalAlpha=1;
-    },
-    framed: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);
-      var m=38,ph=H*.62; drawCoverRect(ctx,img,m,34,W-m*2,ph,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#111';ctx.textAlign='center';
-      ctx.font=rtl?'32px "Noto Nastaliq Urdu", serif':'26px Georgia, serif';
-      wrapCentered(ctx,text,W/2,m+ph+90,W-90,42);ctx.globalAlpha=1;
-    },
-    split: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      var sy=H*.58; drawCoverRect(ctx,img,0,0,W,sy,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='center';
-      ctx.font=rtl?'32px "Noto Nastaliq Urdu", serif':'27px Georgia, serif';
-      wrapCentered(ctx,text,W/2,sy+(H-sy)/2+10,W-80,42);ctx.globalAlpha=1;
-    },
-    cinematic: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='center';
-      ctx.font=rtl?'34px "Noto Nastaliq Urdu", serif':'27px Georgia, serif';
-      wrapCentered(ctx,text,W/2,H/2+18,W-110,44);ctx.globalAlpha=1;
-    },
-    left: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign=rtl?'right':'left';
-      ctx.font=rtl?'34px "Noto Nastaliq Urdu", serif':'28px Georgia, serif';
-      wrapLeft(ctx,text,rtl?W-48:48,H/2-30,W*.72,44,rtl);ctx.globalAlpha=1;
-    },
-    right: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign=rtl?'left':'right';
-      ctx.font=rtl?'34px "Noto Nastaliq Urdu", serif':'28px Georgia, serif';
-      wrapRight(ctx,text,rtl?48:W-48,H/2-30,W*.72,44,rtl);ctx.globalAlpha=1;
-    },
-    minimal: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='center';
-      ctx.font=rtl?'36px "Noto Nastaliq Urdu", serif':'29px Arial, sans-serif';
-      wrapCentered(ctx,text,W/2,H/2+12,W-120,46);ctx.globalAlpha=1;
-    },
-    lower: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='center';
-      ctx.font=rtl?'35px "Noto Nastaliq Urdu", serif':'28px Georgia, serif';
-      wrapCentered(ctx,text,W/2,H*.78,W-70,45);ctx.globalAlpha=1;
-    },
-    photoFirst: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='center';
-      ctx.font=rtl?'31px "Noto Nastaliq Urdu", serif':'25px Georgia, serif';
-      wrapCentered(ctx,text,W/2,H-90,W-100,38);ctx.globalAlpha=1;
-    },
-    glass: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.fillStyle='rgba(8,12,28,.42)';ctx.fillRect(32,H*.36,W-64,H*.28);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font=rtl?'34px "Noto Nastaliq Urdu", serif':'27px Georgia, serif';
-      wrapCentered(ctx,text,W/2,H/2+12,W-100,43);ctx.globalAlpha=1;
-    },
-    corner: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign=rtl?'right':'left';ctx.font=rtl?'31px "Noto Nastaliq Urdu", serif':'25px Arial, sans-serif';
-      wrapLeft(ctx,text,rtl?W-44:44,H-220,W*.72,40,rtl);ctx.globalAlpha=1;
-    },
-    vertical: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);
-      ctx.save();ctx.translate(W*.12,H/2);ctx.rotate(-Math.PI/2);ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font=rtl?'28px "Noto Nastaliq Urdu", serif':'23px Arial, sans-serif';wrapCentered(ctx,text,0,0,H*.68,36);ctx.restore();ctx.globalAlpha=1;
-    },
-    duotone: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);ctx.fillStyle='rgba(10,20,45,.28)';ctx.fillRect(0,0,W,H);
-      ctx.strokeStyle='rgba(255,255,255,.8)';ctx.lineWidth=3;ctx.strokeRect(26,26,W-52,H-52);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font=rtl?'35px "Noto Nastaliq Urdu", serif':'28px Georgia, serif';wrapCentered(ctx,text,W/2,H/2+12,W-110,45);ctx.globalAlpha=1;
-    },
-    polaroid: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      ctx.fillStyle='#f4f0e8';ctx.fillRect(0,0,W,H);var m=42;drawCoverRect(ctx,img,m,48,W-m*2,H*.57,zoom);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#171923';ctx.textAlign='center';ctx.font=rtl?'29px "Noto Nastaliq Urdu", serif':'24px Georgia, serif';wrapCentered(ctx,text,W/2,H*.79,W-105,37);ctx.globalAlpha=1;
-    },
-    spotlight: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);var g=ctx.createRadialGradient(W/2,H/2,20,W/2,H/2,W*.7);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.68)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-      ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='center';ctx.font=rtl?'36px "Noto Nastaliq Urdu", serif':'29px Georgia, serif';wrapCentered(ctx,text,W/2,H*.73,W-100,44);ctx.globalAlpha=1;
-    },
-    diagonal: function(ctx,img,W,H,zoom,text,alpha,rtl){
-      drawCover(ctx,img,W,H,zoom);ctx.save();ctx.translate(W*.05,H*.64);ctx.rotate(-.08);ctx.globalAlpha=alpha;ctx.fillStyle='#fff';ctx.textAlign='left';ctx.font=rtl?'32px "Noto Nastaliq Urdu", serif':'26px Arial, sans-serif';wrapLeft(ctx,text,0,0,W*.8,40,rtl);ctx.restore();ctx.globalAlpha=1;
-    }
-  };
-
-  function wrapLeft(ctx,txt,x,y,maxWidth,lineHeight,rtl){
-    var words=txt.split(' '), line='', lines=[];
-    for(var i=0;i<words.length;i++){var test=line+words[i]+' ';if(ctx.measureText(test).width>maxWidth&&line){lines.push(line.trim());line=words[i]+' ';}else line=test;}
-    lines.push(line.trim()); lines.forEach(function(ln,i){ctx.fillText(ln,x,y+i*lineHeight);});
-  }
-  function wrapRight(ctx,txt,x,y,maxWidth,lineHeight,rtl){
-    var words=txt.split(' '), line='', lines=[];
-    for(var i=0;i<words.length;i++){var test=line+words[i]+' ';if(ctx.measureText(test).width>maxWidth&&line){lines.push(line.trim());line=words[i]+' ';}else line=test;}
-    lines.push(line.trim()); lines.forEach(function(ln,i){ctx.fillText(ln,x,y+i*lineHeight);});
-  }
-  var LAYOUT_KEYS = Object.keys(LAYOUTS);
-
-  function wrapCentered(ctx, txt, cx, baseY, maxWidth, lineHeight){
-    var words = txt.split(' ');
-    var line = '', lines = [];
-    for(var i=0;i<words.length;i++){
+  function wrapLines(ctx, txt, maxWidth){
+    var words = txt.split(' '), line = '', lines = [];
+    for(var i = 0; i < words.length; i++){
       var test = line + words[i] + ' ';
-      if(ctx.measureText(test).width > maxWidth && line !== ''){ lines.push(line.trim()); line = words[i] + ' '; }
-      else { line = test; }
+      if(ctx.measureText(test).width > maxWidth && line){ lines.push(line.trim()); line = words[i] + ' '; }
+      else line = test;
     }
     lines.push(line.trim());
-    var startY = baseY - (lines.length - 1) * lineHeight;
-    lines.forEach(function(ln, i){ ctx.fillText(ln, cx, startY + i * lineHeight); });
+    return lines;
   }
-
-  var layoutSelect = document.getElementById('layoutSelect');
-
-  generateVideoBtn.addEventListener('click', async function(){
-    if(photos.length === 0){ videoStatus.textContent = 'Add at least one photo first.'; return; }
-    var lines = lyricsInput.value.split('\n').map(function(s){ return s.trim(); }).filter(Boolean);
-    if(lines.length === 0){ videoStatus.textContent = 'Add at least one line of poetry or lyrics.'; return; }
-    if(!('MediaRecorder' in window)){ videoStatus.textContent = 'Your browser does not support in-browser video recording.'; return; }
-
-    var chosenLayout = layoutSelect.value;
-    if(chosenLayout === 'random'){
-      chosenLayout = LAYOUT_KEYS[Math.floor(Math.random() * LAYOUT_KEYS.length)];
-    }
-    var drawLayout = LAYOUTS[chosenLayout];
-
-    generateVideoBtn.disabled = true;
-    videoStatus.textContent = 'Preparing…';
-    photoDownloadLink.style.display = 'none';
-    photoExportVideo.style.display = 'none';
-
-    var audioDuration = await ensureAudioReady();
-    var W = videoCanvas.width, H = videoCanvas.height;
-    var totalMs;
-    if(audioDuration && audioDuration > 0){ totalMs = Math.min(audioDuration, 30) * 1000; }
-    else { totalMs = Math.max(6, Math.min(30, lines.length * 3)) * 1000; }
-
-    var canvasStream = videoCanvas.captureStream(30);
-    var combined = new MediaStream();
-    canvasStream.getVideoTracks().forEach(function(t){ combined.addTrack(t); });
-    if(audioEl && audioFile){
-      try{
-        var aStream = audioEl.captureStream ? audioEl.captureStream() : (audioEl.mozCaptureStream ? audioEl.mozCaptureStream() : null);
-        if(aStream){ aStream.getAudioTracks().forEach(function(t){ combined.addTrack(t); }); }
-      } catch(e){}
-    }
-
-    var mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm';
-    var recorder;
-    try { recorder = new MediaRecorder(combined, { mimeType: mimeType }); }
-    catch(e){ videoStatus.textContent = 'Recording is not supported in this browser.'; generateVideoBtn.disabled = false; return; }
-
-    var chunks = [];
-    recorder.ondataavailable = function(e){ if(e.data && e.data.size) chunks.push(e.data); };
-    recorder.onstop = function(){
-      var blob = new Blob(chunks, { type: mimeType });
-      var url = URL.createObjectURL(blob);
-      photoExportVideo.src = url;
-      photoExportVideo.style.display = 'block';
-      photoDownloadLink.href = url;
-      photoDownloadLink.style.display = 'inline-block';
-      videoStatus.textContent = 'Your video is ready — play it back or download it.';
-      generateVideoBtn.disabled = false;
-    };
-
-    videoStatus.textContent = 'Recording… (layout: ' + chosenLayout + ')';
-    recorder.start();
-    if(audioEl && audioFile){ audioEl.currentTime = 0; audioEl.play().catch(function(){}); }
-
-    var start = null;
-    var photoSlot = totalMs / photos.length;
-    var lineSlot = totalMs / lines.length;
-
-    function render(ts){
-      if(start === null) start = ts;
-      var elapsed = ts - start;
-      if(elapsed >= totalMs){
-        setTimeout(function(){ recorder.stop(); if(audioEl) audioEl.pause(); }, 100);
-        return;
-      }
-      var pIdx = Math.min(photos.length - 1, Math.floor(elapsed / photoSlot));
-      var pProgress = (elapsed - pIdx * photoSlot) / photoSlot;
-      var zoom = 1 + 0.08 * pProgress;
-
-      var lIdx = Math.min(lines.length - 1, Math.floor(elapsed / lineSlot));
-      var lProgress = (elapsed - lIdx * lineSlot) / lineSlot;
-      var fade = lProgress < 0.15 ? lProgress / 0.15 : (lProgress > 0.85 ? (1 - lProgress) / 0.15 : 1);
-      fade = Math.max(0, Math.min(1, fade));
-      var curLine = lines[lIdx];
-
-      drawLayout(vctx, photos[pIdx], W, H, zoom, curLine, fade, isUrdu(curLine));
-
-      requestAnimationFrame(render);
-    }
-    requestAnimationFrame(render);
-  });
-})();
-</script>
-
-<script>
-(function(){var g=document.getElementById('templateGrid');
-document.querySelectorAll('.tp-arrows button').forEach(function(b){b.addEventListener('click',function(){g.scrollBy({left:(+b.dataset.d)*g.clientWidth*.8,behavior:'smooth'})})});
-document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x===c)});var k=c.dataset.f;g.querySelectorAll('.dir-card').forEach(function(d){d.style.display=(k==='all'||d.dataset.cat===k)?'':'none'});g.scrollTo({left:0})})});
-})();
-</script>
-
-<style>
-#nvMenuBtn{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:80;width:42px;height:48px;border:1px solid var(--border-strong,#2a353c);border-left:0;border-radius:0 14px 14px 0;background:var(--card,#151d22);color:var(--accent,#6fd3b5);font-size:24px;cursor:pointer}
-#nvSide{position:fixed;top:0;left:0;bottom:0;width:min(320px,86vw);z-index:120;background:var(--bg-alt,#11191d);border-right:1px solid var(--border,#2a353c);padding:20px 16px;overflow:auto;transform:translateX(-105%);transition:transform .25s}
-#nvSide.on{transform:none}#nvSide h3{margin:0 0 4px;font-size:18px}#nvSide small{color:var(--muted,#8fa1a6);display:block;margin:14px 0 6px;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
-#nvSide a,#nvSide button.nvl{display:block;width:100%;text-align:left;padding:10px 12px;margin-bottom:4px;border-radius:10px;color:var(--text,#e9f0ee);text-decoration:none;background:rgba(255,255,255,.035);border:0;font:inherit;font-size:14px;cursor:pointer}
-#nvSide a:hover{background:var(--accent-soft,rgba(111,211,181,.15))}#nvSide a span{display:block;font-size:11.5px;color:var(--muted,#8fa1a6)}
-#nvShade{position:fixed;inset:0;background:#0009;z-index:110;display:none}#nvShade.on{display:block}
-#nvIntro{position:fixed;inset:0;z-index:200;background:var(--bg,#0e1417);display:none;overflow:auto;padding:24px 16px}#nvIntro.on{display:block}
-#nvIntro .box{max-width:760px;margin:0 auto}#nvIntro h1{font-size:clamp(28px,7vw,44px);margin:8px 0 12px}#nvIntro p{color:var(--muted,#8fa1a6);line-height:1.7}
-#nvIntro .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:18px 0}
-#nvIntro .grid div{border:1px solid var(--border,#2a353c);border-radius:12px;padding:12px;background:var(--card,#151d22);font-size:13px}#nvIntro .grid b{display:block;color:var(--accent,#6fd3b5);margin-bottom:3px}
-</style>
-<button id="nvMenuBtn" aria-label="Open menu" aria-expanded="false">&#9776;</button>
-<div id="nvShade"></div>
-<aside id="nvSide" aria-label="Website menu">
-<h3>Navaar Studio</h3><span style="color:var(--muted,#8fa1a6);font-size:12.5px">Urdu-first video creation</span>
-<small>Tools</small>
-<a href="editor.html">Full Video Editor<span>Timeline, trim, split, layers, filters, voiceover</span></a>
-<a href="tools.html">All Free Tools<span>Text, calculators, developer tools</span></a>
-<a href="#studio">Quick Poetry Video<span>One line to a shareable 9:16 video</span></a>
-<a href="#photoVideo">Photo + Lyrics Video<span>Photos, lyrics and your audio</span></a>
-<a href="#templates">Templates<span>Poetry, quotes, promos, announcements</span></a>
-<small>Site</small>
-<a href="#pricing">Plans &amp; Payment</a><a href="#feedback">Feedback</a><a href="privacy.html">Privacy Policy</a>
-<button class="nvl" id="nvAbout" type="button">&#9432; About this website</button>
-</aside>
-<div id="nvIntro" role="dialog" aria-modal="true" aria-label="Welcome"><div class="box">
-<div class="eyebrow">Welcome to Navaar Studio</div>
-<h1>Give your Urdu words a cinematic life.</h1>
-<p>Navaar Studio is a free online video maker built for Urdu and English poetry, quotes, lyrics, reels, shorts and promos. Everything runs in your browser. No install, no design skills needed.</p>
-<div class="grid">
-<div><b>Video Editor</b>Timeline, trim, split, text, shapes, stickers, drawing, filters, animations, speed, volume, voiceover and captions.</div>
-<div><b>Quick Poetry Video</b>Type one line, pick mood, font, background and sound, then export.</div>
-<div><b>Photo + Lyrics Video</b>Upload photos, write lyrics, add your audio and generate a lyric video.</div>
-<div><b>Templates</b>Ready poetry, quote, romantic, announcement and promo designs.</div>
-<div><b>Download</b>Save as .webm, .mp4, PNG frame or project file.</div>
-<div><b>Accounts &amp; Plans</b>Sign in to sync projects. Free plan to start, paid plans for more.</div>
-</div>
-<p>You can use it for: poetry and shayari videos, Instagram/TikTok/YouTube shorts, WhatsApp status, lyric videos, announcements, and business promos.</p>
-<button class="btn btn-primary" id="nvStart" type="button">Start creating</button>
-<button class="btn btn-outline" id="nvTour" type="button" style="margin-left:8px">Open menu</button>
-</div></div>
-<script>
-(function(){var $=function(i){return document.getElementById(i)},S=$('nvSide'),Sh=$('nvShade'),B=$('nvMenuBtn'),I=$('nvIntro');
-function menu(o){S.classList.toggle('on',o);Sh.classList.toggle('on',o);B.setAttribute('aria-expanded',o)}
-function intro(o){I.classList.toggle('on',o);document.body.style.overflow=o?'hidden':'';if(!o)try{sessionStorage.setItem('nvIntro','1')}catch(e){}}
-B.onclick=function(){menu(!S.classList.contains('on'))};Sh.onclick=function(){menu(false)};
-S.onclick=function(e){if(e.target.closest('a'))menu(false)};
-$('nvAbout').onclick=function(){menu(false);intro(true)};$('nvStart').onclick=function(){intro(false)};$('nvTour').onclick=function(){intro(false);menu(true)};
-document.addEventListener('keydown',function(e){if(e.key=='Escape'){menu(false);intro(false)}});
-var seen=false;try{seen=sessionStorage.getItem('nvIntro')}catch(e){}if(!seen)intro(true);})();
-</script>
-  <<!-- NAVAAR FIXES: paste this whole block in index.html, just before the final </body> -->
-<style>
-.hero-actions{flex-wrap:wrap}
-.preview-urdu{white-space:pre-line}
-#nvMenuBtn{position:static!important;transform:none!important;width:40px;height:40px;border:1px solid var(--border-strong);border-radius:50%;font-size:20px;line-height:1;padding:0;flex:none}
-@media(max-width:900px){footer nav ul{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 20px}}
-@media(max-width:700px){
-  .wrap{padding:0 18px}.statbar .wrap{padding:26px 18px}
-  section{padding:56px 0}.hero{padding:44px 0 36px}
-  .select-grid{grid-template-columns:1fr}.panel{padding:18px}
-}
-</style>
-<script>
-(function(){
-  var RTL=/[\u0600-\u06FF]/;
-  // 1) Menu button goes into the header so it stops covering page content
-  var b=document.getElementById('nvMenuBtn'),nl=document.querySelector('.nav-links'),ab=document.getElementById('authBox');
-  if(b&&nl&&ab)nl.insertBefore(b,ab);
-  // 2) After login the Sign in button showed a second hamburger; show "Account" instead
-  var t=document.getElementById('authToggleBtn');
-  if(t&&window.MutationObserver){
-    new MutationObserver(function(){if(t.textContent==='\u2630')t.textContent='Account';})
-      .observe(t,{childList:true,characterData:true,subtree:true});
+  function wrapCentered(ctx, txt, cx, baseY, maxWidth, lh){
+    var lines = wrapLines(ctx, txt, maxWidth), startY = baseY - (lines.length - 1) * lh;
+    lines.forEach(function(ln, i){ ctx.fillText(ln, cx, startY + i * lh); });
   }
-  // 3) Text boxes follow the language typed (Urdu = right-to-left, English = left-to-right)
-  ['textInput','lyricsInput'].forEach(function(id){
-    var e=document.getElementById(id);if(!e)return;
-    function d(){e.style.direction=RTL.test(e.value)?'rtl':'ltr';}
-    e.addEventListener('input',d);d();
-  });
-  // 4) Template cards: English text was showing right-to-left and Urdu left-to-right
-  document.querySelectorAll('.dir-thumb').forEach(function(el){
-    el.style.direction=RTL.test(el.textContent)?'rtl':'ltr';
-  });
-  // 5) "Start with Free" did nothing
-  var free=document.querySelector('.price-card .btn-outline:not([id])');
-  if(free)free.addEventListener('click',function(){location.href='editor.html';});
-  // 6) Feedback is shown publicly on the page, so the consent text now says so
-  var c=document.getElementById('feedbackConsent');
-  if(c&&c.parentNode&&c.parentNode.lastChild.nodeType===3){
-    c.parentNode.lastChild.textContent=' I agree that my name, rating and feedback may be stored and shown publicly on this page.';
+  function wrapLeft(ctx, txt, x, y, maxWidth, lh){
+    wrapLines(ctx, txt, maxWidth).forEach(function(ln, i){ ctx.fillText(ln, x, y + i * lh); });
   }
-})();
-</script>
-<script>
-/* ROUND 2: Safari/iPhone export, poetry line breaks, honest labels */
-(function(){
-  var RTL=/[\u0600-\u06FF]/,$=function(i){return document.getElementById(i)};
-  var MR=window.MediaRecorder,ext='webm';
-  // Safari/iPhone: no webm, so record mp4 instead (photo + lyrics maker uses this too)
-  if(MR&&MR.isTypeSupported&&!MR.isTypeSupported('video/webm')){
-    var mp4=['video/mp4;codecs=avc1,mp4a.40.2','video/mp4'].filter(function(t){return MR.isTypeSupported(t)})[0];
-    if(mp4){
-      ext='mp4';
-      window.MediaRecorder=function(s){return new MR(s,{mimeType:mp4})};
-      window.MediaRecorder.isTypeSupported=MR.isTypeSupported.bind(MR);
-      var B=window.Blob;
-      window.Blob=function(p,o){if(o&&/webm/.test(o.type||''))o=Object.assign({},o,{type:'video/mp4'});return new B(p,o)};
-      window.Blob.prototype=B.prototype;
-      [['downloadLink','navaar-video-preview'],['photoDownloadLink','navaar-photo-video']].forEach(function(a){
-        var l=$(a[0]);if(l){l.download=a[1]+'.mp4';l.textContent='Download this video (.mp4)';}
-      });
-    }
-  }
-  // Quick poetry export: keeps line breaks (couplets stay on two lines)
-  var BG={cinematic:['#141c42','#0d1330'],dusk:['#5b3a1a','#2b1710'],teal:['#123f3a','#0a1f1e'],midnight:['#0d1440','#070a1f'],rose:['#4a1530','#160a18'],slate:['#2a3049','#12162a']};
-  var eb=$('exportBtn');
-  if(eb){
-    var nb=eb.cloneNode(true);eb.parentNode.replaceChild(nb,eb);
-    nb.addEventListener('click',function(){
-      var st=$('statusLine'),v=$('exportVideo'),dl=$('downloadLink');
-      if(!window.MediaRecorder){st.textContent='Your browser does not support in-browser video recording.';return}
-      var mime=['video/webm;codecs=vp9','video/webm','video/mp4'].filter(function(t){return MR.isTypeSupported(t)})[0];
-      if(!mime){st.textContent='Recording is not supported in this browser.';return}
-      var e2=mime.indexOf('mp4')>-1?'mp4':'webm';
-      if(document.fonts)document.fonts.load('42px "Noto Nastaliq Urdu"');
-      var W=540,H=960,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
-      var p=BG[$('bgSelect').value]||BG.cinematic,text=$('textInput').value||'Navaar Studio',rtl=RTL.test(text),dur=4000,t0=null;
-      x.font=rtl?'42px "Noto Nastaliq Urdu",serif':'36px Georgia,serif';
-      var lines=[],lh=rtl?68:52;
-      text.split('\n').forEach(function(par){var l='';par.split(' ').forEach(function(w){var t=l?l+' '+w:w;if(x.measureText(t).width>W-72&&l){lines.push(l);l=w}else l=t});lines.push(l)});
-      var chunks=[],rec;
-      try{rec=new MediaRecorder(c.captureStream(30),{mimeType:mime})}catch(err){st.textContent='Recording is not supported in this browser.';return}
-      nb.disabled=true;st.textContent='Recording your animated preview…';dl.style.display='none';v.style.display='none';
-      function draw(ts){
-        if(t0===null)t0=ts;var a=(ts-t0)/dur*Math.PI*2;
-        var g=x.createLinearGradient(0,0,W+80*Math.cos(a),H+80*Math.sin(a));g.addColorStop(0,p[0]);g.addColorStop(1,p[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
-        var gx=W/2+Math.cos(a)*80,gy=H*.35+Math.sin(a)*60,r=x.createRadialGradient(gx,gy,10,gx,gy,320);r.addColorStop(0,'rgba(82,217,208,.18)');r.addColorStop(1,'rgba(82,217,208,0)');x.fillStyle=r;x.fillRect(0,0,W,H);
-        x.fillStyle='rgba(255,255,255,.55)';x.font='12px Arial';x.textAlign='left';x.fillText('NAVAAR STUDIO',36,50);
-        x.strokeStyle='#52d9d0';x.lineWidth=2;x.beginPath();x.moveTo(36,80);x.lineTo(74,80);x.stroke();
-        x.fillStyle='#eef1fb';x.font=rtl?'42px "Noto Nastaliq Urdu",serif':'36px Georgia,serif';x.textAlign=rtl?'right':'left';
-        var y0=440-(lines.length-1)*lh/2;lines.forEach(function(l,i){x.fillText(l,rtl?W-36:36,y0+i*lh)});
-        x.fillStyle='rgba(238,241,251,.7)';x.font='16px Arial';x.textAlign='left';x.fillText('Give your words a scene.',36,H-90);
-        if(ts-t0<dur)requestAnimationFrame(draw);
-      }
-      rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
-      rec.onstop=function(){
-        var u=URL.createObjectURL(new Blob(chunks,{type:mime.split(';')[0]}));
-        v.src=u;v.style.display='block';dl.href=u;dl.download='navaar-video-preview.'+e2;dl.textContent='Download this video (.'+e2+')';dl.style.display='inline-block';
-        st.textContent='Preview ready. Play it back or download the file.';nb.disabled=false;
-      };
-      rec.start();requestAnimationFrame(draw);setTimeout(function(){rec.stop()},dur+150);
-    });
-  }
-  // Music options never added sound, so say so instead of promising it
-  var vs=$('voiceSelect');
-  if(vs)Array.prototype.forEach.call(vs.options,function(o){if(o.value!=='none')o.textContent+=' (not in export yet)'});
-  // Pricing note matched to what the page really does
-  var pn=document.querySelector('.pricing-note');
-  if(pn)pn.textContent='Free needs no payment. Sign in to choose a paid plan.';
-})();
-</script>
-<!-- NAVAAR FIXES V2 -->
-<style>
-/* header: sirf logo + menu button. Baqi sab menu mein */
-header nav,#authToggleBtn{display:none!important}
-.nav-links{gap:12px}
-#nvMenuBtn{position:static!important;transform:none!important;width:42px;height:42px;border:1px solid var(--border-strong);border-radius:50%;font-size:20px;line-height:1;padding:0;flex:none;background:var(--card);color:var(--accent);cursor:pointer}
-.auth-panel{position:fixed;top:76px;right:16px;width:min(300px,calc(100vw - 32px));max-height:calc(100vh - 96px);overflow:auto}
-#nvSide .nvl.out{color:#ff9a9a;margin-top:14px;border:1px solid rgba(255,120,120,.3)}
-.hero-actions{flex-wrap:wrap}
-.preview-urdu{white-space:pre-line}
-@media(max-width:900px){footer nav ul{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 20px}}
-@media(max-width:700px){
-  .wrap{padding:0 18px}.statbar .wrap{padding:26px 18px}
-  section{padding:56px 0}.hero{padding:44px 0 36px}
-  .select-grid{grid-template-columns:1fr}.panel{padding:18px}
-}
-</style>
-<script>
-(function(){
-  var RTL=/[\u0600-\u06FF]/,$=function(i){return document.getElementById(i)};
+  var wrapRight = wrapLeft;
 
-  // 1) Menu button header mein (desktop + mobile dono)
-  var b=$('nvMenuBtn'),nl=document.querySelector('.nav-links');
-  if(b&&nl)nl.appendChild(b);
+  function font(rtl, urduPx, enPx, fam){ return rtl ? urduPx + 'px "Noto Nastaliq Urdu", serif' : enPx + 'px ' + (fam || 'Georgia, serif'); }
 
-  // 2) Sign in / Log out sirf menu mein (Log out sab se last)
-  var S=$('nvSide'),t=$('authToggleBtn');
-  var inBtn=document.createElement('button');inBtn.type='button';inBtn.className='nvl';inBtn.textContent='Sign in / Create account';
-  var outBtn=document.createElement('button');outBtn.type='button';outBtn.className='nvl out';outBtn.textContent='Log out';
-  S.appendChild(inBtn);S.appendChild(outBtn);
-  function sync(){var on=t.textContent.trim()!=='Sign in';inBtn.style.display=on?'none':'block';outBtn.style.display=on?'block':'none';}
-  inBtn.onclick=function(){$('nvShade').click();t.click();};
-  outBtn.onclick=function(){$('nvShade').click();$('signOutBtn').click();};
-  if(window.MutationObserver)new MutationObserver(sync).observe(t,{childList:true,characterData:true,subtree:true});
-  sync();
-
-  // 3) Text box language ke hisab se RTL/LTR
-  ['textInput','lyricsInput'].forEach(function(id){
-    var e=$(id);if(!e)return;
-    function d(){e.style.direction=RTL.test(e.value)?'rtl':'ltr';}
-    e.addEventListener('input',d);d();
-  });
-
-  // 4) Template cards ki direction
-  document.querySelectorAll('.dir-thumb').forEach(function(el){
-    el.style.direction=RTL.test(el.textContent)?'rtl':'ltr';
-  });
-
-  // 5) "Start with Free" button
-  var free=document.querySelector('.price-card .btn-outline:not([id])');
-  if(free)free.addEventListener('click',function(){location.href='editor.html';});
-
-  // 6) Feedback consent text (public dikhta hai)
-  var c=$('feedbackConsent');
-  if(c&&c.parentNode&&c.parentNode.lastChild.nodeType===3){
-    c.parentNode.lastChild.textContent=' I agree that my name, rating and feedback may be stored and shown publicly on this page.';
-  }
-
-  // 7) Urdu font pehle load ho, taake video mein sahi nazar aaye
-  if(document.fonts){document.fonts.load('30px "Noto Nastaliq Urdu"');}
-})();
-</script>
-
-</body>
-</html>
+  var LAYOUTS = {
+    bottom: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,38,30); wrapCentered(c,t,W/2,H-150,W-90,48); c.globalAlpha=1; },
+    center: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,44,34); wrapCentered(c,t,W/2,H/2+20,W-100,52); c.globalAlpha=1; },
+    top: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,38,30); wrapCentered(c,t,W/2,170,W-100,46); c.globalAlpha=1; },
+    framed: function(c,img,W,H,z,t,a,r){ c.fillStyle='#fff'; c.fillRect(0,0,W,H); var m=38,ph=H*.62; drawCoverRect(c,img,m,34,W-m*2,ph,z); c.globalAlpha=a; c.fillStyle='#111'; c.textAlign='center'; c.font=font(r,32,26); wrapCentered(c,t,W/2,m+ph+90,W-90,42); c.globalAlpha=1; },
+    split: function(c,img,W,H,z,t,a,r){ var sy=H*.58; c.fillStyle='#0c1214'; c.fillRect(0,0,W,H); drawCoverRect(c,img,0,0,W,sy,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,32,27); wrapCentered(c,t,W/2,sy+(H-sy)/2+10,W-80,42); c.globalAlpha=1; },
+    cinematic: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,34,27); wrapCentered(c,t,W/2,H/2+18,W-110,44); c.globalAlpha=1; },
+    left: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign=r?'right':'left'; c.font=font(r,34,28); wrapLeft(c,t,r?W-48:48,H/2-30,W*.72,44); c.globalAlpha=1; },
+    right: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign=r?'left':'right'; c.font=font(r,34,28); wrapRight(c,t,r?48:W-48,H/2-30,W*.72,44); c.globalAlpha=1; },
+    minimal: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,36,29,'Arial, sans-serif'); wrapCentered(c,t,W/2,H/2+12,W-120,46); c.globalAlpha=1; },
+    lower: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,35,28); wrapCentered(c,t,W/2,H*.78,W-70,45); c.globalAlpha=1; },
+    photoFirst: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,31,25); wrapCentered(c,t,W/2,H-90,W-100,38); c.globalAlpha=1; },
+    glass: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.fillStyle='rgba(8,12,28,.42)'; c.fillRect(32,H*.36,W-64,H*.28); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,34,27); wrapCentered(c,t,W/2,H/2+12,W-100,43); c.globalAlpha=1; },
+    corner: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign=r?'right':'left'; c.font=font(r,31,25,'Arial, sans-serif'); wrapLeft(c,t,r?W-44:44,H-220,W*.72,40); c.globalAlpha=1; },
+    vertical: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.save(); c.translate(W*.12,H/2); c.rotate(-Math.PI/2); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,28,23,'Arial, sans-serif'); wrapCentered(c,t,0,0,H*.68,36); c.restore(); c.globalAlpha=1; },
+    duotone: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); c.fillStyle='rgba(10,20,45,.28)'; c.fillRect(0,0,W,H); c.strokeStyle='rgba(255,255,255,.8)'; c.lineWidth=3; c.strokeRect(26,26,W-52,H-52); c.globalAlpha=a; c.fillStyle='#fff'; c.textAlign='center'; c.font=font(r,35,28); wrapCentered(c,t,W/2,H/2+12,W-110,45); c.globalAlpha=1; },
+    polaroid: function(c,img,W,H,z,t,a,r){ c.fillStyle='#f4f0e8'; c.fillRect(0,0,W,H); var m=42; drawCoverRect(c,img,m,48,W-m*2,H*.57,z); c.globalAlpha=a; c.fillStyle='#171923'; c.textAlign='center'; c.font=font(r,29,24); wrapCentered(c,t,W/2,H*.79,W-105,37); c.globalAlpha=1; },
+    spotlight: function(c,img,W,H,z,t,a,r){ drawCover(c,img,W,H,z); var g=c.createRadialGradient(W/2,H/2,20,W/2,H/2,W*.7); g.addColorStop(0,'rgba(0,0,0,0)'); g
