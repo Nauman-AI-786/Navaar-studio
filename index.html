@@ -125,7 +125,7 @@ footer ul{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--mu2)
 #side small{color:var(--mu);display:block;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
 #side a,#side .nb{display:block;width:100%;text-align:left;padding:10px 12px;margin-bottom:4px;border-radius:10px;color:var(--tx);background:rgba(255,255,255,.04);font-size:14px;cursor:pointer}
 #side a:hover,#side .nb:hover{background:var(--soft)}#side a span{display:block;font-size:11.5px;color:var(--mu)}
-#side .lo{color:#ff9a9a;border:1px solid rgba(255,120,120,.3);background:transparent;margin-top:auto;display:none}
+#side .lo{color:#ff9a9a;border:1px solid rgba(255,120,120,.3);background:transparent;margin-top:4px;display:none}
 #shade{position:fixed;inset:0;background:#0009;z-index:110;display:none}#shade.on{display:block}
 /* modal + intro */
 .ov{position:fixed;inset:0;z-index:200;background:rgba(6,10,11,.86);backdrop-filter:blur(6px);display:none;overflow:auto;padding:24px 14px}
@@ -155,7 +155,7 @@ footer ul{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--mu2)
 
 <header id="top"><div class="wrap">
   <a class="logo" href="#top"><svg viewBox="0 0 40 40"><use href="#lg"/></svg><span>Navaar<span>Studio</span></span></a>
-  <div class="hd-r"><button class="btn btn-o btn-s" id="hdSign" type="button">Sign in</button><button id="menuBtn" type="button" aria-label="Menu">&#9776;</button></div>
+  <div class="hd-r"><button class="btn btn-o btn-s" id="hdSign" type="button">Sign in</button><button class="btn btn-o btn-s" id="hdOut" type="button" style="display:none">Log out</button><button id="menuBtn" type="button" aria-label="Menu">&#9776;</button></div>
 </div></header>
 
 <section class="hero"><div class="wrap hero-grid">
@@ -393,7 +393,8 @@ $('go').onclick=async function(){
 $('fg').onclick=async function(){if(!ready())return;var e=$('em').value.trim();if(!e)return ast.textContent='Enter your email first.';
   var r=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin+location.pathname});ast.textContent=r.error?r.error.message:'Password reset email sent.'};
 function syncAuth(){var on=!!user;$('mSign').style.display=on?'none':'block';$('mOut').style.display=on?'block':'none';
-  $('hdSign').style.display=on?'none':'inline-flex';if(on)ov(auth,false)}
+  $('hdSign').style.display=on?'none':'inline-flex';$('hdOut').style.display=on?'inline-flex':'none';if(on)ov(auth,false)}
+$('hdOut').onclick=function(){$('mOut').onclick()};
 $('mOut').onclick=async function(){if(sb)await sb.auth.signOut();try{sessionStorage.setItem('nvSkip','1')}catch(e){}location.href=location.pathname};
 if(sb){sb.auth.onAuthStateChange(function(ev,s){user=s?s.user:null;syncAuth();if(ev!=='INITIAL_SESSION')renderSaved()});
   sb.auth.getSession().then(function(r){if(r.data.session){user=r.data.session.user;syncAuth();renderSaved()}})}
