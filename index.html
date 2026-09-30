@@ -358,10 +358,10 @@ function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp
 async function hdr(x){var h=Object.assign({},x||{});try{var r=await sb.auth.getSession();if(r.data.session)h.Authorization='Bearer '+r.data.session.access_token}catch(e){}return h}
 
 /* ---- menu / overlays ---- */
-var side=$('side'),shade=$('shade'),auth=$('auth'),intro=$('intro');
-function menu(o){side.classList.toggle('on',o);shade.classList.toggle('on',o)}
+var side=$('side'),shadeEl=$('shade'),auth=$('auth'),intro=$('intro');
+function menu(o){side.classList.toggle('on',o);shadeEl.classList.toggle('on',o)}
 function ov(el,o){el.classList.toggle('on',o);document.body.style.overflow=(auth.classList.contains('on')||intro.classList.contains('on'))?'hidden':''}
-$('menuBtn').onclick=function(){menu(!side.classList.contains('on'))};shade.onclick=function(){menu(false)};
+$('menuBtn').onclick=function(){menu(!side.classList.contains('on'))};shadeEl.onclick=function(){menu(false)};
 side.onclick=function(e){if(e.target.closest('a'))menu(false)};
 $('mAbout').onclick=function(){menu(false);ov(intro,true)};
 $('iStart').onclick=function(){ov(intro,false)};
