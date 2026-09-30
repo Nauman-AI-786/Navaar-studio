@@ -142,4 +142,6 @@ document.addEventListener('click',e=>{const f=e.target.closest('[data-f]'),c=e.t
  else if(c){cat=c.dataset.c=='All'?'':c.dataset.c;dash()}
  else if(o&&T.find(x=>x.id==o.dataset.o).href){rec=[o.dataset.o,...rec.filter(x=>x!=o.dataset.o)].slice(0,6);LS.s('nv-rec',rec)}});
 document.addEventListener('input',e=>{if(e.target.id=='q')dash()});addEventListener('hashchange',route);route();
-</script></body></html>
+</script>
+<script src="pwa.js" defer></script>
+</body></html>
