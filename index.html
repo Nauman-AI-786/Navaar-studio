@@ -214,7 +214,7 @@ footer ul{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--mu2)
       <div class="sel">
         <div><label for="mood">Visual mood</label><select id="mood"><option value="CINEMATIC POETRY">Cinematic poetry</option><option value="EDITORIAL CALM">Editorial calm</option><option value="FORWARD MOTION">Forward motion</option><option value="ROMANTIC WARMTH">Romantic warmth</option><option value="SPIRITUAL STILLNESS">Spiritual stillness</option><option value="BOLD ANNOUNCEMENT">Bold announcement</option></select></div>
         <div><label for="typ">Typography</label><select id="typ"><option value="">Urdu classic</option><option value="f-modern">Urdu modern</option><option value="f-serif">English serif</option><option value="f-sans">English sans</option></select></div>
-        <div style="grid-column:1/-1"><label for="bgs">Background</label><select id="bgs"><option value="cinematic">Cinematic gradient</option><option value="dusk">Warm dusk</option><option value="teal">Deep teal</option><option value="midnight">Midnight blue</option><option value="rose">Rose noir</option><option value="slate">Slate</option></select></div>
+        <div style="grid-column:1/-1"><label for="bgs">Background</label><select id="bgs"><option value="cinematic">Cinematic gradient</option><option value="dusk">Warm dusk</option><option value="teal">Deep teal</option><option value="midnight">Midnight blue</option><option value="rose">Rose noir</option><option value="slate">Slate</option></select></div><div><label for="dur">Video length</label><select id="dur"><option value="15">15 sec</option><option value="20" selected>20 sec</option><option value="30">30 sec</option><option value="45">45 sec</option><option value="60">60 sec</option></select></div><div><label for="snd">Sound</label><select id="snd"><option value="calm">Calm music</option><option value="dream">Dreamy music</option><option value="warm">Warm music</option><option value="">No sound</option></select></div>
       </div>
       <div class="acts"><button class="btn btn-o" id="saveBtn" type="button">Save project</button><button class="btn btn-p" id="expBtn" type="button">Export video</button></div>
       <div class="st" id="st1"></div><video class="out" id="v1" controls playsinline></video><a class="dl" id="d1">Download video</a>
@@ -240,7 +240,7 @@ footer ul{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--mu2)
       <div class="help" style="margin-top:8px">Use audio you own or have rights to.</div>
       <label for="lay">Layout style</label>
       <select id="lay"><option value="bottom">Bottom caption</option><option value="center">Center focus</option><option value="top">Top title</option><option value="framed">Framed photo</option><option value="split">Split panel</option><option value="glass">Glass panel</option><option value="polaroid">Polaroid card</option><option value="spot">Spotlight</option><option value="cinematic">Cinematic full photo</option><option value="left">Left aligned story</option><option value="right">Right aligned Urdu</option><option value="minimal">Minimal clean</option><option value="lower">Lower third</option><option value="photoFirst">Photo first caption</option><option value="corner">Corner editorial</option><option value="vertical">Vertical side</option><option value="duotone">Duotone frame</option><option value="diagonal">Diagonal dynamic</option><option value="random">Random</option></select>
-      <label for="aiTopic" style="margin-top:6px">AI poetry writer</label>
+      <label for="vlen">Video length</label><select id="vlen"><option value="0">Auto</option><option value="15">15 sec</option><option value="20">20 sec</option><option value="30">30 sec</option><option value="60">60 sec</option></select><label for="aiTopic" style="margin-top:6px">AI poetry writer</label>
       <div style="display:flex;gap:8px;margin-bottom:6px"><input id="aiTopic" placeholder="Topic: ماں، دوستی، محبت, hope..."><button class="btn btn-o btn-s" id="aiWrite" type="button" style="white-space:nowrap">✨ AI write</button></div>
       <div class="help">AI writes original lines for your topic (sign in required).</div>
       <div class="acts" style="margin-top:8px"><button class="btn btn-p" id="autoBtn" type="button">✨ Auto video</button><button class="btn btn-o" id="gen" type="button">Generate with my settings</button></div>
@@ -425,17 +425,23 @@ syncAuth();
 
 /* ---- helpers ---- */
 var BG={cinematic:['#141c42','#0d1330'],dusk:['#5b3a1a','#2b1710'],teal:['#123f3a','#0a1f1e'],midnight:['#0d1440','#070a1f'],rose:['#4a1530','#160a18'],slate:['#2a3049','#12162a']};
-function mime(){var M=window.MediaRecorder;if(!M)return null;return['video/webm;codecs=vp9','video/webm','video/mp4'].filter(function(t){return M.isTypeSupported(t)})[0]||null}
+function mime(){var M=window.MediaRecorder;if(!M)return null;return['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4'].filter(function(t){return M.isTypeSupported(t)})[0]||null}
+function nvTap(el){if(!el._t){var C=window.AudioContext||window.webkitAudioContext,c=new C(),s=c.createMediaElementSource(el),d=c.createMediaStreamDestination();s.connect(d);el._t={c:c,s:d.stream}}el._t.c.resume();return el._t.s}
+function nvMusic(k,sec){var C=window.AudioContext||window.webkitAudioContext,c=new C(),d=c.createMediaStreamDestination(),g=c.createGain(),T=c.currentTime,
+ch={calm:[[220,277,330],[196,247,294],[175,220,262],[196,247,294]],dream:[[262,330,392],[220,262,330],[175,220,262],[196,247,294]],warm:[[196,247,294],[220,277,330],[165,208,247],[175,220,262]]}[k]||[[220,277,330]];
+g.gain.value=.22;g.gain.setValueAtTime(.22,T+sec-1.5);g.gain.linearRampToValueAtTime(0,T+sec);g.connect(d);c.resume();
+for(var t=0,n=0;t<sec;t+=4,n++)ch[n%ch.length].forEach(function(f){[f,f*2].forEach(function(F,j){var o=c.createOscillator(),e=c.createGain();o.type=j?'sine':'triangle';o.frequency.value=F;e.gain.setValueAtTime(0,T+t);e.gain.linearRampToValueAtTime(j?.15:.35,T+t+1.2);e.gain.linearRampToValueAtTime(0,T+t+4.3);o.connect(e);e.connect(g);o.start(T+t);o.stop(T+t+4.4)})});
+d.stream._c=c;return d.stream}
 function record(canvas,ms,draw,audio,done){
   var m=mime(),chunks=[],ms2=new MediaStream();
   canvas.captureStream(30).getVideoTracks().forEach(function(t){ms2.addTrack(t)});
-  if(audio){try{var a=audio.captureStream?audio.captureStream():audio.mozCaptureStream();a.getAudioTracks().forEach(function(t){ms2.addTrack(t)})}catch(e){}}
+  if(audio){try{(audio.getAudioTracks?audio:nvTap(audio)).getAudioTracks().forEach(function(t){ms2.addTrack(t)})}catch(e){}}
   var rec=new MediaRecorder(ms2,{mimeType:m});
   rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
   rec.onstop=function(){done(new Blob(chunks,{type:m.split(';')[0]}),m.indexOf('mp4')>-1?'mp4':'webm')};
-  rec.start();if(audio){audio.currentTime=0;audio.play().catch(function(){})}
+  rec.start();if(audio&&audio.play){audio.currentTime=0;audio.play().catch(function(){})}
   var t0=null;(function f(ts){if(t0===null)t0=ts;var e=ts-t0;
-    if(e>=ms){setTimeout(function(){if(rec.state!=='inactive')rec.stop();if(audio)audio.pause()},100);return}
+    if(e>=ms){setTimeout(function(){if(rec.state!=='inactive')rec.stop();if(audio&&audio.pause)audio.pause()},100);return}
     draw(e);requestAnimationFrame(f)})(performance.now());
 }
 function showOut(v,d,blob,ext,name){var u=URL.createObjectURL(blob);v.src=u;v.style.display='block';d.href=u;d.download=name+'.'+ext;d.textContent='Download video (.'+ext+')';d.style.display='inline-block'}
@@ -461,12 +467,12 @@ $('expBtn').onclick=async function(){
   var p=BG[$('bgs').value],text=txt.value||'Navaar Studio',u=isU(text),fs=$('typ').value;
   var fnt=u&&fs!=='f-modern'?'42px "Noto Nastaliq Urdu",serif':(u?'38px Arial,sans-serif':'36px '+(fs==='f-sans'?'Arial,sans-serif':'Georgia,serif')),lh=u?70:52;
   x.font=fnt;var lines=[];text.split('\n').forEach(function(l){wrap(x,l,W-72).forEach(function(z){lines.push(z)})});
-  record(c,4000,function(e){var a=e/4000*Math.PI*2;
+  var secs=+$('dur').value,mu=$('snd').value?nvMusic($('snd').value,secs):null;record(c,secs*1000,function(e){var a=e/4000*Math.PI*2;
     var g=x.createLinearGradient(0,0,W+80*Math.cos(a),H+80*Math.sin(a));g.addColorStop(0,p[0]);g.addColorStop(1,p[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
     x.fillStyle='rgba(255,255,255,.55)';x.font='12px Arial';x.textAlign='left';x.fillText('NAVAAR STUDIO',36,50);
     x.fillStyle='#eef1fb';x.font=fnt;x.textAlign=u?'right':'left';var y0=460-(lines.length-1)*lh/2;
-    lines.forEach(function(l,i){x.fillText(l,u?W-36:36,y0+i*lh)});mark(x,W,H)},null,
-    function(blob,ext){showOut($('v1'),$('d1'),blob,ext,'navaar-video');st.textContent='Video ready. Play or download it.';b.disabled=false})};
+    lines.forEach(function(l,i){x.fillText(l,u?W-36:36,y0+i*lh)});mark(x,W,H)},mu,
+    function(blob,ext){showOut($('v1'),$('d1'),blob,ext,'navaar-video');if(mu)mu._c.close();st.textContent='Video ready. Play or download it.';b.disabled=false})};
 
 /* ---- saved projects ---- */
 var KEY='navaar_saved_projects';
@@ -562,7 +568,7 @@ $('gen').onclick=async function(){var st=$('st2'),b=this;
   b.disabled=true;st.textContent='Recording…';$('d2').style.display='none';$('v2').style.display='none';
   try{await document.fonts.load('30px "Noto Nastaliq Urdu"')}catch(e){}
   var dur=0;if(audioEl&&audioFile){dur=await new Promise(function(res){if(audioEl.readyState>=1&&!isNaN(audioEl.duration))return res(audioEl.duration);audioEl.onloadedmetadata=function(){res(audioEl.duration||0)};audioEl.onerror=function(){res(0)}})}
-  var ms=dur>0?Math.min(dur,30)*1000:Math.max(6,Math.min(30,lines.length*3))*1000,ps=ms/photos.length,ls=ms/lines.length;
+  var vl=+$('vlen').value,ms=vl?vl*1000:dur>0?Math.min(dur,60)*1000:Math.max(6,Math.min(60,lines.length*3))*1000,ps=ms/photos.length,ls=ms/lines.length;
   record(cv,ms,function(e){var pi=Math.min(photos.length-1,Math.floor(e/ps)),z=1+.08*((e-pi*ps)/ps),li=Math.min(lines.length-1,Math.floor(e/ls)),lp2=(e-li*ls)/ls;
     var f=Math.max(0,Math.min(1,lp2<.15?lp2/.15:(lp2>.85?(1-lp2)/.15:1)));vx.globalAlpha=1;L(vx,photos[pi],cv.width,cv.height,z,lines[li],f,isU(lines[li]));vx.globalAlpha=1;mark(vx,cv.width,cv.height)},
     audioFile?audioEl:null,function(blob,ext){showOut($('v2'),$('d2'),blob,ext,'navaar-photo-video');st.textContent='Your video is ready.';b.disabled=false})};
@@ -596,6 +602,12 @@ async function loadFb(){var b=$('fl');try{var r=await fetch(CFG.API+'/api/feedba
   catch(e){b.innerHTML='<p class="muted">Feedback could not be loaded right now.</p>'}}
 loadFb();
 
+/* ---- back button closes popups first ---- */
+(function(){var els=[side,auth,intro],pushed=false,skipPop=false;
+function anyOn(){return els.some(function(e){return e.classList.contains('on')})}
+var mo=new MutationObserver(function(){if(anyOn()&&!pushed){history.pushState({nv:1},'');pushed=true}else if(!anyOn()&&pushed){pushed=false;skipPop=true;history.back()}});
+els.forEach(function(e){mo.observe(e,{attributes:true,attributeFilter:['class']})});
+addEventListener('popstate',function(){if(skipPop){skipPop=false;return}if(pushed){pushed=false;menu(false);ov(auth,false);ov(intro,false)}})})();
 /* ---- welcome intro: every visit, except right after login/logout ---- */
 var skip=false;try{skip=sessionStorage.getItem('nvSkip')==='1';sessionStorage.removeItem('nvSkip')}catch(e){}
 if(/access_token|[?&]code=/.test(location.hash+location.search))skip=true;
