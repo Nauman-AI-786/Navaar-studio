@@ -435,7 +435,8 @@ function record(canvas,ms,draw,audio,done){
 }
 function showOut(v,d,blob,ext,name){var u=URL.createObjectURL(blob);v.src=u;v.style.display='block';d.href=u;d.download=name+'.'+ext;d.textContent='Download video (.'+ext+')';d.style.display='inline-block'}
 function wrap(c,t,maxW){var w=t.split(' '),l='',o=[];w.forEach(function(x){var s=l?l+' '+x:x;if(c.measureText(s).width>maxW&&l){o.push(l);l=x}else l=s});o.push(l);return o}
-
+function isPaid(){return false} // paid plan check baad mein yahan
+function mark(c,W,H){if(isPaid())return;c.save();c.globalAlpha=.75;c.fillStyle='#fff';c.shadowColor='rgba(0,0,0,.65)';c.shadowBlur=6;c.font='600 20px Arial,sans-serif';c.textAlign='right';c.fillText('Made with Navaar Studio',W-24,H-28);c.restore()}
 /* ---- quick poetry ---- */
 var txt=$('txt'),pt=$('pt'),pv=$('pv');
 function render(){var t=txt.value||' ',u=isU(t);$('cc').textContent=txt.value.length+' / 180';
@@ -455,7 +456,7 @@ $('expBtn').onclick=async function(){
     var g=x.createLinearGradient(0,0,W+80*Math.cos(a),H+80*Math.sin(a));g.addColorStop(0,p[0]);g.addColorStop(1,p[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
     x.fillStyle='rgba(255,255,255,.55)';x.font='12px Arial';x.textAlign='left';x.fillText('NAVAAR STUDIO',36,50);
     x.fillStyle='#eef1fb';x.font=fnt;x.textAlign=u?'right':'left';var y0=460-(lines.length-1)*lh/2;
-    lines.forEach(function(l,i){x.fillText(l,u?W-36:36,y0+i*lh)})},null,
+    lines.forEach(function(l,i){x.fillText(l,u?W-36:36,y0+i*lh)});mark(x,W,H)},null,
     function(blob,ext){showOut($('v1'),$('d1'),blob,ext,'navaar-video');st.textContent='Video ready. Play or download it.';b.disabled=false})};
 
 /* ---- saved projects ---- */
@@ -554,7 +555,7 @@ $('gen').onclick=async function(){var st=$('st2'),b=this;
   var dur=0;if(audioEl&&audioFile){dur=await new Promise(function(res){if(audioEl.readyState>=1&&!isNaN(audioEl.duration))return res(audioEl.duration);audioEl.onloadedmetadata=function(){res(audioEl.duration||0)};audioEl.onerror=function(){res(0)}})}
   var ms=dur>0?Math.min(dur,30)*1000:Math.max(6,Math.min(30,lines.length*3))*1000,ps=ms/photos.length,ls=ms/lines.length;
   record(cv,ms,function(e){var pi=Math.min(photos.length-1,Math.floor(e/ps)),z=1+.08*((e-pi*ps)/ps),li=Math.min(lines.length-1,Math.floor(e/ls)),lp2=(e-li*ls)/ls;
-    var f=Math.max(0,Math.min(1,lp2<.15?lp2/.15:(lp2>.85?(1-lp2)/.15:1)));vx.globalAlpha=1;L(vx,photos[pi],cv.width,cv.height,z,lines[li],f,isU(lines[li]));vx.globalAlpha=1},
+    var f=Math.max(0,Math.min(1,lp2<.15?lp2/.15:(lp2>.85?(1-lp2)/.15:1)));vx.globalAlpha=1;L(vx,photos[pi],cv.width,cv.height,z,lines[li],f,isU(lines[li]));vx.globalAlpha=1;mark(vx,cv.width,cv.height)},
     audioFile?audioEl:null,function(blob,ext){showOut($('v2'),$('d2'),blob,ext,'navaar-photo-video');st.textContent='Your video is ready.';b.disabled=false})};
 
 /* ---- pricing ---- */
