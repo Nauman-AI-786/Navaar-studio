@@ -296,4 +296,6 @@ hp.onclick=()=>{hp.classList.remove('on');try{localStorage.setItem('navaar-help'
 try{if(!localStorage.getItem('navaar-help'))hp.classList.add('on')}catch(_){}
 ui();requestAnimationFrame(n=>{last=n;loop(n)});
 const pq=new URLSearchParams(location.search).get('poem');if(pq!==null&&window.POEMS&&POEMS[+pq]){tool='Templates';applyPoem(+pq)}
-</script></body></html>
+</script>
+<script src="pwa.js" defer></script>
+</body></html>
