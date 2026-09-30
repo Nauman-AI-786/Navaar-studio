@@ -67,11 +67,24 @@ Navaar <span>Studio</span></a>
 <aside id="props"></aside>
 <section id="tl"><div id="tb"><button id="pl" class="pri" style="width:70px">Play</button><button id="sp">Split</button><button id="fitdur" title="Set length to end of last item">Fit length</button><b id="tm" style="font-variant-numeric:tabular-nums">0.0 / 8.0s</b><span class="sp" style="flex:1"></span><label class="hint">Length <input type="number" id="dur" value="8" min="1" max="120" style="width:64px;display:inline"> s</label></div><div id="tk"><div id="ruler"></div><div id="rows"></div><div id="ph"></div></div></section>
 <input type="file" id="fm" accept="image/*,video/*,audio/*" multiple hidden>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="poems.js"></script>
 <script>
 const $=s=>document.querySelector(s),C=$('#cv'),X=C.getContext('2d');
 const RS={'9:16':[540,960],'16:9':[960,540],'1:1':[720,720]};
 let dm=false,dr=null,gd=false,dc='#ffffff',dw=6,pf='All',vr=null,asBg=false,L=[],sel=null,t=0,play=false,dur=8,bg='#132a2b',H=[],F=[],last=0,drag=null,AC=null,AD=null,rec=false;
+/* ---- free-plan watermark: stays ON unless a paid plan is confirmed ---- */
+const NV={URL:'https://zcungofmmaagqcinafhb.supabase.co',KEY:'sb_publishable_7ydxbZOzF0v2X58P7Pk_jg_za4pBQ3s',API:'https://navaar-backend-production.up.railway.app'};
+let WM=true;
+const PLANP=(async()=>{try{
+ const sb=window.supabase.createClient(NV.URL,NV.KEY),{data}=await sb.auth.getSession(),ss=data.session;if(!ss)return;
+ const r=await fetch(NV.API+'/api/subscription/'+ss.user.id,{headers:{Authorization:'Bearer '+ss.access_token}});
+ const d=await r.json();
+ if(r.ok&&d.status==='active'&&(d.plan==='creator'||d.plan==='studio'))WM=false;
+}catch(e){}})();
+function wmark(){const s=Math.max(16,Math.round(C.width*.035));X.save();X.filter='none';X.globalAlpha=.8;X.shadowColor='rgba(0,0,0,.7)';X.shadowBlur=8;
+ X.font='700 '+s+'px Manrope,Arial,sans-serif';X.textAlign='right';X.textBaseline='bottom';X.fillStyle='#fff';
+ X.fillText('Made with Navaar Studio',C.width-s*.8,C.height-s*.8);X.restore()}
 const FONTS={'Modern':'Manrope','Urdu Nastaliq':'Noto Nastaliq Urdu','Serif':'Georgia','Mono':'monospace','Impact':'Impact,Arial Black','Cursive':'cursive','Fantasy':'fantasy','Arial':'Arial','Times':'Times New Roman'};
 const ANIMS=['none','typewriter','fade','slide up','slide down','slide left','slide right','zoom in','pop','spin'],OUTS=['none','fade','zoom out','slide down'],LOOPS=['none','pulse','float','shake','spin','slow zoom','swing'];
 let MB=null,AK=false,AL='ur-PK',SR=null,SEG=[];const SPK=new Set();const GM=new WeakMap(),HS=matchMedia('(pointer:coarse)').matches?40:20;
@@ -114,6 +127,7 @@ function draw(){
  if(dr&&dr.pts.length>1){X.strokeStyle=dc;X.lineWidth=dw;X.lineCap=X.lineJoin='round';X.beginPath();dr.pts.forEach((z,i)=>i?X.lineTo(z[0],z[1]):X.moveTo(z[0],z[1]));X.stroke()}
  if(gd&&!rec){X.strokeStyle='rgba(220,181,110,.6)';X.lineWidth=1;X.beginPath();X.moveTo(C.width/2,0);X.lineTo(C.width/2,C.height);X.moveTo(0,C.height/2);X.lineTo(C.width,C.height/2);X.stroke()}
  const s=cur();if(s&&!rec&&!dm&&s.type!='audio'){X.save();X.strokeStyle='#6fd3b5';X.lineWidth=2;X.setLineDash([6,4]);X.translate(s.x+s.w/2,s.y+s.h/2);X.rotate(s.rot*Math.PI/180);X.strokeRect(-s.w/2,-s.h/2,s.w,s.h);X.setLineDash([]);X.fillStyle='#6fd3b5';X.fillRect(s.w/2-HS/2.5,s.h/2-HS/2.5,HS/1.25,HS/1.25);X.restore()}
+ if(rec&&WM)wmark();
 }
 function shp(o){const w=o.w,h=o.h,k=o.k;let f=o.c;if(o.g){f=X.createLinearGradient(-w/2,-h/2,w/2,h/2);f.addColorStop(0,o.c);f.addColorStop(1,o.c2)}X.fillStyle=f;X.beginPath();
  if(k=='circle')X.ellipse(0,0,w/2,h/2,0,0,7);else if(k=='round')X.roundRect(-w/2,-h/2,w,h,h/4);
@@ -268,7 +282,7 @@ function projJSON(){return JSON.stringify({n:$('#pname').value,r:$('#ratio').val
 function loadProj(j){$('#pname').value=j.n||'Untitled video';$('#ratio').value=j.r;$('#ratio').onchange({target:{value:j.r}});bg=j.bg;dur=j.dur;$('#dur').value=dur;L=j.L;sel=null;ui()}
 $('#exp').onclick=e=>{e.stopPropagation();$('#dm').classList.toggle('on')};
 addEventListener('click',()=>$('#dm').classList.remove('on'));
-$('#dm').onclick=e=>{const d=e.target.dataset.d;if(!d)return;const n=$('#pname').value||'video';
+$('#dm').onclick=async e=>{const d=e.target.dataset.d;if(!d)return;const n=$('#pname').value||'video';if(d!='json')await PLANP;
  if(d=='png'){rec=true;draw();C.toBlob(b=>{dl(b,n+'.png');rec=false;msg('Downloaded frame')})}
  else if(d=='json'){dl(new Blob([projJSON()],{type:'application/json'}),n+'.json');msg('Project downloaded (text and shapes only)')}
  else startExport(d)};
