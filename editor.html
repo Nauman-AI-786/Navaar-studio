@@ -299,7 +299,6 @@ $('#dm').onclick=async e=>{const d=e.target.dataset.d;if(!d)return;const n=$('#p
 function stopRec(){play=false;pauseAll();mr.stop()}
 function ui(){drawer();props();rows()}
 $('#stage').ondragover=e=>e.preventDefault();$('#stage').ondrop=e=>{e.preventDefault();$('#fm').onchange({target:{files:e.dataTransfer.files,value:''}})};
-addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;const o=cur();if(e.code=='Space'){e.preventDefault();$('#pl').click()}if(o&&(e.key=='Delete'||e.key=='Backspace')){snap();L.splice(L.indexOf(o),1);sel=null;ui()}});
 $('#fitdur').onclick=()=>{if(!L.length)return;dur=Math.max(1,Math.ceil(Math.max(...L.map(o=>o.st+o.d))));$('#dur').value=dur;rows()};
 const hp=document.createElement('div');hp.id='hp';hp.innerHTML='<div><h3 style="font-size:16px;color:var(--tx)">Quick guide</h3><b>1.</b> Pick a tool (Text, Media, Shapes, Templates...).<br><b>2.</b> Tap an item on the video to edit it. Drag the corner square to resize.<br><b>3.</b> Drag bars in the timeline to set when each item shows. Split cuts at the playhead.<br><b>4.</b> Media &rsaquo; Record voice. Turn on Auto-captions to get subtitles from your voice.<br><b>5.</b> Press Download when you are done.<br><br><button class="pri" style="width:100%">Got it</button></div>';document.body.appendChild(hp);
 hp.onclick=()=>{hp.classList.remove('on');try{localStorage.setItem('navaar-help','1')}catch(_){}};$('#hlp').onclick=()=>hp.classList.add('on');
