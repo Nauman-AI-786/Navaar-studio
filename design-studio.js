@@ -1,4 +1,13 @@
 (()=>{
+ const NV={URL:'https://zcungofmmaagqcinafhb.supabase.co',KEY:'sb_publishable_7ydxbZOzF0v2X58P7Pk_jg_za4pBQ3s',API:'https://navaar-backend-production.up.railway.app'};
+let WM=true;
+const PLANP=(async()=>{try{
+ if(!window.supabase)await loadJS('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2');
+ const sb=window.supabase.createClient(NV.URL,NV.KEY),{data}=await sb.auth.getSession(),ss=data.session;if(!ss)return;
+ const r=await fetch(NV.API+'/api/subscription/'+ss.user.id,{headers:{Authorization:'Bearer '+ss.access_token}});
+ const d=await r.json();
+ if(r.ok&&d.status==='active'&&(d.plan==='creator'||d.plan==='studio'))WM=false;
+}catch(e){}})();
 const PRE={
 Poster:[1080,1350],Flyer:[1080,1350],BusinessCard:[1050,600],Invitation:[1080,1350],EventPoster:[1080,1350],ProductAdvertisement:[1080,1350],QuoteCard:[1080,1080],PoetryCard:[1080,1080],
 InstagramPost:[1080,1080],InstagramStory:[1080,1920],InstagramReelCover:[1080,1920],InstagramCarousel:[1080,1080],WhatsAppStatus:[1080,1920],FacebookPost:[1200,630],FacebookStory:[1080,1920],FacebookCover:[1640,856],
