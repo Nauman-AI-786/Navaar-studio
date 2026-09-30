@@ -440,7 +440,11 @@ function record(canvas,ms,draw,audio,done){
 }
 function showOut(v,d,blob,ext,name){var u=URL.createObjectURL(blob);v.src=u;v.style.display='block';d.href=u;d.download=name+'.'+ext;d.textContent='Download video (.'+ext+')';d.style.display='inline-block'}
 function wrap(c,t,maxW){var w=t.split(' '),l='',o=[];w.forEach(function(x){var s=l?l+' '+x:x;if(c.measureText(s).width>maxW&&l){o.push(l);l=x}else l=s});o.push(l);return o}
-function isPaid(){return false} // paid plan check baad mein yahan
+var PAID=false;
+function isPaid(){return PAID}
+(async function(){try{if(!sb)return;var s=(await sb.auth.getSession()).data.session;if(!s)return;
+var r=await fetch(CFG.API+'/api/subscription/'+s.user.id,{headers:{Authorization:'Bearer '+s.access_token}});var d=await r.json();
+if(r.ok&&d.status==='active'&&(d.plan==='creator'||d.plan==='studio'))PAID=true}catch(e){}})();
 function mark(c,W,H){if(isPaid())return;c.save();c.globalAlpha=.75;c.fillStyle='#fff';c.shadowColor='rgba(0,0,0,.65)';c.shadowBlur=6;c.font='600 20px Arial,sans-serif';c.textAlign='right';c.fillText('Made with Navaar Studio',W-24,H-28);c.restore()}
 /* ---- quick poetry ---- */
 var txt=$('txt'),pt=$('pt'),pv=$('pv');
