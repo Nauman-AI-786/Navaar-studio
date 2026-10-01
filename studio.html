@@ -311,9 +311,11 @@ document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{document.querySelec
 $("template-prev").onclick=()=>$("template-carousel").scrollBy({left:-300,behavior:"smooth"});
 $("template-next").onclick=()=>$("template-carousel").scrollBy({left:300,behavior:"smooth"});
 
-/* ---- Feedback (local validation only) ---- */
-$("feedback-form").addEventListener("submit",e=>{
+/* ---- Feedback ---- */
+const API_URL="https://AAPKA-BACKEND-URL"; // bina aakhri slash ke
+$("feedback-form").addEventListener("submit",async e=>{
  e.preventDefault();
+ const form=e.currentTarget;
  const name=$("feedback-name").value.trim(),email=$("feedback-email").value.trim(),msg=$("feedback-message").value.trim();
  ["name","email","message"].forEach(k=>$("feedback-"+k+"-error").textContent="");
  if($("feedback-website").value){setStatus("feedback-status","Thanks for your feedback.","success");return;}
@@ -322,7 +324,16 @@ $("feedback-form").addEventListener("submit",e=>{
  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$("feedback-email-error").textContent="Enter a valid email address or leave this field empty.";ok=false;}
  if(msg.length<10){$("feedback-message-error").textContent="Write at least 10 characters of feedback.";ok=false;}
  if(!ok)return setStatus("feedback-status","Please review the highlighted fields.","error");
- e.currentTarget.reset();setStatus("feedback-status","Thanks — this feedback was validated locally. No remote feedback service is connected.","success");
+ const btn=form.querySelector("button[type=submit]");
+ btn.disabled=true;setStatus("feedback-status","Sending…");
+ try{
+  const r=await fetch(API_URL+"/api/feedback",{method:"POST",headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({name,email,category:$("feedback-category").value,rating:0,message:msg,website:""})});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(d.error||"Could not send feedback.");
+  form.reset();setStatus("feedback-status","Thank you for your feedback!","success");
+ }catch(err){setStatus("feedback-status",err.message||"Network error. Please try again.","error");}
+ finally{btn.disabled=false;}
 });
 
 /* ---- Nav ---- */
