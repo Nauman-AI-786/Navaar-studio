@@ -52,5 +52,5 @@ qrscan:async b=>{await lib(JS);b.innerHTML='<div class="row"><button class="b pr
 barcode:async b=>{await lib(JB);b.innerHTML='<div class="fm"></div><div class="row"><button class="b pri dp">Download PNG</button></div>'+XS+'<canvas style="max-width:100%;background:#fff;border-radius:8px"></canvas>';const cv=$('canvas',b),g=form($('.fm',b),[['sel','Format',['CODE128','EAN13','EAN8','UPC','CODE39','ITF14']],['s','Value','123456789012'],['r','Bar width',1,4,2],['r','Height',30,200,90],['c','Bar color','#000000'],['c','Background','#ffffff']]);let ok=0;const R=()=>{const[f,v,w,h,lc,bg]=g();if(!v.trim()){ok=0;return S(b,'Type a value to create a barcode.')}try{JsBarcode(cv,v,{format:f,width:+w,height:+h,lineColor:lc,background:bg,displayValue:true,margin:16});ok=1;S(b,'')}catch(e){ok=0;S(b,'This value is not valid for '+f+'. EAN-13 needs 12–13 digits, EAN-8 7–8, UPC 11–12, ITF-14 13–14.')}};b.oninput=b.onchange=R;R();$('.dp',b).onclick=async()=>ok?dl(await blob(cv,'image/png'),'navaar-barcode.png'):S(b,'Fix the value first.')}
 };
 async function PDFLib0(){await lib(PL);return PDFLib.PDFDocument.create()}
-window.NVH={form,S,dl,rd,blob,XS,U,shell,flist,ld,pdfOut};};
+window.NVH={form,S,dl,rd,blob,XS,U,shell,flist,ld,pdfOut};
 })();
