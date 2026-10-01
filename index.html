@@ -428,7 +428,7 @@ syncAuth();
 
 /* ---- helpers ---- */
 var BG={cinematic:['#141c42','#0d1330'],dusk:['#5b3a1a','#2b1710'],teal:['#123f3a','#0a1f1e'],midnight:['#0d1440','#070a1f'],rose:['#4a1530','#160a18'],slate:['#2a3049','#12162a']};
-function mime(){var M=window.MediaRecorder;if(!M)return null;return['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4'].filter(function(t){return M.isTypeSupported(t)})[0]||null}
+function mime(){var M=window.MediaRecorder;if(!M)return null;return['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].filter(function(t){return M.isTypeSupported(t)})[0]||null}
 function nvTap(el){if(!el._t){var C=window.AudioContext||window.webkitAudioContext,c=new C(),s=c.createMediaElementSource(el),d=c.createMediaStreamDestination();s.connect(d);el._t={c:c,s:d.stream}}el._t.c.resume();return el._t.s}
 function nvMusic(k,sec){var C=window.AudioContext||window.webkitAudioContext,c=new C(),d=c.createMediaStreamDestination(),g=c.createGain(),T=c.currentTime,
 ch={calm:[[220,277,330],[196,247,294],[175,220,262],[196,247,294]],dream:[[262,330,392],[220,262,330],[175,220,262],[196,247,294]],warm:[[196,247,294],[220,277,330],[165,208,247],[175,220,262]]}[k]||[[220,277,330]];
@@ -439,7 +439,7 @@ function record(canvas,ms,draw,audio,done){
   var m=mime(),chunks=[],ms2=new MediaStream();
   canvas.captureStream(30).getVideoTracks().forEach(function(t){ms2.addTrack(t)});
   if(audio){try{(audio.getAudioTracks?audio:nvTap(audio)).getAudioTracks().forEach(function(t){ms2.addTrack(t)})}catch(e){}}
-  var rec=new MediaRecorder(ms2,{mimeType:m});
+  var rec=new MediaRecorder(ms2,{mimeType:m,videoBitsPerSecond:8000000,audioBitsPerSecond:128000});
   rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
   rec.onstop=function(){done(new Blob(chunks,{type:m.split(';')[0]}),m.indexOf('mp4')>-1?'mp4':'webm')};
   rec.start();if(audio&&audio.play){audio.currentTime=0;audio.play().catch(function(){})}
