@@ -1,5 +1,5 @@
 /* Navaar Studio service worker. Bump VERSION after each site update. */
-const VERSION = 'navaar-v1';
+const VERSION = 'navaar-v2';
 const SHELL = ['./', 'index.html', 'editor.html', 'tools.html', 'cartoon.html', 'privacy.html',
   'favicon.svg', 'manifest.json', 'pwa.js', 'icons/icon-192.png', 'icons/icon-512.png'];
 
