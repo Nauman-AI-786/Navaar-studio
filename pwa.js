@@ -1,6 +1,5 @@
 /* Navaar Studio PWA helper: add <script src="pwa.js" defer></script> to EVERY page. */
 (function () {
-  // manifest + theme (only if the page does not have them already)
   var h = document.head;
   if (!document.querySelector('link[rel="manifest"]')) {
     var l = document.createElement('link'); l.rel = 'manifest'; l.href = 'manifest.json'; h.appendChild(l);
@@ -19,10 +18,11 @@
   }
 
   var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
-  if (standalone) return;                       // already installed
-  try { if (localStorage.getItem('nvInstallHide') === '1') return; } catch (e) {}
+  if (standalone) return; // already installed
 
   var deferred = null, bar = null;
+  function hidden() { try { return localStorage.getItem('nvInstallHide') === '1'; } catch (e) { return false; } }
+
   function build(text, onClick) {
     if (bar) return;
     bar = document.createElement('div');
@@ -38,19 +38,32 @@
     bar.appendChild(t); bar.appendChild(b); bar.appendChild(x); document.body.appendChild(bar);
   }
 
+  // Permanent "Install app" item in the menu (not affected by the x button)
+  var side = document.getElementById('side');
+  if (side && !document.getElementById('mInstall')) {
+    var n = document.createElement('div');
+    n.className = 'nb'; n.id = 'mInstall'; n.textContent = '\u2B07 Install app';
+    side.insertBefore(n, document.getElementById('mAbout') || null);
+    n.onclick = function () {
+      if (deferred) { deferred.prompt(); deferred.userChoice.finally(function () { deferred = null; }); return; }
+      var ios2 = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      alert(ios2 ? 'Safari mein Share > Add to Home Screen dabayen.' : 'Chrome menu (\u22EE) mein "Install app" ya "Add to Home screen" chunein.');
+    };
+  }
+
   // Android / Chrome / Edge
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault(); deferred = e;
-    build('Install Navaar Studio on your phone', function () {
+    if (!hidden()) build('Install Navaar Studio on your phone', function () {
       if (!deferred) return; deferred.prompt();
       deferred.userChoice.finally(function () { deferred = null; if (bar) { bar.remove(); bar = null; } });
     });
   });
   window.addEventListener('appinstalled', function () { if (bar) { bar.remove(); bar = null; } });
 
-  // iPhone Safari has no install prompt: show a short hint
+  // iPhone Safari: short hint
   var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
-  if (ios) window.addEventListener('load', function () {
+  if (ios && !hidden()) window.addEventListener('load', function () {
     setTimeout(function () { build('To install: tap Share, then "Add to Home Screen"', null); }, 2500);
   });
 })();
