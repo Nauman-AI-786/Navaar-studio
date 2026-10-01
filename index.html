@@ -621,5 +621,25 @@ if(!skip)ov(intro,true);
 (function(){var s=document.getElementById('side');if(!s)return;var a=document.createElement('a');a.href='cartoon.html';a.innerHTML='Photo to Cartoon<span>Photo se cartoon, anime, sketch</span>';var t=s.querySelector('a[href="tools.html"]');if(t&&t.after)t.after(a);else s.appendChild(a)})();
 </script>
   <script src="pwa.js" defer></script>
+  <style>
+body{background:radial-gradient(900px 480px at 85% -10%,rgba(121,217,189,.18),transparent 60%),radial-gradient(700px 420px at -10% 30%,rgba(216,182,116,.08),transparent 60%),var(--bg)}
+header{background:rgba(12,18,20,.6);backdrop-filter:blur(20px) saturate(1.4)}
+.hero h1{background:linear-gradient(120deg,#fff 30%,var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card,.pc,.step,.panel,.tc,.fbi{border-radius:20px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover,.pc:hover,.step:hover,.tc:hover{transform:translateY(-4px);border-color:rgba(121,217,189,.45);box-shadow:0 18px 40px -18px rgba(121,217,189,.35)}
+.btn{min-height:44px}
+.btn-p{background:linear-gradient(135deg,#79d9bd,#d8b674)}
+.pv{box-shadow:0 40px 90px -30px #000,0 0 0 1px rgba(121,217,189,.12)}
+section{padding:96px 0}
+@media(max-width:900px){section{padding:60px 0}}
+.fade{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.fade.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.fade{opacity:1;transform:none}*{transition:none!important}}
+</style>
+<script>
+(function(){if(!('IntersectionObserver' in window))return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.card,.step,.pc,.panel').forEach(function(el){el.classList.add('fade');io.observe(el)})})();
+</script>
 </body>
 </html>
