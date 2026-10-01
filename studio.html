@@ -1,645 +1,334 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <link rel="manifest" href="manifest.json">
+<!doctype html>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Navaar Studio — Free Online Video Editor for Urdu &amp; English</title>
-<meta name="description" content="Navaar Studio is a free online video editor with a timeline, Urdu and English text, templates, photo and lyrics videos. Download as video or PNG.">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0c1214">
-<link rel="canonical" href="https://nauman-ai-786.github.io/Navaar-studio/">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Navaar Studio — Free Online Video Editor">
-<meta property="og:description" content="Edit videos in your browser: timeline, Urdu text, templates and downloads.">
-<meta property="og:url" content="https://nauman-ai-786.github.io/Navaar-studio/">
-<meta property="og:image" content="https://nauman-ai-786.github.io/Navaar-studio/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Navaar Studio","url":"https://nauman-ai-786.github.io/Navaar-studio/","description":"Free online video editor for Urdu and English.","applicationCategory":"MultimediaApplication","operatingSystem":"Any","inLanguage":["en","ur"]}</script>
+<title>Navaar Studio — Urdu-first video workspace</title>
+<meta name="description" content="Free online video editor, Urdu first. Make poetry and photo-lyrics videos in your browser.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0c1214;--alt:#0f181b;--card:#141f22;--bd:rgba(121,217,189,.13);--bd2:rgba(210,235,228,.2);--tx:#f3f7f5;--mu:#93a8a2;--mu2:#c3d2ce;--ac:#79d9bd;--ac2:#d8b674;--soft:rgba(121,217,189,.13)}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:radial-gradient(1100px 520px at 78% -8%,rgba(121,217,189,.13),transparent 60%),var(--bg);color:var(--tx);font:16px/1.65 'Inter','Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}ul{list-style:none}button{font-family:inherit;border:none}
-.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--ac);font-weight:600;text-transform:uppercase;margin-bottom:12px}
-h1,h2,h3{font-family:'Plus Jakarta Sans','Inter',sans-serif;font-weight:700;letter-spacing:-.025em}
-h2{font-size:clamp(26px,4vw,34px);line-height:1.2}h3{font-size:18px}
-p{color:var(--mu2);line-height:1.7}.muted{color:var(--mu)}
-section{padding:80px 0}
-.alt{background:var(--alt);border-block:1px solid var(--bd)}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:999px;font-size:14.5px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:.15s}
-.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn-p{background:linear-gradient(135deg,var(--ac),#a8ecd6);color:#08201a;box-shadow:0 8px 26px -8px rgba(121,217,189,.55)}
-.btn-o{background:rgba(255,255,255,.03);border-color:var(--bd2);color:var(--tx)}.btn-o:hover{border-color:var(--ac)}
-.btn-s{padding:9px 16px;font-size:13.5px}
-.btn-d{background:transparent;border:1px solid rgba(255,120,120,.4);color:#ff9a9a;padding:6px 12px;font-size:12.5px;border-radius:7px;cursor:pointer}
-header{position:sticky;top:0;z-index:50;background:rgba(12,18,20,.75);backdrop-filter:blur(16px);border-bottom:1px solid var(--bd)}
-header .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
-.logo{display:flex;align-items:center;gap:10px;font:800 18px 'Plus Jakarta Sans',sans-serif}
-.logo svg{width:34px;height:34px}.logo span span{font-weight:500;color:var(--ac);margin-left:3px}
-.hd-r{display:flex;gap:10px;align-items:center}
-#menuBtn{width:42px;height:42px;border:1px solid var(--bd2);border-radius:50%;background:var(--card);color:var(--ac);font-size:20px;cursor:pointer}
-.hero{padding:80px 0 60px}
-.hero-grid,.two{display:grid;grid-template-columns:1.1fr .95fr;gap:48px;align-items:center}
-.two{grid-template-columns:1fr 1fr;align-items:start;gap:26px}
-.hero h1{font-size:clamp(34px,5.4vw,58px);line-height:1.07;letter-spacing:-.03em;max-width:15ch}
-.hero .lead{max-width:52ch;margin:18px 0 26px}
-.acts{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-.pv{background:linear-gradient(160deg,#182427,#0e1719);border:1px solid var(--bd2);border-radius:24px;padding:26px;box-shadow:0 40px 90px -30px #000;transition:background .4s}
-.pv-top{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.08em;color:var(--mu);margin-bottom:16px}
-.pv-top b{color:var(--tx)}
-.rule{width:38px;height:2px;background:var(--ac);margin-bottom:22px}
-.pv-t{font-size:32px;text-align:right;direction:rtl;font-weight:600;margin-bottom:16px;white-space:pre-line;word-wrap:break-word;font-family:'Noto Nastaliq Urdu',serif;line-height:2.1}
-.f-modern{font-family:'Inter',sans-serif!important;line-height:1.5!important}
-.f-serif{font-family:Georgia,serif!important;font-style:italic;line-height:1.5!important}
-.f-sans{font-family:Arial,sans-serif!important;line-height:1.5!important}
-.stats{background:var(--alt);border-block:1px solid var(--bd)}
-.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding:30px 24px;text-align:center}
-.stats h4{font-size:15px}.stats span{font-size:13px;color:var(--mu)}
-.head{max-width:600px;margin-bottom:40px}.head h2{margin-bottom:12px}
-.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:36px;flex-wrap:wrap}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:24px}
-.card .ic{width:38px;height:38px;border-radius:10px;background:var(--soft);color:var(--ac);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-.card p{font-size:14px;margin-top:6px}
-.steps{counter-reset:s;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.step{position:relative;padding:24px;border:1px solid var(--bd);border-radius:16px;background:var(--card)}
-.step:before{counter-increment:s;content:counter(s);display:flex;width:32px;height:32px;border-radius:50%;background:var(--ac);color:#08201a;font-weight:800;align-items:center;justify-content:center;margin-bottom:12px}
-.step p{font-size:14px}
-.panel{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:24px}
-label{display:block;font-size:12.5px;color:var(--mu2);margin-bottom:6px;font-weight:600}
-textarea,select,input:not([type=checkbox]):not([type=radio]):not([type=file]){width:100%;background:rgba(255,255,255,.04);border:1px solid var(--bd2);border-radius:10px;color:var(--tx);padding:11px 12px;font:inherit;font-size:14px}
-textarea{min-height:100px;direction:rtl;resize:vertical;margin:6px 0 8px;font-size:16px}
-select option{background:#141f22}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--soft)}
-.help{font-size:12.5px;color:var(--mu);margin-bottom:16px}
-.sel{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-.row{display:flex;justify-content:space-between;align-items:baseline}
-.st{font-size:12.5px;color:var(--ac);margin-top:10px;min-height:16px}
-.out{width:100%;border-radius:10px;margin-top:12px;display:none;background:#000}
-.dl{display:none;margin-top:8px;font-size:13px;color:var(--ac);font-weight:600}
-.saved{margin-top:22px}
-.item{display:flex;justify-content:space-between;align-items:center;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:9px;padding:9px 12px;margin-top:8px}
-.item .t{direction:rtl;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
-.lk{font-size:12.5px;color:var(--ac);font-weight:600;cursor:pointer;margin-right:8px}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{background:transparent;border:1px solid var(--bd2);color:var(--mu2);border-radius:999px;padding:8px 15px;font-size:13px;cursor:pointer}
-.chip.on{background:var(--ac);border-color:var(--ac);color:#0b1a15;font-weight:700}
-.tp-bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
-.arrows button{width:40px;height:40px;border-radius:50%;border:1px solid var(--bd2);background:rgba(255,255,255,.03);color:var(--tx);font-size:22px;cursor:pointer;margin-left:6px}
-#tg{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 14px;scrollbar-width:none}
-#tg::-webkit-scrollbar{display:none}
-.tc{flex:0 0 clamp(250px,29%,330px);scroll-snap-align:start;border-radius:18px;overflow:hidden;border:1px solid var(--bd);background:var(--card)}
-.tth{height:170px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font:600 19px/2.1 'Noto Nastaliq Urdu',serif;white-space:pre-line}
-.tth.en{font:500 16px/1.5 Georgia,serif;font-style:italic}
-.tb{padding:16px 18px 20px}.tb p{font-size:13px;margin:4px 0 10px}
-.tb a{margin-left:10px}
-.price{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.pc{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:26px;position:relative}
-.pc.f{border-color:var(--ac2)}
-.badge{position:absolute;top:-12px;left:24px;background:var(--ac);color:#08201a;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
-.amt{font:800 38px 'Plus Jakarta Sans',sans-serif}
-.pc p{font-size:13px;margin:6px 0 14px}.pc small{display:block;color:var(--mu);font-size:11.5px;margin-bottom:16px}
-.tog{display:inline-flex;border:1px solid var(--bd2);border-radius:8px;overflow:hidden;cursor:pointer}
-.tog span{padding:7px 16px;font-size:13px;color:var(--mu)}.tog .on{background:var(--ac2);color:#1b1608;font-weight:600}
-.note{text-align:center;font-size:12.5px;color:var(--mu);margin-top:22px}
-.fb{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:start}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.fld{margin-bottom:12px}
-.rate{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px}
-.rate input{display:none}.rate label{font-size:25px;color:#5f7570;cursor:pointer;margin:0;line-height:1}
-.rate label:hover,.rate label:hover~label,.rate input:checked~label{color:#ffd166}
-.hp{position:absolute;left:-9999px;height:0;width:0;opacity:0}
-.fbl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:22px}
-.fbi{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;font-size:13.5px}
-.fbi .top{display:flex;justify-content:space-between;margin-bottom:6px}.fbi .s{color:#f5b942;letter-spacing:2px}
-footer{border-top:1px solid var(--bd);padding:32px 0}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-footer ul{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px;color:var(--mu2)}
-#side{position:fixed;top:0;right:0;bottom:0;width:min(320px,86vw);z-index:120;background:var(--alt);border-left:1px solid var(--bd);padding:20px 16px;overflow:auto;transform:translateX(105%);transition:transform .25s;display:flex;flex-direction:column}
-#side.on{transform:none}
-#side small{color:var(--mu);display:block;margin:16px 0 6px;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
-#side a,#side .nb{display:block;width:100%;text-align:left;padding:10px 12px;margin-bottom:4px;border-radius:10px;color:var(--tx);background:rgba(255,255,255,.04);font-size:14px;cursor:pointer}
-#side a:hover,#side .nb:hover{background:var(--soft)}#side a span{display:block;font-size:11.5px;color:var(--mu)}
-#side .lo{color:#ff9a9a;border:1px solid rgba(255,120,120,.3);background:transparent;margin-top:4px;display:none}
-#shade{position:fixed;inset:0;background:#0009;z-index:110;display:none}#shade.on{display:block}
-/* modal + intro */
-.ov{position:fixed;inset:0;z-index:200;background:rgba(6,10,11,.86);backdrop-filter:blur(6px);display:none;overflow:auto;padding:24px 14px}
-.ov.on{display:block}
-.mb{max-width:440px;margin:4vh auto;background:var(--card);border:1px solid var(--bd2);border-radius:18px;padding:26px;position:relative}
-.x{position:absolute;top:10px;right:14px;background:none;color:var(--mu);font-size:26px;cursor:pointer}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:rgba(255,255,255,.04);padding:4px;border-radius:10px;margin:8px 0 18px}
-.tabs button{background:transparent;color:var(--mu);padding:9px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
-.tabs .on{background:var(--soft);color:var(--tx)}
-.oa{width:100%;display:flex;justify-content:center;gap:8px;padding:10px;border:1px solid var(--bd2);border-radius:10px;background:rgba(255,255,255,.04);color:var(--tx);cursor:pointer;font-size:13px;font-weight:600;margin-bottom:8px}
-.dv{display:flex;align-items:center;gap:8px;color:var(--mu);font-size:11px;margin:12px 0}
-.dv:before,.dv:after{content:"";height:1px;background:var(--bd);flex:1}
-.su{display:none}
-.intro{max-width:800px;margin:0 auto;padding:10px 0 40px}
-.intro h1{font-size:clamp(30px,7vw,48px);line-height:1.1;margin:8px 0 14px}
-.intro h3{margin:26px 0 10px;color:var(--ac)}
-.ig{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-.ig div{border:1px solid var(--bd);border-radius:12px;padding:12px;background:var(--card);font-size:13.5px;color:var(--mu2)}
-.ig b{display:block;color:var(--tx);margin-bottom:3px}
-.intro ol{padding-left:20px;color:var(--mu2);line-height:1.9}
-.intro .acts{margin-top:26px}
-.ed{padding:70px 0 0}.ed-box{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:36px;border:1px solid var(--bd);border-radius:26px;background:linear-gradient(160deg,rgba(121,217,189,.09),rgba(20,31,34,.6) 55%)}.ed-box h2{margin-bottom:12px}.ed-tools{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 24px}.ed-tools span{padding:6px 13px;border:1px solid var(--bd2);border-radius:999px;font-size:13px;color:var(--mu2)}.ed-mock{background:#0a1012;border:1px solid var(--bd2);border-radius:16px;padding:12px}.ed-dots{display:flex;gap:6px;margin-bottom:10px}.ed-dots i{width:9px;height:9px;border-radius:50%;background:#2a3a3d}.ed-screen{height:150px;border-radius:10px;background:linear-gradient(135deg,#123b3a,#3a2b17);display:flex;align-items:center;justify-content:center;font:28px "Noto Nastaliq Urdu",serif}.ed-track{height:18px;border-radius:5px;margin-top:8px;background:#111c1f;position:relative}.ed-track b{position:absolute;top:2px;bottom:2px;border-radius:4px}
-@media(max-width:860px){.ed-box{grid-template-columns:1fr;padding:22px}}
-@media(max-width:900px){.hero-grid,.two,.fb{grid-template-columns:1fr}.cards,.steps,.price{grid-template-columns:1fr}.stats .wrap{grid-template-columns:repeat(2,1fr);gap:20px}.g2,.sel{grid-template-columns:1fr}.tc{flex-basis:78%}section{padding:56px 0}.hero{padding:40px 0 30px}}
+:root{--ink:#0c1214;--alt:#111b1e;--panel:#162326;--line:rgba(143,230,204,.18);--paper:#f2f7f4;--muted:#9ab0aa;--mint:#79d9bd;--danger:#ffaaa4;--ok:#a9edce}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(850px 440px at 95% -5%,rgba(121,217,189,.14),transparent 60%),var(--ink);color:var(--paper);font-family:"DM Sans",sans-serif}
+button,input,textarea,select{font:inherit}.app-shell{width:100%;overflow:hidden}.frame{width:min(100% - 2.5rem,1180px);margin:auto}.skip{position:fixed;z-index:100;top:-5rem;left:1rem;padding:.7rem 1rem;background:var(--mint);color:#062018;border-radius:.5rem;font-weight:700}.skip:focus{top:1rem}
+:focus-visible{outline:3px solid var(--mint);outline-offset:3px}.header{position:sticky;top:0;z-index:20;background:rgba(12,18,20,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.nav{min-height:68px;display:flex;justify-content:space-between;align-items:center;gap:1rem}.brand{font-family:Fraunces,serif;font-size:1.3rem;font-weight:700;text-decoration:none;color:var(--paper)}.brand b{color:var(--mint)}.links{display:flex;gap:1.15rem}.links a{font-size:.84rem;color:var(--muted);text-decoration:none}.links a:hover{color:var(--mint)}.menu{display:none;background:transparent;border:1px solid var(--line);color:var(--paper);padding:.55rem .8rem;border-radius:.5rem}.mobile{display:none;padding:.7rem 0 1rem}.mobile.open{display:grid;gap:.7rem}.mobile a{color:var(--paper);text-decoration:none}
+.hero{padding:4.7rem 0 3.8rem}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}.eyebrow{margin:0 0 .75rem;color:var(--mint);font-weight:700;font-size:.73rem;letter-spacing:.13em;text-transform:uppercase}.hero h1,.section-title{font-family:Fraunces,serif;letter-spacing:-.055em;line-height:.98;margin:0}.hero h1{font-size:clamp(2.6rem,6vw,5.2rem);max-width:11ch}.hero p{max-width:58ch;color:#cedbd6;line-height:1.7}.actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.4rem}.button{min-height:44px;border-radius:.55rem;padding:.72rem 1rem;border:1px solid transparent;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}.primary{background:var(--mint);color:#092018}.secondary{background:transparent;color:var(--paper);border-color:var(--line)}.secondary:hover{border-color:var(--mint);color:var(--mint)}.button:disabled{opacity:.55;cursor:wait}
+.hero-preview,.preview-card{background:linear-gradient(145deg,#192e30,#0b1317);border:1px solid var(--line);border-radius:1rem;box-shadow:0 25px 75px -35px #000}.hero-preview{padding:1.5rem}.preview-top{display:flex;justify-content:space-between;color:var(--muted);font-size:.68rem;letter-spacing:.1em}.preview-rule{height:2px;width:42px;background:var(--mint);margin:1.4rem 0}.hero-urdu{font-family:"Noto Nastaliq Urdu",serif;font-size:2rem;line-height:2;text-align:right;direction:rtl}
+.section{padding:4.7rem 0}.alt{background:var(--alt);border-block:1px solid var(--line)}.section-head{max-width:680px;margin-bottom:2rem}.section-title{font-size:clamp(2rem,4vw,3.2rem)}.section-copy{color:var(--muted);line-height:1.7}
+.workflow{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}.step{padding:1.5rem 1.2rem 1.2rem 0;border-right:1px solid var(--line)}.step+.step{padding-left:1.2rem}.step:last-child{border:0}.step-no{display:block;color:var(--mint);font-weight:700;margin-bottom:2.8rem}.step h3{margin:0;font-family:Fraunces,serif;font-size:1.4rem}.step p{color:var(--muted);line-height:1.6}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.9fr);gap:1.5rem;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:1.25rem}.field{display:grid;gap:.4rem;margin-bottom:1rem}.field label,.label-row{font-size:.82rem;font-weight:700;color:#d6e2dd}.label-row{display:flex;justify-content:space-between}.counter{color:var(--mint);font-weight:500}
+textarea,select,input[type=text],input[type=email]{width:100%;color:var(--paper);background:rgba(255,255,255,.04);border:1px solid rgba(214,239,230,.24);border-radius:.55rem;padding:.75rem}select option{color:#000}.poetry-input{min-height:125px;font-family:"Noto Nastaliq Urdu",serif;font-size:1.1rem;line-height:2;resize:vertical}.field-help,.status{font-size:.8rem;color:var(--muted);line-height:1.5}.status{min-height:1.25rem;margin:.7rem 0 0}.status.error{color:var(--danger)}.status.success{color:var(--ok)}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.wide{grid-column:1/-1}
+.preview-card{min-height:540px;padding:1.4rem;display:flex;flex-direction:column;justify-content:space-between}.poetry-preview{font-family:"Noto Nastaliq Urdu",serif;font-size:clamp(1.6rem,3.5vw,2.5rem);line-height:2;white-space:pre-wrap;overflow-wrap:anywhere}.preview-footer{color:#d2ddd8;font-size:.88rem}
+.saved-list{display:grid;gap:.6rem;margin-top:.75rem}.saved-row{display:flex;gap:.7rem;align-items:center;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:.55rem;padding:.7rem}.saved-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:auto}.small-btn{padding:.4rem .6rem;border-radius:.4rem;border:1px solid var(--line);background:transparent;color:var(--paper);font-size:.75rem;cursor:pointer}.danger{color:var(--danger);border-color:rgba(255,170,164,.35)}
+.upload-row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}.thumbs{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:.7rem}.thumb{position:relative}.thumb img{display:block;width:62px;height:62px;border-radius:.45rem;object-fit:cover;border:1px solid var(--line)}.remove-thumb{position:absolute;right:-7px;top:-7px;border:0;width:21px;height:21px;border-radius:50%;background:#8f312d;color:#fff;cursor:pointer}.canvas-wrap{background:#091114;border:1px solid var(--line);border-radius:1rem;overflow:hidden}.canvas-wrap canvas{display:block;width:100%;height:auto}.download{display:none;margin-top:.7rem;color:var(--mint);font-weight:700;font-size:.85rem}
+.templates-bar{display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap}.chips{display:flex;gap:.5rem;flex-wrap:wrap}.chip{border:1px solid var(--line);background:transparent;color:var(--muted);padding:.5rem .8rem;border-radius:2rem;cursor:pointer}.chip.active{background:var(--mint);border-color:var(--mint);color:#082018;font-weight:700}.carousel{display:flex;overflow-x:auto;gap:1rem;padding:.8rem .1rem 1rem;scroll-snap-type:x mandatory}.template{flex:0 0 min(290px,82vw);scroll-snap-align:start;border:1px solid var(--line);background:var(--panel);border-radius:.85rem;overflow:hidden}.template-face{min-height:175px;padding:1.2rem;display:flex;align-items:center;justify-content:center;text-align:center;white-space:pre-line;font-family:"Noto Nastaliq Urdu",serif;font-size:1.15rem;line-height:2}.template-body{padding:1rem}.template-body h3{margin:0;font-size:1rem}.template-body p{color:var(--muted);font-size:.78rem;margin:.35rem 0 .8rem}.carousel-controls{display:flex;gap:.5rem}
+.feedback-grid{display:grid;grid-template-columns:1fr .75fr;gap:1.5rem}.error-text{color:var(--danger);min-height:1rem;font-size:.77rem}.footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--muted);font-size:.8rem}.footer-row{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}.footer a{color:var(--paper);font-weight:700}
+@media(max-width:780px){.frame{width:min(100% - 1.5rem,1180px)}.links{display:none}.menu{display:inline-flex}.hero{padding:3rem 0}.hero-grid,.workspace,.feedback-grid,.workflow{grid-template-columns:1fr}.step,.step+.step{padding:1.2rem 0;border-right:0;border-bottom:1px solid var(--line)}.step-no{margin-bottom:1rem}.choice-grid{grid-template-columns:1fr}.wide{grid-column:auto}.preview-card{min-height:410px}.section{padding:3.5rem 0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 </style>
 </head>
-<body>
-<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fe6cc"/><stop offset="1" stop-color="#d8b674"/></linearGradient></defs><symbol id="lg" viewBox="0 0 40 40"><rect x="2" y="2" width="36" height="36" rx="11" fill="#0f1f21" stroke="url(#g)" stroke-width="1.6"/><path d="M12.5 28.5V11.5l15 17v-17" fill="none" stroke="url(#g)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="31" cy="9.5" r="2.3" fill="#d8b674"/></symbol></svg>
-
-<header id="top"><div class="wrap">
-  <a class="logo" href="#top"><svg viewBox="0 0 40 40"><use href="#lg"/></svg><span>Navaar<span>Studio</span></span></a>
-  <div class="hd-r"><button class="btn btn-o btn-s" id="hdSign" type="button">Sign in</button><button id="menuBtn" type="button" aria-label="Menu">&#9776;</button></div>
-</div></header>
-
-<section class="hero"><div class="wrap hero-grid">
-  <div>
-    <div class="eyebrow">Free online video editor, Urdu first</div>
-    <h1>Edit videos your way, right in the browser.</h1>
-    <p class="lead">Add Urdu or English text, layer photos and music, start from a poetry template, then download. No install, no design skills.</p>
-    <div class="acts"><a href="editor.html" class="btn btn-p">Open Editor</a><a href="#studio" class="btn btn-o">Quick poetry video</a><a href="#templates" class="btn btn-o">Templates</a></div>
-    <p class="muted" style="font-size:13.5px">Made for reels, shorts, shayari, lyric videos and promos.</p>
-  </div>
-  <div class="pv"><div class="pv-top"><b>NAVAAR STUDIO</b><span>VIDEO EDITOR</span></div><div class="rule"></div><div class="pv-t">لفظوں کو منظر دو</div><p>Give your words a scene.</p></div>
+<body><a class="skip" href="#main-content">Skip to workspace</a>
+<div class="app-shell">
+<header class="header">
+ <div class="frame nav"><a href="#top" class="brand" aria-label="Navaar Studio home">Navaar<b>.</b> Studio</a>
+  <nav class="links" aria-label="Primary navigation"><a href="#quick-poetry">Quick poetry</a><a href="#photo-lyrics">Photo + lyrics</a><a href="#templates">Templates</a><a href="#projects">Projects</a><a href="#feedback">Feedback</a></nav>
+  <button id="menu-button" class="menu" type="button" aria-label="Open navigation" aria-controls="mobile-nav" aria-expanded="false">☰</button>
+ </div>
+ <nav id="mobile-nav" class="frame mobile" aria-label="Mobile navigation"><a href="#quick-poetry">Quick poetry</a><a href="#photo-lyrics">Photo + lyrics</a><a href="#templates">Templates</a><a href="#projects">Projects</a><a href="#feedback">Feedback</a></nav>
+</header>
+<main id="main-content">
+<section id="top" class="hero"><div class="frame hero-grid">
+ <div>
+  <p class="eyebrow">Free online video editor, Urdu first</p>
+  <h1>Edit videos your way, right in the browser.</h1>
+  <p>Add Urdu or English text, layer photos and music, start from a poetry template, then download.</p>
+  <div class="actions"><a class="button primary" href="#quick-poetry">Open Quick Poetry</a><a class="button secondary" href="#templates">Browse templates</a></div>
+ </div>
+ <aside class="hero-preview" aria-label="Navaar Urdu preview">
+  <div class="preview-top"><b>NAVAAR STUDIO</b><span>URDU-FIRST</span></div><div class="preview-rule"></div>
+  <div class="hero-urdu">لفظوں کو منظر دو</div><p>Give your words a scene.</p>
+ </aside>
 </div></section>
 
-<div class="stats"><div class="wrap">
-  <div><h4>Full timeline</h4><span>Trim, split, layer</span></div><div><h4>Urdu-first text</h4><span>Nastaliq and modern fonts</span></div>
-  <div><h4>Download anywhere</h4><span>Video and PNG</span></div><div><h4>One-click templates</h4><span>Poetry and quotes</span></div>
-</div></div>
-
-<section id="about"><div class="wrap">
-  <div class="head"><div class="eyebrow">About Navaar Studio</div><h2>Everything you need to turn words into video.</h2><p>Navaar Studio is a free browser-based video maker built for Urdu and English poetry, quotes, lyrics and short promos. Your work runs in your browser and you can sign in to keep projects on your account.</p></div>
-  <div class="cards">
-    <div class="card"><div class="ic">▶</div><h3>Video Editor</h3><p>Timeline, trim, split, text, shapes, filters, speed, volume and voiceover in a full editor.</p></div>
-    <div class="card"><div class="ic">✎</div><h3>Quick Poetry Video</h3><p>Type one line, choose mood, font and background, and export a vertical 9:16 video.</p></div>
-    <div class="card"><div class="ic">♫</div><h3>Photo + Lyrics Video</h3><p>Upload photos, write lyrics, add your own audio and generate a slideshow video.</p></div>
-    <div class="card"><div class="ic">❖</div><h3>Templates</h3><p>Classic couplets, empty style cards and ready quotes you can use in one tap.</p></div>
-    <div class="card"><div class="ic">⇩</div><h3>Download</h3><p>Save your result as a video file, or a PNG frame from the editor.</p></div>
-    <div class="card"><div class="ic">☁</div><h3>Account</h3><p>Create a free account to save projects and use them on any device.</p></div>
-  </div>
-  <div class="head" style="margin-top:56px"><div class="eyebrow">How it works</div><h2>Three simple steps.</h2></div>
-  <div class="steps">
-    <div class="step"><h3>Choose</h3><p>Pick a template, or start from a blank line of your own verse.</p></div>
-    <div class="step"><h3>Customize</h3><p>Change text, font, background, photos, layout and audio.</p></div>
-    <div class="step"><h3>Download</h3><p>Export your video and share it on Instagram, TikTok, YouTube or WhatsApp.</p></div>
-  </div>
+<section class="alt section" aria-labelledby="workflow-title"><div class="frame">
+ <div class="section-head"><p class="eyebrow">How it works</p><h2 id="workflow-title" class="section-title">Three simple steps.</h2></div>
+ <div class="workflow">
+  <article class="step"><span class="step-no">01</span><h3>Choose</h3><p>Pick a template, or start from a blank line of your own verse.</p></article>
+  <article class="step"><span class="step-no">02</span><h3>Customize</h3><p>Change text, font, background, photos, layout and audio.</p></article>
+  <article class="step"><span class="step-no">03</span><h3>Download</h3><p>Export your video and share it wherever your audience watches.</p></article>
+ </div>
 </div></section>
 
-<section class="ed" id="editorPromo"><div class="wrap"><div class="ed-box">
-  <div><h2>A full editor, no install.</h2><p>Timeline, text, shapes, stickers, filters, speed and volume. Upload your own photos, videos, audio and fonts, then download as video, MP4 or a single frame.</p>
-  <div class="ed-tools"><span>Timeline</span><span>Trim and split</span><span>Urdu text</span><span>Captions</span><span>Crop</span><span>Draw</span><span>Voiceover</span><span>Animations</span><span>Filters</span><span>Poetry templates</span><span>Download</span></div>
-  <div class="acts"><a href="editor.html" class="btn btn-p">Open Editor</a><a href="tools.html" class="btn btn-o">Open Tools</a></div></div>
-  <div class="ed-mock" aria-hidden="true"><div class="ed-dots"><i></i><i></i><i></i></div><div class="ed-screen">لفظوں کو منظر دو</div>
-  <div class="ed-track"><b style="left:0;width:55%;background:#2c4b47"></b><b style="left:58%;width:30%;background:#6fd3b5"></b></div>
-  <div class="ed-track"><b style="left:12%;width:40%;background:#4a3a1c"></b></div><div class="ed-track"><b style="left:0;width:88%;background:#26363a"></b></div></div>
-</div></div></section>
-
-<section class="alt" id="studio"><div class="wrap">
-  <div class="head"><div class="eyebrow">Quick poetry video</div><h2>Make a text video from one line.</h2><p>Pick a mood, font and background, preview it, then download. For full control, open the editor.</p></div>
-  <div class="two">
-    <div class="panel">
-      <div class="row"><label for="txt">Your poetry or quote</label><span class="muted" id="cc" style="font-size:12px">0 / 180</span></div>
-      <textarea id="txt" maxlength="180">لفظوں کو منظر دو</textarea>
-      <div class="help">Urdu and English are both supported. Keep it short for a stronger result.</div>
-      <div class="sel">
-        <div><label for="mood">Visual mood</label><select id="mood"><option value="CINEMATIC POETRY">Cinematic poetry</option><option value="EDITORIAL CALM">Editorial calm</option><option value="FORWARD MOTION">Forward motion</option><option value="ROMANTIC WARMTH">Romantic warmth</option><option value="SPIRITUAL STILLNESS">Spiritual stillness</option><option value="BOLD ANNOUNCEMENT">Bold announcement</option></select></div>
-        <div><label for="typ">Typography</label><select id="typ"><option value="">Urdu classic</option><option value="f-modern">Urdu modern</option><option value="f-serif">English serif</option><option value="f-sans">English sans</option></select></div>
-        <div style="grid-column:1/-1"><label for="bgs">Background</label><select id="bgs"><option value="cinematic">Cinematic gradient</option><option value="dusk">Warm dusk</option><option value="teal">Deep teal</option><option value="midnight">Midnight blue</option><option value="rose">Rose noir</option><option value="slate">Slate</option></select></div><div><label for="dur">Video length</label><select id="dur"><option value="15">15 sec</option><option value="20" selected>20 sec</option><option value="30">30 sec</option><option value="45">45 sec</option><option value="60">60 sec</option></select></div><div><label for="snd">Sound</label><select id="snd"><option value="calm">Calm music</option><option value="dream">Dreamy music</option><option value="warm">Warm music</option><option value="">No sound</option></select></div>
-      </div>
-      <div class="acts"><button class="btn btn-o" id="saveBtn" type="button">Save project</button><button class="btn btn-p" id="expBtn" type="button">Export video</button></div>
-      <div class="st" id="st1"></div><video class="out" id="v1" controls playsinline></video><a class="dl" id="d1">Download video</a>
-    </div>
-    <div class="pv" id="pv"><div class="pv-top"><b>NAVAAR STUDIO</b><span id="ml">CINEMATIC POETRY</span></div><div class="rule"></div><div class="pv-t" id="pt"></div><p>Give your words a scene.</p></div>
-  </div>
-  <div class="panel saved"><div class="row"><h3>Saved projects</h3><span class="muted" id="sc" style="font-size:12.5px"></span></div><p class="muted" id="se" style="font-size:13px;margin-top:6px"></p><div id="sl"></div></div>
+<section id="quick-poetry" class="section" aria-labelledby="poetry-title"><div class="frame">
+ <div class="section-head"><p class="eyebrow">Quick poetry video</p><h2 id="poetry-title" class="section-title">Make a text video from one line.</h2>
+ <p class="section-copy">Pick a mood, font and background, preview it instantly, then download where browser video recording is supported.</p></div>
+ <div class="workspace">
+  <form id="poetry-form" class="panel" novalidate>
+   <div class="field">
+    <div class="label-row"><label for="poetry-text">Your poetry or quote</label><span id="poetry-count" class="counter" aria-live="polite">0 / 180</span></div>
+    <textarea id="poetry-text" class="poetry-input" maxlength="180" dir="rtl">لفظوں کو منظر دو</textarea>
+    <span class="field-help">Urdu and English are both supported. Keep it short for a stronger result.</span>
+   </div>
+   <div class="choice-grid">
+    <div class="field"><label for="mood">Visual mood</label><select id="mood"><option value="CINEMATIC POETRY">Cinematic poetry</option><option value="EDITORIAL CALM">Editorial calm</option><option value="FORWARD MOTION">Forward motion</option><option value="ROMANTIC WARMTH">Romantic warmth</option><option value="SPIRITUAL STILLNESS">Spiritual stillness</option><option value="BOLD ANNOUNCEMENT">Bold announcement</option></select></div>
+    <div class="field"><label for="typography">Typography</label><select id="typography"><option value="urdu-classic">Urdu classic</option><option value="urdu-modern">Urdu modern</option><option value="english-serif">English serif</option><option value="english-sans">English sans</option></select></div>
+    <div class="field wide"><label for="background">Background</label><select id="background"><option value="cinematic">Cinematic gradient</option><option value="dusk">Warm dusk</option><option value="teal">Deep teal</option><option value="midnight">Midnight blue</option><option value="rose">Rose noir</option><option value="slate">Slate</option></select></div>
+   </div>
+   <div class="actions">
+    <button class="button secondary" type="button" id="save-project"><span>Save project</span></button>
+    <button class="button primary" type="button" id="export-poetry"><span>Export video</span></button>
+   </div>
+   <p id="poetry-status" class="status" role="status" aria-live="polite"></p>
+   <video id="poetry-video" controls playsinline style="display:none;width:100%;margin-top:.7rem;border-radius:.55rem"></video><a id="poetry-download" class="download" href="#">Download video</a>
+  </form>
+  <aside id="poetry-preview" class="preview-card" aria-label="Live poetry video preview">
+   <div><div class="preview-top"><b>NAVAAR STUDIO</b><span id="preview-mood">CINEMATIC POETRY</span></div><div class="preview-rule"></div></div>
+   <div id="preview-text" class="poetry-preview" dir="rtl">لفظوں کو منظر دو</div>
+   <p class="preview-footer">Live 9:16 preview — your controls update this composition immediately.</p>
+  </aside>
+ </div>
 </div></section>
 
-<section id="photoVideo"><div class="wrap">
-  <div class="head"><div class="eyebrow">Photo + lyrics video maker</div><h2>Turn photos and words into a short video.</h2><p>Add your photos, write the lyrics, add an audio file you own, and generate a downloadable video.</p></div>
-  <div class="two">
-    <div class="panel">
-      <label>Your photos</label><input type="file" id="pin" accept="image/*" multiple hidden>
-      <button class="btn btn-o btn-s" id="pbtn" type="button">Add photos</button>
-      <div id="thumbs" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"></div>
-      <label for="lyr" style="margin-top:18px">Poetry or lyrics (one line per row)</label>
-      <textarea id="lyr" style="min-height:110px">لفظوں کو منظر دو
+<section id="projects" class="alt section" aria-labelledby="projects-title"><div class="frame">
+ <div class="section-head"><p class="eyebrow">Projects</p><h2 id="projects-title" class="section-title">Return to your saved words.</h2>
+ <p class="section-copy">Quick Poetry projects are saved in this browser (local storage) so you can load, edit, and delete them here.</p></div>
+ <div class="panel">
+  <div class="label-row"><strong>Saved poetry projects</strong><span id="project-count" class="counter"></span></div>
+  <p id="projects-status" class="status" role="status" aria-live="polite">Loading saved projects…</p>
+  <div id="saved-list" class="saved-list"></div>
+ </div>
+</div></section>
+
+<section id="photo-lyrics" class="section" aria-labelledby="lyrics-title"><div class="frame">
+ <div class="section-head"><p class="eyebrow">Photo + lyrics video maker</p><h2 id="lyrics-title" class="section-title">Turn photos and words into a short video.</h2>
+ <p class="section-copy">Add photos, write lyric lines, optionally add audio you own, and generate a downloadable vertical video.</p></div>
+ <div class="workspace">
+  <div class="panel">
+   <div class="field"><label for="photos-input">Your photos</label>
+    <input id="photos-input" type="file" accept="image/*" multiple hidden>
+    <button class="button secondary" type="button" id="add-photos"><span>Add photos</span></button>
+    <div id="thumbs" class="thumbs" aria-live="polite"></div><span class="field-help">Up to 12 image files, 8 MB each.</span></div>
+   <div class="field"><label for="lyrics-input">Poetry or lyrics — one line per row</label>
+    <textarea id="lyrics-input" class="poetry-input" dir="rtl">لفظوں کو منظر دو
 تم سا کوئی نہیں
-دل کو سکون دو</textarea>
-      <label style="margin-top:8px">Background audio (optional)</label><input type="file" id="ain" accept="audio/*" hidden>
-      <button class="btn btn-o btn-s" id="abtn" type="button">Add audio file</button><span class="muted" id="an" style="font-size:12.5px;margin-left:8px"></span>
-      <div class="help" style="margin-top:8px">Use audio you own or have rights to.</div>
-      <label for="lay">Layout style</label>
-      <select id="lay"><option value="bottom">Bottom caption</option><option value="center">Center focus</option><option value="top">Top title</option><option value="framed">Framed photo</option><option value="split">Split panel</option><option value="glass">Glass panel</option><option value="polaroid">Polaroid card</option><option value="spot">Spotlight</option><option value="cinematic">Cinematic full photo</option><option value="left">Left aligned story</option><option value="right">Right aligned Urdu</option><option value="minimal">Minimal clean</option><option value="lower">Lower third</option><option value="photoFirst">Photo first caption</option><option value="corner">Corner editorial</option><option value="vertical">Vertical side</option><option value="duotone">Duotone frame</option><option value="diagonal">Diagonal dynamic</option><option value="random">Random</option></select>
-      <label for="vlen">Video length</label><select id="vlen"><option value="0">Auto</option><option value="15">15 sec</option><option value="20">20 sec</option><option value="30">30 sec</option><option value="60">60 sec</option></select><label for="aiTopic" style="margin-top:6px">AI poetry writer</label>
-      <div style="display:flex;gap:8px;margin-bottom:6px"><input id="aiTopic" placeholder="Topic: ماں، دوستی، محبت, hope..."><button class="btn btn-o btn-s" id="aiWrite" type="button" style="white-space:nowrap">✨ AI write</button></div>
-      <div class="help">AI writes original lines for your topic (sign in required).</div>
-      <div class="acts" style="margin-top:8px"><button class="btn btn-p" id="autoBtn" type="button">✨ Auto video</button><button class="btn btn-o" id="gen" type="button">Generate with my settings</button></div>
-      <div class="help" style="margin-top:8px">Auto video: add photos only. Lines, layout and timing are chosen for you.</div>
-      <div class="st" id="st2"></div><video class="out" id="v2" controls playsinline></video><a class="dl" id="d2">Download video</a>
-    </div>
-    <div class="pv" style="padding:0;overflow:hidden"><canvas id="cv" width="540" height="960" style="width:100%;display:block;background:#0a1012"></canvas></div>
+دل کو سکون دو</textarea></div>
+   <div class="field"><label for="audio-input">Background audio</label>
+    <input id="audio-input" type="file" accept="audio/*" hidden>
+    <div class="upload-row"><button class="button secondary" type="button" id="add-audio"><span>Add audio file</span></button><span id="audio-name" class="field-help">Optional; use audio you own or have rights to.</span></div></div>
+   <div class="field"><label for="layout">Layout style</label><select id="layout"><option value="bottom">Bottom caption</option><option value="center">Center focus</option><option value="top">Top title</option><option value="framed">Framed photo</option><option value="random">Random</option></select></div>
+   <div class="actions"><button class="button primary" type="button" id="generate-lyrics"><span>Generate video</span></button></div>
+   <p id="lyrics-status" class="status" role="status" aria-live="polite"></p>
+   <video id="lyrics-video" controls playsinline style="display:none;width:100%;margin-top:.7rem;border-radius:.55rem"></video><a id="lyrics-download" class="download" href="#">Download video</a>
   </div>
+  <div class="canvas-wrap"><canvas id="lyrics-canvas" width="540" height="960" aria-label="Photo and lyrics canvas preview"></canvas></div>
+ </div>
 </div></section>
 
-<section class="alt" id="templates"><div class="wrap">
-  <div class="head-row"><div><div class="eyebrow">Swipe to browse</div><h2>Templates and poetry.</h2></div><p style="max-width:300px;font-size:14px">Classic couplets from great poets, empty style cards and ready quotes. Use one here or open it in the editor.</p></div>
-  <div class="tp-bar"><div class="chips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="poetry">Classic poetry</button><button class="chip" data-f="style">Your own verse</button><button class="chip" data-f="quote">Quotes</button></div><div class="arrows"><button data-d="-1" aria-label="Previous">‹</button><button data-d="1" aria-label="Next">›</button></div></div>
-  <div id="tg"></div>
+<section id="templates" class="alt section" aria-labelledby="templates-title"><div class="frame">
+ <div class="section-head"><p class="eyebrow">Swipe to browse</p><h2 id="templates-title" class="section-title">Templates and poetry.</h2>
+ <p class="section-copy">Use classic poetry, an empty style card, or a ready quote. One click loads styling into Quick Poetry Video.</p></div>
+ <div class="templates-bar">
+  <div class="chips" role="group" aria-label="Template categories"><button class="chip active" type="button" data-filter="all">All</button><button class="chip" type="button" data-filter="poetry">Classic poetry</button><button class="chip" type="button" data-filter="style">Your own verse</button><button class="chip" type="button" data-filter="quote">Quotes</button></div>
+  <div class="carousel-controls"><button class="small-btn" id="template-prev" type="button" aria-label="Previous templates">←</button><button class="small-btn" id="template-next" type="button" aria-label="Next templates">→</button></div>
+ </div>
+ <div id="template-carousel" class="carousel" aria-live="polite"></div>
 </div></section>
 
-<section id="pricing"><div class="wrap">
-  <div class="head-row"><div><div class="eyebrow">Simple pricing</div><h2>A plan for every creative rhythm.</h2></div><div class="tog" id="tog"><span class="on" data-m="monthly">Monthly</span><span data-m="annual">Annual</span></div></div>
-  <div class="price">
-    <div class="pc"><h3>Free</h3><p>Full editor with video downloads.</p><div class="amt">$0<span class="muted" style="font-size:14px;font-weight:400"> / month</span></div><small>&nbsp;</small><button class="btn btn-o" style="width:100%" id="freeBtn">Start with Free</button></div>
-    <div class="pc f"><span class="badge">Recommended</span><h3>Creator</h3><p>For regular editing and longer projects.</p><div class="amt"><span class="pa" data-monthly="12" data-annual="9">$12</span><span class="muted" style="font-size:14px;font-weight:400"> / month</span></div><small class="bn">Billed monthly</small><button class="btn btn-p" style="width:100%" data-plan="creator">Choose Creator</button></div>
-    <div class="pc"><h3>Studio</h3><p>For teams that publish often.</p><div class="amt"><span class="pa" data-monthly="24" data-annual="19">$24</span><span class="muted" style="font-size:14px;font-weight:400"> / month</span></div><small class="bn">Billed monthly</small><button class="btn btn-o" style="width:100%" data-plan="studio">Choose Studio</button></div>
-  </div>
-  <div class="note">Free needs no payment. Sign in to choose a paid plan.</div><div class="note" id="cs" style="color:var(--ac)"></div>
+<section id="feedback" class="section" aria-labelledby="feedback-title"><div class="frame">
+ <div class="section-head"><p class="eyebrow">Your voice matters</p><h2 id="feedback-title" class="section-title">Share feedback about Navaar Studio.</h2>
+ <p class="section-copy">Tell us what worked or what you would improve. This form validates your message locally.</p></div>
+ <div class="feedback-grid">
+  <form id="feedback-form" class="panel" novalidate>
+   <div class="choice-grid">
+    <div class="field"><label for="feedback-name">Your name</label><input id="feedback-name" type="text" maxlength="80" autocomplete="name"><span id="feedback-name-error" class="error-text"></span></div>
+    <div class="field"><label for="feedback-email">Email (optional)</label><input id="feedback-email" type="email" maxlength="160" autocomplete="email"><span id="feedback-email-error" class="error-text"></span></div>
+   </div>
+   <div class="field"><label for="feedback-category">Type</label><select id="feedback-category"><option>General</option><option>Design</option><option>Templates</option><option>Video maker</option><option>Bug</option><option>Feature request</option></select></div>
+   <div class="field"><label for="feedback-message">Feedback</label><textarea id="feedback-message" style="min-height:130px;direction:ltr" maxlength="2000"></textarea><span id="feedback-message-error" class="error-text"></span></div>
+   <div style="position:absolute;left:-9999px" aria-hidden="true"><label for="feedback-website">Website</label><input id="feedback-website" tabindex="-1" autocomplete="off"></div>
+   <button class="button primary" type="submit">Validate feedback</button>
+   <p id="feedback-status" class="status" role="status" aria-live="polite"></p>
+  </form>
+  <aside class="panel"><h3 style="margin-top:0">An honest feedback state</h3>
+  <p class="section-copy">There is no connected remote feedback endpoint here, so validated feedback is not submitted or stored remotely.</p></aside>
+ </div>
 </div></section>
+</main>
+<footer class="footer"><div class="frame footer-row"><span>Navaar Studio — words, in motion.</span><a href="#top">Back to top</a></div></footer>
+</div>
 
-<section class="alt" id="feedback"><div class="wrap">
-  <div class="head"><div class="eyebrow">Your voice matters</div><h2>Send feedback about Navaar Studio.</h2><p>Tell us what worked, what needs work, or which feature you want next. No account needed.</p></div>
-  <div class="fb">
-    <div class="panel"><form id="ff">
-      <div class="g2"><div class="fld"><label for="fn">Your name</label><input id="fn" maxlength="80" autocomplete="name"></div><div class="fld"><label for="fe">Email (optional)</label><input id="fe" type="email" maxlength="160" autocomplete="email"></div></div>
-      <div class="g2"><div class="fld"><label for="fc">Type</label><select id="fc"><option value="general">General</option><option value="design">Design</option><option value="templates">Templates</option><option value="video">Video maker</option><option value="account">Login / account</option><option value="bug">Bug</option><option value="feature">Feature request</option></select></div>
-      <div class="fld"><label>Experience</label><div class="rate"><input id="r5" name="rt" type="radio" value="5"><label for="r5">★</label><input id="r4" name="rt" type="radio" value="4"><label for="r4">★</label><input id="r3" name="rt" type="radio" value="3"><label for="r3">★</label><input id="r2" name="rt" type="radio" value="2"><label for="r2">★</label><input id="r1" name="rt" type="radio" value="1"><label for="r1">★</label></div></div></div>
-      <div class="fld"><label for="fm">Feedback</label><textarea id="fm" maxlength="2000" style="direction:ltr;margin:0;min-height:120px" placeholder="Write your feedback..."></textarea></div>
-      <div class="hp"><input id="fw" tabindex="-1" autocomplete="off"></div>
-      <label style="display:flex;gap:8px;font-weight:500;font-size:12px"><input id="fk" type="checkbox" style="width:auto;margin-top:2px"> <span>I agree my name, rating and feedback may be shown publicly on this page.</span></label>
-      <button class="btn btn-p" id="fs" type="submit" style="margin-top:14px">Submit feedback</button><div class="st" id="fst"></div>
-    </form></div>
-    <div class="panel"><h3 style="margin-bottom:8px">Make the next version better</h3><p style="font-size:14px">Send praise, a problem report, a design idea or a feature request. Add your email only if you want a reply.</p></div>
-  </div>
-  <div class="fbl" id="fl"><p class="muted">Loading feedback…</p></div>
-</div></section>
-
-<footer><div class="wrap">
-  <a class="logo" href="#top"><svg viewBox="0 0 40 40"><use href="#lg"/></svg><span>Navaar<span>Studio</span></span></a>
-  <ul><li><a href="editor.html">Editor</a></li><li><a href="tools.html">Tools</a></li><li><a href="#studio">Studio</a></li><li><a href="#templates">Templates</a></li><li><a href="#pricing">Plans</a></li><li><a href="#feedback">Feedback</a></li><li><a href="poetry-video.html">Poetry Video</a></li><li><a href="shayari-video.html">Shayari Video</a></li><li><a href="urdu-reel-maker.html">Reel Maker</a></li><li><a href="cartoon.html">Photo to Cartoon</a></li><li><a href="privacy.html">Privacy</a></li></ul>
-  <span class="muted" style="font-size:13px">© 2026 Navaar Studio</span>
-</div></footer>
-
-<div id="shade"></div>
-<aside id="side">
-  <h3>Navaar Studio</h3><span class="muted" style="font-size:12.5px">Urdu-first video creation</span>
-  <small>Tools</small>
-  <a href="editor.html">Editor<span>Timeline, trim, layers, filters, voiceover</span></a>
-  <a href="tools.html">Tools<span>Text, calculators, developer tools</span></a>
-  <a href="tools.html#aienhance">Auto Enhance Photo<span>AI: fix dark or flat photos</span></a>
-<a href="tools.html#aibg">Background Remover<span>AI: cut out a person</span></a>
-<a href="tools.html#aicap">Voice to Captions<span>AI: Urdu, English, Hindi subtitles</span></a>
-  <a href="#studio">Quick Poetry Video<span>One line to a 9:16 video</span></a>
-  <a href="#photoVideo">Photo + Lyrics Video<span>Photos, lyrics and your audio</span></a>
-  <a href="#templates">Templates<span>Poetry and quotes</span></a>
-  <small>Guides</small>
-<a href="poetry-video.html">Urdu Poetry Video Maker</a>
-<a href="shayari-video.html">Shayari Video Editor</a>
-<a href="urdu-reel-maker.html">Urdu Reel Maker</a>
-  <small>Site</small>
-  <a href="#about">About &amp; how it works</a><a href="#pricing">Plans</a><a href="#feedback">Feedback</a><a href="privacy.html">Privacy Policy</a>
-  <div class="nb" id="mAbout">ⓘ Welcome guide</div>
-  <small>Account</small>
-  <div class="muted" id="mMail" style="font-size:12.5px;margin:0 0 8px 2px"></div>
-  <div class="nb" id="mSign">Sign in / Create account</div>
-  <div class="nb lo" id="mOut">Log out</div>
-</aside>
-
-<!-- Auth modal -->
-<div class="ov" id="auth"><div class="mb">
-  <button class="x" id="ax" aria-label="Close">&times;</button>
-  <div class="tabs"><button class="on" id="tIn">Sign in</button><button id="tUp">Create account</button></div>
-  <h3 id="at">Welcome back</h3><p class="muted" id="as" style="font-size:13px;margin:4px 0 14px">Sign in to save projects and use your account anywhere.</p>
-  <button class="oa" id="gg">G &nbsp;Continue with Google</button><button class="oa" id="fbk">f &nbsp;Continue with Facebook</button>
-  <div class="dv">or use email</div>
-  <div class="su fld"><label for="sName">Full name</label><input id="sName" autocomplete="name" placeholder="Your full name"></div>
-  <div class="fld"><label for="em">Email</label><input type="email" id="em" autocomplete="email" placeholder="you@example.com"></div>
-  <div class="su g2"><div class="fld"><label for="sDob">Date of birth</label><input type="date" id="sDob"></div><div class="fld"><label for="sGen">Gender</label><select id="sGen"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option></select></div></div>
-  <div class="su fld"><label for="sCty">Country</label><input id="sCty" autocomplete="country-name" placeholder="e.g. Pakistan"></div>
-  <div class="fld"><label for="pw">Password</label><input type="password" id="pw" autocomplete="current-password" placeholder="At least 6 characters"></div>
-  <div class="su fld"><label for="pw2">Confirm password</label><input type="password" id="pw2" autocomplete="new-password"></div>
-  <label class="su" style="display:none;gap:8px;font-weight:500;font-size:12px" id="sTermsL"><input id="sTerms" type="checkbox" style="width:auto;margin-top:2px"> <span>I agree to the <a href="privacy.html" style="color:var(--ac)">Privacy Policy</a> and Terms.</span></label>
-  <button class="btn btn-p" id="go" style="width:100%;margin-top:10px">Sign in</button>
-  <button class="lk" id="fg" style="background:none;margin:12px 0 0">Forgot password?</button>
-  <div class="st" id="ast"></div>
-</div></div>
-
-<!-- Welcome intro -->
-<div class="ov" id="intro" style="background:var(--bg)"><div class="intro">
-  <div class="eyebrow">Welcome to Navaar Studio</div>
-  <h1>Give your Urdu words a cinematic life.</h1>
-  <p>Navaar Studio is a free online video maker for Urdu and English poetry, shayari, quotes, lyrics, reels, shorts and promos. Everything runs in your browser: no install, no design skills needed.</p>
-  <h3>What can you do here?</h3>
-  <div class="ig">
-    <div><b>Video Editor</b>Timeline, trim, split, text, shapes, filters, speed, volume, voiceover.</div>
-    <div><b>Quick Poetry Video</b>One line, your mood, font and background, then export.</div>
-    <div><b>Photo + Lyrics Video</b>Photos, lyrics and your own audio in a short video.</div>
-    <div><b>Templates</b>Ghalib, Mir, Iqbal and more, plus quotes and empty styles.</div>
-    <div><b>Download</b>Save videos and PNG frames to your device.</div>
-    <div><b>Free Account</b>Sign up to save projects and use them anywhere.</div>
-  </div>
-  <h3>How to use it</h3>
-  <ol><li>Pick a template or type your own verse.</li><li>Choose font, background, photos, layout and audio.</li><li>Export and download, then share anywhere.</li></ol>
-  <h3>Who is it for?</h3>
-  <p>Poets and shayari pages, content creators, students, small businesses and anyone who wants quick, beautiful vertical videos in Urdu or English.</p>
-  <div class="acts"><button class="btn btn-p" id="iStart">Start creating</button><button class="btn btn-o" id="iSign">Sign in / Create account</button></div>
-</div></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-(function(){
-var $=function(i){return document.getElementById(i)},RTL=/[\u0600-\u06FF]/,isU=function(s){return RTL.test(s)};
-var CFG={URL:'https://zcungofmmaagqcinafhb.supabase.co',KEY:'sb_publishable_7ydxbZOzF0v2X58P7Pk_jg_za4pBQ3s',API:'https://navaar-backend-production.up.railway.app'};
-var sb=null,user=null;
-try{if(window.supabase)sb=window.supabase.createClient(CFG.URL,CFG.KEY)}catch(e){}
-function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-async function hdr(x){var h=Object.assign({},x||{});try{var r=await sb.auth.getSession();if(r.data.session)h.Authorization='Bearer '+r.data.session.access_token}catch(e){}return h}
+const $=id=>document.getElementById(id);
+const isUrdu=t=>/[\u0600-\u06FF]/.test(t);
+const backgrounds={cinematic:["#19343a","#071216"],dusk:["#69401c","#27130f"],teal:["#14544c","#091d1c"],midnight:["#172154","#070a20"],rose:["#571a38","#180914"],slate:["#343c58","#10131d"]};
+const templates=[
+{category:"poetry",title:"Mirza Ghalib",note:"Classic couplet.",text:"ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے\nبہت نکلے مرے ارمان لیکن پھر بھی کم نکلے",mood:"CINEMATIC POETRY",type:"urdu-classic",bg:"cinematic"},
+{category:"poetry",title:"Mir Taqi Mir",note:"Classic couplet.",text:"ابتدائے عشق ہے روتا ہے کیا\nآگے آگے دیکھیے ہوتا ہے کیا",mood:"ROMANTIC WARMTH",type:"urdu-classic",bg:"rose"},
+{category:"poetry",title:"Allama Iqbal",note:"Classic couplet.",text:"ستاروں سے آگے جہاں اور بھی ہیں\nابھی عشق کے امتحاں اور بھی ہیں",mood:"FORWARD MOTION",type:"urdu-classic",bg:"midnight"},
+{category:"style",title:"Dark and raw",note:"Empty style template — replace the text.",text:"یہاں اپنا کلام لکھیں\nWrite your own verse here",mood:"CINEMATIC POETRY",type:"urdu-classic",bg:"slate"},
+{category:"style",title:"Golden classic",note:"Empty style template — replace the text.",text:"یہاں اپنا کلام لکھیں\nWrite your own verse here",mood:"EDITORIAL CALM",type:"urdu-classic",bg:"dusk"},
+{category:"quote",title:"Editorial quote",note:"Ready-to-use quote.",text:"Make room for meaning, because the quietest words can sometimes stay with us the longest.",mood:"EDITORIAL CALM",type:"english-serif",bg:"slate"},
+{category:"quote",title:"Modern motivation",note:"Ready-to-use quote.",text:"Begin before you feel ready, keep moving with patience, and let every small step become part of the story.",mood:"FORWARD MOTION",type:"english-sans",bg:"dusk"}];
 
-/* ---- menu / overlays ---- */
-var side=$('side'),shadeEl=$('shade'),auth=$('auth'),intro=$('intro');
-function menu(o){side.classList.toggle('on',o);shadeEl.classList.toggle('on',o)}
-function ov(el,o){el.classList.toggle('on',o);document.body.style.overflow=(auth.classList.contains('on')||intro.classList.contains('on'))?'hidden':''}
-$('menuBtn').onclick=function(){menu(!side.classList.contains('on'))};shadeEl.onclick=function(){menu(false)};
-side.onclick=function(e){if(e.target.closest('a'))menu(false)};
-$('mAbout').onclick=function(){menu(false);ov(intro,true)};
-$('iStart').onclick=function(){ov(intro,false)};
-$('iSign').onclick=function(){ov(intro,false);openAuth('in')};
-$('ax').onclick=function(){ov(auth,false)};
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){menu(false);ov(auth,false);ov(intro,false)}});
-
-/* ---- auth ---- */
-var mode='in',ast=$('ast');
-function setMode(m){mode=m;var up=m==='up';
-  $('tIn').classList.toggle('on',!up);$('tUp').classList.toggle('on',up);
-  document.querySelectorAll('.su').forEach(function(e){e.style.display=up?(e.classList.contains('g2')?'grid':(e.id==='sTermsL'?'flex':'block')):'none'});
-  $('go').textContent=up?'Create account':'Sign in';$('fg').style.display=up?'none':'inline';
-  $('at').textContent=up?'Create your account':'Welcome back';
-  $('as').textContent=up?'Join free to save projects and use your account anywhere.':'Sign in to save projects and use your account anywhere.';
-  $('pw').autocomplete=up?'new-password':'current-password';ast.textContent=''}
-function openAuth(m){setMode(m||'in');ov(auth,true)}
-window.nvOpenAuth=openAuth;
-$('tIn').onclick=function(){setMode('in')};$('tUp').onclick=function(){setMode('up')};
-$('hdSign').onclick=function(){openAuth('in')};$('mSign').onclick=function(){menu(false);openAuth('in')};
-function goHome(){try{sessionStorage.setItem('nvSkip','1')}catch(e){}location.href=location.pathname}
-function ready(){if(!sb){ast.textContent='Account service is not connected right now.';return false}return true}
-async function oauth(p){if(!ready())return;ast.textContent='Opening '+p+'…';
-  var r=await sb.auth.signInWithOAuth({provider:p,options:{redirectTo:location.origin+location.pathname}});if(r.error)ast.textContent=r.error.message}
-$('gg').onclick=function(){oauth('google')};$('fbk').onclick=function(){oauth('facebook')};
-$('go').onclick=async function(){
-  if(!ready())return;var email=$('em').value.trim(),pw=$('pw').value;
-  if(mode==='in'){
-    if(!email||!pw){ast.textContent='Enter your email and password.';return}
-    ast.textContent='Signing in…';var r=await sb.auth.signInWithPassword({email:email,password:pw});
-    if(r.error){ast.textContent=r.error.message;return}goHome();return}
-  var name=$('sName').value.trim(),dob=$('sDob').value,gen=$('sGen').value,cty=$('sCty').value.trim();
-  if(name.length<2)return ast.textContent='Enter your full name.';
-  if(!/^\S+@\S+\.\S+$/.test(email))return ast.textContent='Enter a valid email.';
-  if(!dob)return ast.textContent='Select your date of birth.';
-  var age=(Date.now()-new Date(dob))/31557600000;if(age<13||age>110)return ast.textContent='You must be at least 13 years old.';
-  if(!gen)return ast.textContent='Select your gender.';
-  if(!cty)return ast.textContent='Enter your country.';
-  if(pw.length<6)return ast.textContent='Password must be at least 6 characters.';
-  if(pw!==$('pw2').value)return ast.textContent='Passwords do not match.';
-  if(!$('sTerms').checked)return ast.textContent='Please accept the Privacy Policy and Terms.';
-  ast.textContent='Creating account…';
-  var r=await sb.auth.signUp({email:email,password:pw,options:{data:{full_name:name,birth_date:dob,gender:gen,country:cty}}});
-  if(r.error){ast.textContent=r.error.message;return}
-  if(r.data&&r.data.session)goHome();else ast.textContent='Account created. Check your email to confirm, then sign in.'};
-$('fg').onclick=async function(){if(!ready())return;var e=$('em').value.trim();if(!e)return ast.textContent='Enter your email first.';
-  var r=await sb.auth.resetPasswordForEmail(e,{redirectTo:location.origin+location.pathname});ast.textContent=r.error?r.error.message:'Password reset email sent.'};
-function stored(){try{for(var i=0;i<localStorage.length;i++){if(/^sb-.*-auth-token$/.test(localStorage.key(i)))return true}}catch(e){}return false}
-function syncAuth(){var on=!!user||stored();$('mMail').textContent=user&&user.email?'Signed in as '+user.email:(on?'Signed in':'');$('mSign').style.display=on?'none':'block';$('mOut').style.display=on?'block':'none';
-  $('hdSign').style.display=on?'none':'inline-flex';if(on)ov(auth,false)}
-$('mOut').onclick=async function(){try{if(sb)await Promise.race([sb.auth.signOut(),new Promise(function(r){setTimeout(r,2000)})])}catch(e){}
-  try{Object.keys(localStorage).forEach(function(k){if(/^sb-.*-auth-token/.test(k))localStorage.removeItem(k)});sessionStorage.setItem('nvSkip','1')}catch(e){}location.href=location.pathname};
-if(sb){sb.auth.onAuthStateChange(function(ev,s){user=s?s.user:null;syncAuth();if(ev!=='INITIAL_SESSION')setTimeout(renderSaved,0)});
-  sb.auth.getSession().then(function(r){if(r.data.session){user=r.data.session.user;syncAuth();renderSaved()}}).catch(function(){})}
-syncAuth();
-
-/* ---- helpers ---- */
-var BG={cinematic:['#141c42','#0d1330'],dusk:['#5b3a1a','#2b1710'],teal:['#123f3a','#0a1f1e'],midnight:['#0d1440','#070a1f'],rose:['#4a1530','#160a18'],slate:['#2a3049','#12162a']};
-function mime(){var M=window.MediaRecorder;if(!M)return null;return['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].filter(function(t){return M.isTypeSupported(t)})[0]||null}
-function nvTap(el){if(!el._t){var C=window.AudioContext||window.webkitAudioContext,c=new C(),s=c.createMediaElementSource(el),d=c.createMediaStreamDestination();s.connect(d);el._t={c:c,s:d.stream}}el._t.c.resume();return el._t.s}
-function nvMusic(k,sec){var C=window.AudioContext||window.webkitAudioContext,c=new C(),d=c.createMediaStreamDestination(),g=c.createGain(),T=c.currentTime,
-ch={calm:[[220,277,330],[196,247,294],[175,220,262],[196,247,294]],dream:[[262,330,392],[220,262,330],[175,220,262],[196,247,294]],warm:[[196,247,294],[220,277,330],[165,208,247],[175,220,262]]}[k]||[[220,277,330]];
-g.gain.value=.22;g.gain.setValueAtTime(.22,T+sec-1.5);g.gain.linearRampToValueAtTime(0,T+sec);g.connect(d);c.resume();
-for(var t=0,n=0;t<sec;t+=4,n++)ch[n%ch.length].forEach(function(f){[f,f*2].forEach(function(F,j){var o=c.createOscillator(),e=c.createGain();o.type=j?'sine':'triangle';o.frequency.value=F;e.gain.setValueAtTime(0,T+t);e.gain.linearRampToValueAtTime(j?.15:.35,T+t+1.2);e.gain.linearRampToValueAtTime(0,T+t+4.3);o.connect(e);e.connect(g);o.start(T+t);o.stop(T+t+4.4)})});
-d.stream._c=c;return d.stream}
-function record(canvas,ms,draw,audio,done){
-  var m=mime(),chunks=[],ms2=new MediaStream();
-  canvas.captureStream(30).getVideoTracks().forEach(function(t){ms2.addTrack(t)});
-  if(audio){try{(audio.getAudioTracks?audio:nvTap(audio)).getAudioTracks().forEach(function(t){ms2.addTrack(t)})}catch(e){}}
-  var rec=new MediaRecorder(ms2,{mimeType:m,videoBitsPerSecond:8000000,audioBitsPerSecond:128000});
-  rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
-  rec.onstop=function(){done(new Blob(chunks,{type:m.split(';')[0]}),m.indexOf('mp4')>-1?'mp4':'webm')};
-  rec.start();if(audio&&audio.play){audio.currentTime=0;audio.play().catch(function(){})}
-  var t0=null;(function f(ts){if(t0===null)t0=ts;var e=ts-t0;
-    if(e>=ms){setTimeout(function(){if(rec.state!=='inactive')rec.stop();if(audio&&audio.pause)audio.pause()},100);return}
-    draw(e);requestAnimationFrame(f)})(performance.now());
+function setStatus(id,text,kind=""){const el=$(id);el.textContent=text;el.className="status "+kind;}
+function updatePoetryPreview(){
+ const text=$("poetry-text").value,type=$("typography").value,bg=backgrounds[$("background").value],p=$("preview-text");
+ $("poetry-count").textContent=text.length+" / 180";
+ p.textContent=text||" ";p.dir=isUrdu(text)?"rtl":"ltr";p.style.textAlign=isUrdu(text)?"right":"left";
+ p.style.fontFamily=type==="urdu-classic"?'"Noto Nastaliq Urdu",serif':type==="english-serif"?"Georgia,serif":'"DM Sans",sans-serif';
+ p.style.fontStyle=type==="english-serif"?"italic":"normal";p.style.lineHeight=type==="urdu-classic"?"2":"1.4";
+ $("preview-mood").textContent=$("mood").value;
+ $("poetry-preview").style.background=`linear-gradient(145deg,${bg[0]},${bg[1]})`;
+ $("poetry-text").dir=isUrdu(text)?"rtl":"ltr";
 }
-function showOut(v,d,blob,ext,name){var u=URL.createObjectURL(blob);v.src=u;v.style.display='block';d.href=u;d.download=name+'.'+ext;d.textContent='Download video (.'+ext+')';d.style.display='inline-block'}
-function wrap(c,t,maxW){var w=t.split(' '),l='',o=[];w.forEach(function(x){var s=l?l+' '+x:x;if(c.measureText(s).width>maxW&&l){o.push(l);l=x}else l=s});o.push(l);return o}
-var PAID=false;
-function isPaid(){return PAID}
-(async function(){try{if(!sb)return;var s=(await sb.auth.getSession()).data.session;if(!s)return;
-var r=await fetch(CFG.API+'/api/subscription/'+s.user.id,{headers:{Authorization:'Bearer '+s.access_token}});var d=await r.json();
-if(r.ok&&d.status==='active'&&(d.plan==='creator'||d.plan==='studio'))PAID=true}catch(e){}})();
-function mark(c,W,H){if(isPaid())return;c.save();c.globalAlpha=.75;c.fillStyle='#fff';c.shadowColor='rgba(0,0,0,.65)';c.shadowBlur=6;c.font='600 20px Arial,sans-serif';c.textAlign='right';c.fillText('Made with Navaar Studio',W-24,H-28);c.restore()}
-/* ---- quick poetry ---- */
-var txt=$('txt'),pt=$('pt'),pv=$('pv');
-function render(){var t=txt.value||' ',u=isU(t);$('cc').textContent=txt.value.length+' / 180';
-  pt.textContent=t;pt.className='pv-t '+$('typ').value;pt.style.direction=u?'rtl':'ltr';pt.style.textAlign=u?'right':'left';
-  txt.style.direction=u||!txt.value?'rtl':'ltr';$('ml').textContent=$('mood').value;
-  var p=BG[$('bgs').value];pv.style.background='linear-gradient(160deg,'+p[0]+','+p[1]+')'}
-['txt','mood','typ','bgs'].forEach(function(i){$(i).addEventListener('input',render)});render();
-$('expBtn').onclick=async function(){
-  var b=this,st=$('st1');if(!mime()){st.textContent='Recording is not supported in this browser.';return}
-  b.disabled=true;st.textContent='Recording your video…';$('d1').style.display='none';$('v1').style.display='none';
-  try{await document.fonts.load('42px "Noto Nastaliq Urdu"')}catch(e){}
-  var W=540,H=960,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
-  var p=BG[$('bgs').value],text=txt.value||'Navaar Studio',u=isU(text),fs=$('typ').value;
-  var fnt=u&&fs!=='f-modern'?'42px "Noto Nastaliq Urdu",serif':(u?'38px Arial,sans-serif':'36px '+(fs==='f-sans'?'Arial,sans-serif':'Georgia,serif')),lh=u?70:52;
-  x.font=fnt;var lines=[];text.split('\n').forEach(function(l){wrap(x,l,W-72).forEach(function(z){lines.push(z)})});
-  var secs=+$('dur').value,mu=$('snd').value?nvMusic($('snd').value,secs):null;record(c,secs*1000,function(e){var a=e/4000*Math.PI*2;
-    var g=x.createLinearGradient(0,0,W+80*Math.cos(a),H+80*Math.sin(a));g.addColorStop(0,p[0]);g.addColorStop(1,p[1]);x.fillStyle=g;x.fillRect(0,0,W,H);
-    x.fillStyle='rgba(255,255,255,.55)';x.font='12px Arial';x.textAlign='left';x.fillText('NAVAAR STUDIO',36,50);
-    x.fillStyle='#eef1fb';x.font=fnt;x.textAlign=u?'right':'left';var y0=460-(lines.length-1)*lh/2;
-    lines.forEach(function(l,i){x.fillText(l,u?W-36:36,y0+i*lh)});mark(x,W,H)},mu,
-    function(blob,ext){showOut($('v1'),$('d1'),blob,ext,'navaar-video');if(mu)mu._c.close();st.textContent='Video ready. Play or download it.';b.disabled=false})};
+["poetry-text","mood","typography","background"].forEach(id=>{$(id).addEventListener("input",updatePoetryPreview);$(id).addEventListener("change",updatePoetryPreview);});
 
-/* ---- saved projects ---- */
-var KEY='navaar_saved_projects';
-function lp(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
-function sp(l){try{localStorage.setItem(KEY,JSON.stringify(l))}catch(e){}}
-async function fetchP(){if(user&&sb){try{var r=await fetch(CFG.API+'/api/projects/'+user.id,{headers:await hdr()});if(!r.ok)throw 0;
-  return(await r.json()).map(function(r){return{id:r.id,text:r.text,mood:r.mood,typography:r.typography,background:r.background,date:r.created_at}})}catch(e){}}return lp()}
-async function renderSaved(){var l=await fetchP(),box=$('sl');$('sc').textContent=l.length+' saved';
-  $('se').style.display=l.length?'none':'block';$('se').textContent=user?'No saved projects yet.':'No saved projects yet. Sign in to sync across devices; for now they save in this browser.';
-  box.innerHTML='';l.slice().reverse().forEach(function(p){var r=document.createElement('div');r.className='item';
-    r.innerHTML='<div class="t">'+esc(p.text)+'</div><div><span class="lk" data-l="'+esc(p.id)+'">Load</span><button class="btn-d" data-x="'+esc(p.id)+'">Delete</button></div>';box.appendChild(r)});
-  box.querySelectorAll('[data-l]').forEach(function(e){e.onclick=function(){var p=l.find(function(z){return String(z.id)===e.dataset.l});if(!p)return;
-    txt.value=p.text;$('mood').value=p.mood;$('typ').value=p.typography||'';$('bgs').value=p.background;render()}});
-  box.querySelectorAll('[data-x]').forEach(function(e){e.onclick=async function(){var id=e.dataset.x;
-    if(user&&sb){try{await fetch(CFG.API+'/api/projects/'+id,{method:'DELETE',headers:await hdr()})}catch(x){}}else sp(lp().filter(function(z){return String(z.id)!==id}));renderSaved()}})}
-$('saveBtn').onclick=async function(){if(!txt.value.trim()){$('st1').textContent='Add some text first.';return}
-  var en={text:txt.value,mood:$('mood').value,typography:$('typ').value,background:$('bgs').value};
-  function local(){var l=lp();l.push(Object.assign({id:Date.now(),date:Date.now()},en));sp(l)}
-  if(user&&sb){try{var r=await fetch(CFG.API+'/api/projects',{method:'POST',headers:await hdr({'Content-Type':'application/json'}),body:JSON.stringify(en)});if(!r.ok)throw 0;$('st1').textContent='Saved to your account.'}catch(e){local();$('st1').textContent='Saved to this browser (server unreachable).'}}
-  else{local();$('st1').textContent='Saved to this browser. Sign in to sync.'}renderSaved()};
-renderSaved();
-
-/* ---- templates (generated) ---- */
-var P=[['Mirza Ghalib','ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے\nبہت نکلے مرے ارمان لیکن پھر بھی کم نکلے'],['Mirza Ghalib','ہم کو معلوم ہے جنت کی حقیقت لیکن\nدل کے خوش رکھنے کو غالبؔ یہ خیال اچھا ہے'],['Mirza Ghalib','عشق نے غالبؔ نکما کر دیا\nورنہ ہم بھی آدمی تھے کام کے'],['Mirza Ghalib','بازیچۂ اطفال ہے دنیا مرے آگے\nہوتا ہے شب و روز تماشا مرے آگے'],['Mirza Ghalib','ان کے دیکھے سے جو آ جاتی ہے منہ پر رونق\nوہ سمجھتے ہیں کہ بیمار کا حال اچھا ہے'],['Mir Taqi Mir','ابتدائے عشق ہے روتا ہے کیا\nآگے آگے دیکھیے ہوتا ہے کیا'],['Mir Taqi Mir','دیکھ تو دل کہ جاں سے اٹھتا ہے\nیہ دھواں سا کہاں سے اٹھتا ہے'],['Mir Taqi Mir','نازکی اس کے لب کی کیا کہیے\nپنکھڑی اک گلاب کی سی ہے'],['Allama Iqbal','ستاروں سے آگے جہاں اور بھی ہیں\nابھی عشق کے امتحاں اور بھی ہیں'],['Allama Iqbal','خودی کو کر بلند اتنا کہ ہر تقدیر سے پہلے\nخدا بندے سے خود پوچھے بتا تیری رضا کیا ہے'],['Allama Iqbal','تو شاہیں ہے پرواز ہے کام تیرا\nترے سامنے آسماں اور بھی ہیں'],['Dagh Dehlvi','خوب پردہ ہے کہ چلمن سے لگے بیٹھے ہیں\nصاف چھپتے بھی نہیں سامنے آتے بھی نہیں'],['Dagh Dehlvi','اردو ہے جس کا نام ہمیں جانتے ہیں داغؔ\nسارے جہاں میں دھوم ہماری زباں کی ہے'],['Momin Khan Momin','تم مرے پاس ہوتے ہو گویا\nجب کوئی دوسرا نہیں ہوتا'],['Bahadur Shah Zafar','لگتا نہیں ہے دل مرا اجڑے دیار میں\nکس کی بنی ہے عالمِ ناپائیدار میں'],['Ibrahim Zauq','اب تو گھبرا کے یہ کہتے ہیں کہ مر جائیں گے\nمر کے بھی چین نہ پایا تو کدھر جائیں گے']];
-var TG=['cinematic','midnight','teal','rose','slate'],TC=[['#12303a','#eaf6f3'],['#2a1a33','#f3e6ff'],['#33201a','#ffe9d6'],['#10261f','#dff7ec'],['#20242e','#e6ecf7'],['#3a1420','#ffd6df']];
-var ST=[['Dark and raw','#0b0d10','#e9e4dc'],['Soft romance','#3a1420','#ffd6df'],['Bold red','#3b0f12','#ffe3e0'],['Golden classic','#2b2110','#f2d38a'],['Quiet blue','#0f2a3d','#dbeeff'],['Clean white','#f4f1ea','#1c1c22']];
-var Q=[['Long Urdu Poetry','لفظوں کی روشنی میں کبھی کبھی پوری دنیا روشن ہو جاتی ہے، بس دل سے دیکھنے کی ضرورت ہوتی ہے۔','CINEMATIC POETRY','','teal'],['Romantic Story','تم سا کوئی نہیں، تمہاری باتوں میں وہ سکون ہے جو خاموش لمحوں کو بھی خوبصورت بنا دیتا ہے۔','ROMANTIC WARMTH','','rose'],['Spiritual Reflection','دل کو سکون دو، اپنے رب پر بھروسہ رکھو، اور ہر مشکل کے بعد آنے والی آسانی کو یاد رکھو۔','SPIRITUAL STILLNESS','f-modern','teal'],['Journey Quote','ہر راستہ آسان نہیں ہوتا، مگر مسلسل چلنے والا شخص ایک دن اپنی منزل کے قریب ضرور پہنچ جاتا ہے۔','FORWARD MOTION','f-modern','dusk'],['Editorial Quote','Make room for meaning, because the quietest words can sometimes stay with us the longest.','EDITORIAL CALM','f-serif','slate'],['Modern Motivation','Begin before you feel ready, keep moving with patience, and let every small step become part of the story.','FORWARD MOTION','f-sans','dusk'],['Announcement','Something meaningful is here. Give your announcement enough space to breathe, then let the message speak clearly.','BOLD ANNOUNCEMENT','f-sans','midnight'],['Memory Lines','آج کا دن کل کی یاد بن جائے گا، اس لیے ہر خوبصورت لمحے کو دل سے جیو اور اپنے لفظوں میں محفوظ کر لو۔','EDITORIAL CALM','f-modern','midnight'],['Story Starter','Your next chapter does not need permission to begin. Start with one honest sentence and keep going until it becomes your story.','FORWARD MOTION','f-sans','teal'],['Quiet Thoughts','خاموشی بھی ایک زبان ہے، کبھی کبھی دل کی سب سے سچی بات لفظوں کے بغیر بھی سمجھ آ جاتی ہے۔','ROMANTIC WARMTH','','rose'],['Minimal Message','Keep your message simple, keep your design clean, and let the image and words work together without unnecessary decoration.','EDITORIAL CALM','f-serif','slate'],['Elegant Quote','A beautiful idea becomes more powerful when the design gets out of its way. Choose your words, choose your image, and let the moment breathe.','CINEMATIC POETRY','f-serif','cinematic'],['New Beginning','آج کا دن ایک نئی شروعات ہے، اپنے خوابوں کو وقت دو، اپنے سفر پر یقین رکھو، اور ہر چھوٹی کامیابی کو دل سے محسوس کرو۔','FORWARD MOTION','','midnight'],['Memory Film','Some moments deserve to be remembered slowly. Let the picture breathe, let the words stay simple, and let the feeling become the story.','EDITORIAL CALM','f-serif','slate'],['Silent Love','محبت ہمیشہ شور نہیں کرتی، کبھی ایک خاموش خیال، ایک نظر، یا ایک چھوٹا سا لمحہ پوری کہانی کہہ دیتا ہے۔','ROMANTIC WARMTH','f-modern','rose'],['Patience','ہر مشکل وقت ہمیں کچھ سکھاتا ہے۔ صبر رکھو، کوشش جاری رکھو، اور یاد رکھو کہ راستے بدل سکتے ہیں مگر منزل کی امید باقی رہ سکتی ہے۔','SPIRITUAL STILLNESS','f-modern','teal'],['Life Notes','زندگی کی خوبصورتی یہ ہے کہ ہر دن ہمیں دوبارہ کوشش کرنے کا موقع دیتا ہے، بس دل میں امید اور قدموں میں حرکت ہونی چاہیے۔','FORWARD MOTION','','dusk'],['Story Film','A good story does not need more decoration. It needs a clear voice, a strong image, and enough space for the audience to feel something real.','CINEMATIC POETRY','f-serif','midnight'],['Simple Idea','ایک خوبصورت خیال تب اور بھی خوبصورت لگتا ہے جب اسے سادہ الفاظ، مناسب تصویر اور صاف ڈیزائن کے ساتھ پیش کیا جائے۔','EDITORIAL CALM','f-modern','slate'],['Keep Creating','May your next step be lighter than the last, your purpose clearer than before, and your courage strong enough to keep creating when nobody is watching.','FORWARD MOTION','f-sans','teal'],['Heart Talk','دل کی بات ہمیشہ لمبی نہیں ہوتی، کبھی چند لفظ ہی کافی ہوتے ہیں کہ سامنے والا آپ کے احساس کو سمجھ لے۔','ROMANTIC WARMTH','','rose'],['Launch Announcement','Important announcement: a new chapter is beginning. Save the date, share the message, and stay connected for what comes next.','BOLD ANNOUNCEMENT','f-sans','midnight'],['Trust & Hope','اللہ پر بھروسہ رکھو، نیت صاف رکھو، کوشش جاری رکھو، اور اپنے دل کو اس یقین سے مضبوط رکھو کہ آسانی کا وقت بھی آتا ہے۔','SPIRITUAL STILLNESS','f-modern','teal'],['Brand Message','Your brand deserves a message that feels clear, confident and memorable. Say what matters, show what matters.','BOLD ANNOUNCEMENT','f-sans','cinematic']];
-var tg=$('tg'),html='';
-function card(cat,title,sub,text,th,bg,mood,typ,idx){var en=!isU(text);
-  return'<div class="tc" data-c="'+cat+'" data-t="'+esc(text)+'" data-m="'+mood+'" data-y="'+typ+'" data-b="'+bg+'"><div class="tth'+(en?' en':'')+'" style="background:linear-gradient(135deg,'+th[0]+',#0a0f11);color:'+th[1]+'">'+esc(text)+'</div><div class="tb"><h3>'+esc(title)+'</h3><p>'+sub+'</p><button class="lk use" style="background:none">Use template</button>'+(idx!==null?'<a class="lk" href="editor.html?poem='+idx+'">Edit in Editor</a>':'')+'</div></div>'}
-P.forEach(function(p,i){html+=card('poetry',p[0],'Classic couplet, public domain.',p[1],TC[i%6],TG[i%5],'CINEMATIC POETRY','',i)});
-ST.forEach(function(s,i){html+=card('style',s[0],'Empty style. Paste your own verse.','یہاں اپنا کلام لکھیں\nWrite your own verse here',[s[1],s[2]],'midnight','CINEMATIC POETRY','',16+i)});
-Q.forEach(function(q,i){html+=card('quote',q[0],'Ready-to-use quote.',q[1],TC[i%6],q[4],q[2],q[3],null)});
-tg.innerHTML=html;
-tg.querySelectorAll('.use').forEach(function(b){b.onclick=function(){var c=b.closest('.tc');txt.value=c.dataset.t;$('mood').value=c.dataset.m;$('typ').value=c.dataset.y;$('bgs').value=c.dataset.b;render();$('studio').scrollIntoView({behavior:'smooth'});$('st1').textContent='Template loaded.'}});
-document.querySelectorAll('.arrows button').forEach(function(b){b.onclick=function(){tg.scrollBy({left:(+b.dataset.d)*tg.clientWidth*.8,behavior:'smooth'})}});
-document.querySelectorAll('.chip').forEach(function(c){c.onclick=function(){document.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x===c)});
-  tg.querySelectorAll('.tc').forEach(function(d){d.style.display=(c.dataset.f==='all'||d.dataset.c===c.dataset.f)?'':'none'});tg.scrollTo({left:0})}});
-
-/* ---- photo + lyrics ---- */
-var photos=[],audioEl=null,audioFile=null,cv=$('cv'),vx=cv.getContext('2d');
-$('pbtn').onclick=function(){$('pin').click()};$('abtn').onclick=function(){$('ain').click()};
-$('lyr').addEventListener('input',function(){this.style.direction=isU(this.value)||!this.value?'rtl':'ltr'});
-function thumbs(){var b=$('thumbs');b.innerHTML='';photos.forEach(function(p,i){var w=document.createElement('div');w.style.position='relative';
-  w.innerHTML='<img src="'+p.src+'" alt="Photo '+(i+1)+'" style="width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid var(--bd2)"><button type="button" aria-label="Remove" style="position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:#ff5a5a;color:#fff;font-size:11px;cursor:pointer">×</button>';
-  w.querySelector('button').onclick=function(){photos.splice(i,1);thumbs()};b.appendChild(w)})}
-$('pin').onchange=function(){Array.prototype.forEach.call(this.files||[],function(f){var r=new FileReader();r.onload=function(e){var im=new Image();im.onload=function(){photos.push(im);thumbs()};im.src=e.target.result};r.readAsDataURL(f)});this.value=''};
-$('ain').onchange=function(){var f=this.files[0];if(!f)return;audioFile=f;$('an').textContent=f.name;if(audioEl)audioEl.pause();audioEl=new Audio(URL.createObjectURL(f))};
-function cover(c,im,x,y,w,h,z){var ir=im.width/im.height,cr=w/h,sw,sh;if(ir>cr){sh=im.height;sw=sh*cr}else{sw=im.width;sh=sw/cr}
-  var zw=sw/z,zh=sh/z;c.drawImage(im,(im.width-sw)/2+(sw-zw)/2,(im.height-sh)/2+(sh-zh)/2,zw,zh,x,y,w,h)}
-function fnt(r,u,e){return r?u+'px "Noto Nastaliq Urdu",serif':e+'px Georgia,serif'}
-function say(c,t,cx,cy,w,lh){var l=wrap(c,t,w),s=cy-(l.length-1)*lh/2;l.forEach(function(z,i){c.fillText(z,cx,s+i*lh)})}
-var LY={
-bottom:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);var g=c.createLinearGradient(0,H*.6,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.65)');c.fillStyle=g;c.fillRect(0,0,W,H);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,38,30);say(c,t,W/2,H-140,W-90,52)},
-center:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);c.fillStyle='rgba(0,0,0,.3)';c.fillRect(0,0,W,H);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,44,34);say(c,t,W/2,H/2,W-100,58)},
-top:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);var g=c.createLinearGradient(0,0,0,H*.4);g.addColorStop(0,'rgba(0,0,0,.65)');g.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=g;c.fillRect(0,0,W,H);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,38,30);say(c,t,W/2,150,W-100,52)},
-framed:function(c,im,W,H,z,t,a,r){c.fillStyle='#fff';c.fillRect(0,0,W,H);cover(c,im,38,34,W-76,H*.62,z);c.globalAlpha=a;c.fillStyle='#111';c.textAlign='center';c.font=fnt(r,32,26);say(c,t,W/2,H*.62+120,W-90,46)},
-split:function(c,im,W,H,z,t,a,r){var s=H*.58;c.fillStyle='#0c1214';c.fillRect(0,0,W,H);cover(c,im,0,0,W,s,z);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,32,27);say(c,t,W/2,s+(H-s)/2,W-80,46)},
-glass:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);c.fillStyle='rgba(8,12,28,.5)';c.fillRect(32,H*.36,W-64,H*.28);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,34,27);say(c,t,W/2,H/2,W-100,48)},
-polaroid:function(c,im,W,H,z,t,a,r){c.fillStyle='#f4f0e8';c.fillRect(0,0,W,H);cover(c,im,42,48,W-84,H*.57,z);c.globalAlpha=a;c.fillStyle='#171923';c.textAlign='center';c.font=fnt(r,29,24);say(c,t,W/2,H*.8,W-105,42)},
-spot:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);var g=c.createRadialGradient(W/2,H/2,20,W/2,H/2,W*.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.7)');c.fillStyle=g;c.fillRect(0,0,W,H);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,36,29);say(c,t,W/2,H*.75,W-100,50)}};
-function sayL(c,t,x,y,w,lh){wrap(c,t,w).forEach(function(z,i){c.fillText(z,x,y+i*lh)})}
-function shade(c,W,H,o){c.fillStyle='rgba(0,0,0,'+o+')';c.fillRect(0,0,W,H)}
-Object.assign(LY,{
-cinematic:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,34,27);say(c,t,W/2,H/2+18,W-110,50)},
-left:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);shade(c,W,H,.25);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign=r?'right':'left';c.font=fnt(r,34,28);sayL(c,t,r?W-48:48,H/2-30,W*.72,48)},
-right:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);shade(c,W,H,.25);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign=r?'left':'right';c.font=fnt(r,34,28);sayL(c,t,r?48:W-48,H/2-30,W*.72,48)},
-minimal:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);shade(c,W,H,.2);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=r?'36px "Noto Nastaliq Urdu",serif':'29px Arial,sans-serif';say(c,t,W/2,H/2+12,W-120,50)},
-lower:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);c.fillStyle='rgba(0,0,0,.4)';c.fillRect(0,H*.66,W,H*.2);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,35,28);say(c,t,W/2,H*.76,W-70,48)},
-photoFirst:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);var g=c.createLinearGradient(0,H*.8,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.7)');c.fillStyle=g;c.fillRect(0,0,W,H);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,31,25);say(c,t,W/2,H-90,W-100,42)},
-corner:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);var g=c.createLinearGradient(0,H*.6,0,H);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.6)');c.fillStyle=g;c.fillRect(0,0,W,H);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign=r?'right':'left';c.font=r?'31px "Noto Nastaliq Urdu",serif':'25px Arial,sans-serif';sayL(c,t,r?W-44:44,H-220,W*.72,44)},
-vertical:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);shade(c,W,H,.25);c.save();c.translate(W*.12,H/2);c.rotate(-Math.PI/2);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=r?'28px "Noto Nastaliq Urdu",serif':'23px Arial,sans-serif';say(c,t,0,0,H*.68,40);c.restore()},
-duotone:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);c.fillStyle='rgba(10,20,45,.35)';c.fillRect(0,0,W,H);c.strokeStyle='rgba(255,255,255,.8)';c.lineWidth=3;c.strokeRect(26,26,W-52,H-52);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='center';c.font=fnt(r,35,28);say(c,t,W/2,H/2+12,W-110,50)},
-diagonal:function(c,im,W,H,z,t,a,r){cover(c,im,0,0,W,H,z);shade(c,W,H,.2);c.save();c.translate(W*.05,H*.64);c.rotate(-.08);c.globalAlpha=a;c.fillStyle='#fff';c.textAlign='left';c.font=r?'32px "Noto Nastaliq Urdu",serif':'26px Arial,sans-serif';sayL(c,t,0,0,W*.8,44);c.restore()}
+/* ---- Saved projects (localStorage, replaces Canva data SDK) ---- */
+const STORE_KEY="navaar_studio_projects_v1";
+let records=[];
+function loadRecords(){try{records=JSON.parse(localStorage.getItem(STORE_KEY)||"[]");if(!Array.isArray(records))records=[];}catch{records=[];}}
+function persist(){try{localStorage.setItem(STORE_KEY,JSON.stringify(records));return true;}catch{return false;}}
+function renderProjects(){
+ const box=$("saved-list");box.innerHTML="";
+ $("project-count").textContent=records.length+" / 999";
+ if(!records.length){setStatus("projects-status","No saved projects yet. Save a Quick Poetry Video to keep its text and styling in this browser.");return;}
+ setStatus("projects-status","Projects are saved in this browser.","success");
+ records.slice().reverse().forEach(r=>{
+  const row=document.createElement("div");row.className="saved-row";
+  const text=document.createElement("div");text.className="saved-text";text.textContent=r.text;
+  const load=document.createElement("button");load.className="small-btn";load.type="button";load.textContent="Load";
+  const del=document.createElement("button");del.className="small-btn danger";del.type="button";del.textContent="Delete";
+  load.onclick=()=>{$("poetry-text").value=r.text;$("mood").value=r.mood;$("typography").value=r.typography;$("background").value=r.background;updatePoetryPreview();$("quick-poetry").scrollIntoView({behavior:"smooth"});setStatus("poetry-status","Saved project loaded.","success");};
+  del.onclick=()=>{records=records.filter(x=>x.id!==r.id);if(!persist())setStatus("projects-status","Could not delete. Check browser storage.","error");else renderProjects();};
+  row.append(text,load,del);box.append(row);
+ });
+}
+$("save-project").addEventListener("click",()=>{
+ const text=$("poetry-text").value.trim();
+ if(!text)return setStatus("poetry-status","Add poetry or a quote before saving.","error");
+ if(records.length>=999)return setStatus("poetry-status","Saved-project limit (999) reached.","error");
+ records.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),text,mood:$("mood").value,typography:$("typography").value,background:$("background").value,created_at:new Date().toISOString()});
+ if(persist()){setStatus("poetry-status","Saved in this browser.","success");renderProjects();}
+ else{records.pop();setStatus("poetry-status","Could not save. Browser storage may be blocked.","error");}
 });
-var lyrEdited=false;$('lyr').addEventListener('input',function(){lyrEdited=true});
-$('autoBtn').onclick=function(){var st=$('st2');if(!photos.length)return st.textContent='Add at least one photo, then tap Auto video.';
-  if(!lyrEdited||!$('lyr').value.trim()){$('lyr').value=P[Math.floor(Math.random()*P.length)][1];$('lyr').style.direction='rtl'}
-  $('lay').value='random';$('gen').click()};
-$('aiWrite').onclick=async function(){var st=$('st2'),b=this,t=$('aiTopic').value.trim();
-  if(!user){st.textContent='Sign in to use AI writing.';openAuth('in');return}
-  if(t.length<2)return st.textContent='Type a topic first.';
-  b.disabled=true;st.textContent='AI is writing…';
-  try{var r=await fetch(CFG.API+'/api/ai/poetry',{method:'POST',headers:await hdr({'Content-Type':'application/json'}),body:JSON.stringify({topic:t})});
-    var d=await r.json().catch(function(){return{}});if(!r.ok||!d.text)throw new Error(d.error||'AI service is not connected yet.');
-    $('lyr').value=d.text;lyrEdited=true;$('lyr').style.direction=isU(d.text)?'rtl':'ltr';st.textContent='AI lines added. Tap Auto video or Generate.'}
-  catch(e){st.textContent=e.message}b.disabled=false};
-$('gen').onclick=async function(){var st=$('st2'),b=this;
-  if(!photos.length)return st.textContent='Add at least one photo first.';
-  var lines=$('lyr').value.split('\n').map(function(s){return s.trim()}).filter(Boolean);if(!lines.length)return st.textContent='Add at least one line of text.';
-  if(!mime())return st.textContent='Your browser does not support video recording.';
-  var k=$('lay').value,keys=Object.keys(LY);if(k==='random')k=keys[Math.floor(Math.random()*keys.length)];var L=LY[k];
-  b.disabled=true;st.textContent='Recording…';$('d2').style.display='none';$('v2').style.display='none';
-  try{await document.fonts.load('30px "Noto Nastaliq Urdu"')}catch(e){}
-  var dur=0;if(audioEl&&audioFile){dur=await new Promise(function(res){if(audioEl.readyState>=1&&!isNaN(audioEl.duration))return res(audioEl.duration);audioEl.onloadedmetadata=function(){res(audioEl.duration||0)};audioEl.onerror=function(){res(0)}})}
-  var vl=+$('vlen').value,ms=vl?vl*1000:dur>0?Math.min(dur,60)*1000:Math.max(6,Math.min(60,lines.length*3))*1000,ps=ms/photos.length,ls=ms/lines.length;
-  record(cv,ms,function(e){var pi=Math.min(photos.length-1,Math.floor(e/ps)),z=1+.08*((e-pi*ps)/ps),li=Math.min(lines.length-1,Math.floor(e/ls)),lp2=(e-li*ls)/ls;
-    var f=Math.max(0,Math.min(1,lp2<.15?lp2/.15:(lp2>.85?(1-lp2)/.15:1)));vx.globalAlpha=1;L(vx,photos[pi],cv.width,cv.height,z,lines[li],f,isU(lines[li]));vx.globalAlpha=1;mark(vx,cv.width,cv.height)},
-    audioFile?audioEl:null,function(blob,ext){showOut($('v2'),$('d2'),blob,ext,'navaar-photo-video');st.textContent='Your video is ready.';b.disabled=false})};
 
-/* ---- pricing ---- */
-var billing='monthly';
-$('tog').onclick=function(e){var t=e.target.closest('span');if(!t)return;billing=t.dataset.m;
-  document.querySelectorAll('#tog span').forEach(function(s){s.classList.toggle('on',s===t)});
-  document.querySelectorAll('.pa').forEach(function(a){a.textContent='$'+a.dataset[billing]});
-  document.querySelectorAll('.bn').forEach(function(n){n.textContent=billing==='annual'?'Billed annually':'Billed monthly'})};
-$('freeBtn').onclick=function(){location.href='editor.html'};
-document.querySelectorAll('[data-plan]').forEach(function(b){b.onclick=async function(){var cs=$('cs');
-  if(!user){cs.textContent='Sign in first, then choose a plan.';openAuth('in');return}
-  cs.textContent='Opening secure checkout…';
-  try{var r=await fetch(CFG.API+'/api/checkout',{method:'POST',headers:await hdr({'Content-Type':'application/json'}),body:JSON.stringify({plan:b.dataset.plan,billing:billing})});
-    var d=await r.json();if(d.url)location.href=d.url;else cs.textContent=d.error||'Could not start checkout.'}catch(e){cs.textContent='Could not reach the server.'}}});
+/* ---- Video export ---- */
+function recorderMime(){if(!window.MediaRecorder)return null;return["video/webm;codecs=vp9","video/webm","video/mp4"].find(t=>MediaRecorder.isTypeSupported(t))||null;}
+function makeVideo(canvas,duration,draw,audio,done){
+ const mime=recorderMime();if(!mime)throw new Error("Video recording is not supported in this browser.");
+ const stream=canvas.captureStream(30);
+ if(audio){try{audio.captureStream().getAudioTracks().forEach(t=>stream.addTrack(t));}catch{}}
+ const chunks=[],rec=new MediaRecorder(stream,{mimeType:mime});
+ rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+ rec.onstop=()=>done(new Blob(chunks,{type:mime.split(";")[0]}));
+ rec.start();if(audio){audio.currentTime=0;audio.play().catch(()=>{});}
+ const start=performance.now();
+ (function frame(now){const el=now-start;draw(el);if(el<duration)requestAnimationFrame(frame);else setTimeout(()=>{if(rec.state!=="inactive")rec.stop();if(audio)audio.pause();},100);})(start);
+}
+function setDownload(video,link,blob,name){const url=URL.createObjectURL(blob);const ext=blob.type.includes("mp4")?".mp4":".webm";video.src=url;video.style.display="block";link.href=url;link.download=name+ext;link.textContent="Download video ("+ext+")";link.style.display="inline-block";}
+function wrap(ctx,text,max){const words=text.split(/\s+/),lines=[];let line="";words.forEach(w=>{const n=line?line+" "+w:w;if(ctx.measureText(n).width>max&&line){lines.push(line);line=w}else line=n});if(line)lines.push(line);return lines;}
 
-/* ---- feedback ---- */
-$('ff').onsubmit=async function(e){e.preventDefault();var s=$('fst'),n=$('fn').value.trim(),m=$('fm').value.trim(),rt=document.querySelector('input[name=rt]:checked');
-  if($('fw').value)return;if(n.length<2)return s.textContent='Please enter your name.';if(m.length<10)return s.textContent='Please write at least 10 characters.';
-  if(!$('fk').checked)return s.textContent='Please confirm the consent box.';
-  $('fs').disabled=true;s.textContent='Sending…';
-  try{var r=await fetch(CFG.API+'/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:n,email:$('fe').value.trim(),category:$('fc').value,rating:rt?+rt.value:0,message:m,website:''})});
-    var d=await r.json().catch(function(){return{}});if(!r.ok)throw new Error(d.error||'Could not submit.');
-    $('ff').reset();s.textContent='Thank you, your feedback was submitted.';loadFb()}catch(x){s.textContent=x.message}
-  $('fs').disabled=false};
-async function loadFb(){var b=$('fl');try{var r=await fetch(CFG.API+'/api/feedback'),it=await r.json();if(!r.ok||!Array.isArray(it))throw 0;
-  b.innerHTML=it.length?'':'<p class="muted">No feedback yet. Be the first!</p>';
-  it.forEach(function(x){var q=Math.max(0,Math.min(5,+x.rating||0)),d=document.createElement('div');d.className='fbi';
-    d.innerHTML='<div class="top"><b>'+esc(x.name||'Guest')+'</b><span class="s">'+(q?'★'.repeat(q)+'☆'.repeat(5-q):'')+'</span></div><div>'+esc(x.message||'')+'</div>';b.appendChild(d)})}
-  catch(e){b.innerHTML='<p class="muted">Feedback could not be loaded right now.</p>'}}
-loadFb();
+$("export-poetry").addEventListener("click",async e=>{
+ const button=e.currentTarget,text=$("poetry-text").value.trim();
+ if(!text)return setStatus("poetry-status","Add poetry or a quote before exporting.","error");
+ if(!recorderMime())return setStatus("poetry-status","Video export is not supported in this browser. Your live preview still works.","error");
+ button.disabled=true;button.querySelector("span").textContent="Exporting…";setStatus("poetry-status","Recording a four-second video…");$("poetry-download").style.display="none";$("poetry-video").style.display="none";
+ const reset=()=>{button.disabled=false;button.querySelector("span").textContent="Export video";};
+ try{
+  await document.fonts.ready;
+  const c=document.createElement("canvas");c.width=540;c.height=960;
+  const x=c.getContext("2d"),colors=backgrounds[$("background").value],urdu=isUrdu(text),type=$("typography").value;
+  const font=type==="urdu-classic"?'42px "Noto Nastaliq Urdu"':type==="english-serif"?"37px Georgia":'36px "DM Sans"';
+  x.font=font;const lines=text.split("\n").flatMap(l=>wrap(x,l,465));
+  makeVideo(c,4000,el=>{
+   const p=el/4000,g=x.createLinearGradient(0,0,540+80*Math.sin(p*6),960);
+   g.addColorStop(0,colors[0]);g.addColorStop(1,colors[1]);x.fillStyle=g;x.fillRect(0,0,540,960);
+   x.fillStyle="rgba(255,255,255,.68)";x.font='12px "DM Sans"';x.textAlign="left";x.fillText("NAVAAR STUDIO",36,48);
+   x.fillStyle="#fff";x.font=font;x.textAlign=urdu?"right":"left";
+   const lh=urdu?68:50,s=480-((lines.length-1)*lh/2);
+   lines.forEach((l,i)=>x.fillText(l,urdu?504:36,s+i*lh));
+  },null,blob=>{setDownload($("poetry-video"),$("poetry-download"),blob,"navaar-poetry-video");setStatus("poetry-status","Video ready to play or download.","success");reset();});
+ }catch(err){setStatus("poetry-status",err.message||"Could not export this video.","error");reset();}
+});
 
-/* ---- back button closes popups first ---- */
-(function(){var els=[side,auth,intro],pushed=false,skipPop=false;
-function anyOn(){return els.some(function(e){return e.classList.contains('on')})}
-var mo=new MutationObserver(function(){if(anyOn()&&!pushed){history.pushState({nv:1},'');pushed=true}else if(!anyOn()&&pushed){pushed=false;skipPop=true;history.back()}});
-els.forEach(function(e){mo.observe(e,{attributes:true,attributeFilter:['class']})});
-addEventListener('popstate',function(){if(skipPop){skipPop=false;return}if(pushed){pushed=false;menu(false);ov(auth,false);ov(intro,false)}})})();
-/* ---- welcome intro: every visit, except right after login/logout ---- */
-var skip=false;try{skip=sessionStorage.getItem('nvSkip')==='1';sessionStorage.removeItem('nvSkip')}catch(e){}
-if(/access_token|[?&]code=/.test(location.hash+location.search))skip=true;
-if(!skip)ov(intro,true);
-})();
+/* ---- Photo + lyrics ---- */
+let photos=[],audioPlayer=null;
+const canvas=$("lyrics-canvas"),ctx=canvas.getContext("2d");
+function drawCover(img){const W=canvas.width,H=canvas.height;ctx.fillStyle="#091114";ctx.fillRect(0,0,W,H);if(!img)return;const s=Math.max(W/img.width,H/img.height),w=img.width*s,h=img.height*s;ctx.drawImage(img,(W-w)/2,(H-h)/2,w,h);}
+function drawLine(line,layout){
+ ctx.fillStyle=layout==="framed"?"rgba(244,240,232,.88)":"rgba(0,0,0,.44)";
+ const y=layout==="top"?0:layout==="bottom"?700:390,h=layout==="top"?250:layout==="bottom"?260:190;
+ ctx.fillRect(layout==="center"?30:0,y,layout==="center"?480:540,h);
+ ctx.fillStyle=layout==="framed"?"#111":"#fff";
+ ctx.font=isUrdu(line)?'34px "Noto Nastaliq Urdu"':"29px Georgia";ctx.textAlign="center";ctx.direction=isUrdu(line)?"rtl":"ltr";
+ ctx.fillText(line,270,y+h/2);ctx.direction="ltr";
+}
+function drawLyricsPreview(){const lines=$("lyrics-input").value.split("\n").map(x=>x.trim()).filter(Boolean);drawCover(photos[0]&&photos[0].image);drawLine(lines[0]||"Add photos and lyric lines",$("layout").value==="random"?"bottom":$("layout").value);}
+function renderThumbs(){const box=$("thumbs");box.innerHTML="";photos.forEach((ph,i)=>{const w=document.createElement("div");w.className="thumb";const img=document.createElement("img");img.src=ph.src;img.alt="Selected photo "+(i+1);const r=document.createElement("button");r.className="remove-thumb";r.type="button";r.setAttribute("aria-label","Remove photo "+(i+1));r.textContent="×";r.onclick=()=>{URL.revokeObjectURL(ph.src);photos.splice(i,1);renderThumbs();drawLyricsPreview();};w.append(img,r);box.append(w);});}
+$("add-photos").onclick=()=>$("photos-input").click();$("add-audio").onclick=()=>$("audio-input").click();
+$("photos-input").addEventListener("change",e=>{
+ const files=[...e.target.files].slice(0,Math.max(0,12-photos.length));let issue="";
+ files.forEach(f=>{if(!f.type.startsWith("image/"))issue="Unsupported image file skipped.";else if(f.size>8*1024*1024)issue="Images over 8 MB were skipped.";else{const image=new Image(),src=URL.createObjectURL(f);image.onload=()=>{photos.push({image,src});renderThumbs();drawLyricsPreview();};image.src=src;}});
+ if(issue)setStatus("lyrics-status",issue,"error");e.target.value="";
+});
+$("audio-input").addEventListener("change",e=>{
+ const f=e.target.files[0];if(!f)return;
+ if(!f.type.startsWith("audio/"))return setStatus("lyrics-status","Choose a supported audio file.","error");
+ if(f.size>25*1024*1024)return setStatus("lyrics-status","Audio files must be 25 MB or smaller.","error");
+ if(audioPlayer)audioPlayer.pause();audioPlayer=new Audio(URL.createObjectURL(f));$("audio-name").textContent=f.name;
+});
+["lyrics-input","layout"].forEach(id=>{$(id).addEventListener("input",drawLyricsPreview);$(id).addEventListener("change",drawLyricsPreview);});
+$("generate-lyrics").addEventListener("click",e=>{
+ const button=e.currentTarget,lines=$("lyrics-input").value.split("\n").map(x=>x.trim()).filter(Boolean);
+ if(!photos.length)return setStatus("lyrics-status","Add at least one photo first.","error");
+ if(!lines.length)return setStatus("lyrics-status","Add at least one lyric line first.","error");
+ if(!recorderMime())return setStatus("lyrics-status","Video export is not supported in this browser.","error");
+ button.disabled=true;button.querySelector("span").textContent="Generating…";setStatus("lyrics-status","Recording your photo and lyrics video…");
+ const duration=Math.min(18000,Math.max(6000,lines.length*2600));
+ const layout=$("layout").value==="random"?["bottom","center","top","framed"][Math.floor(Math.random()*4)]:$("layout").value;
+ try{
+  makeVideo(canvas,duration,el=>{
+   const ph=photos[Math.min(photos.length-1,Math.floor(el/(duration/photos.length)))].image;
+   const line=lines[Math.min(lines.length-1,Math.floor(el/(duration/lines.length)))];
+   drawCover(ph);drawLine(line,layout);
+  },audioPlayer,blob=>{setDownload($("lyrics-video"),$("lyrics-download"),blob,"navaar-photo-lyrics");setStatus("lyrics-status","Your video is ready to play or download.","success");button.disabled=false;button.querySelector("span").textContent="Generate video";drawLyricsPreview();});
+ }catch(err){setStatus("lyrics-status",err.message,"error");button.disabled=false;button.querySelector("span").textContent="Generate video";}
+});
+
+/* ---- Templates ---- */
+function renderTemplates(filter="all"){
+ const box=$("template-carousel");box.innerHTML="";
+ templates.filter(t=>filter==="all"||t.category===filter).forEach(t=>{
+  const card=document.createElement("article");card.className="template";
+  const face=document.createElement("div");face.className="template-face";face.textContent=t.text;face.style.background=`linear-gradient(145deg,${backgrounds[t.bg][0]},${backgrounds[t.bg][1]})`;
+  const body=document.createElement("div");body.className="template-body";
+  const h=document.createElement("h3");h.textContent=t.title;const n=document.createElement("p");n.textContent=t.note;
+  const use=document.createElement("button");use.className="small-btn";use.type="button";use.textContent="Use template";
+  use.onclick=()=>{$("poetry-text").value=t.text;$("mood").value=t.mood;$("typography").value=t.type;$("background").value=t.bg;updatePoetryPreview();$("quick-poetry").scrollIntoView({behavior:"smooth"});$("poetry-text").focus();setStatus("poetry-status","Template loaded into Quick Poetry Video.","success");};
+  body.append(h,n,use);card.append(face,body);box.append(card);
+ });
+}
+document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x===b));renderTemplates(b.dataset.filter);});
+$("template-prev").onclick=()=>$("template-carousel").scrollBy({left:-300,behavior:"smooth"});
+$("template-next").onclick=()=>$("template-carousel").scrollBy({left:300,behavior:"smooth"});
+
+/* ---- Feedback (local validation only) ---- */
+$("feedback-form").addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=$("feedback-name").value.trim(),email=$("feedback-email").value.trim(),msg=$("feedback-message").value.trim();
+ ["name","email","message"].forEach(k=>$("feedback-"+k+"-error").textContent="");
+ if($("feedback-website").value){setStatus("feedback-status","Thanks for your feedback.","success");return;}
+ let ok=true;
+ if(name.length<2){$("feedback-name-error").textContent="Enter a name with at least two characters.";ok=false;}
+ if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){$("feedback-email-error").textContent="Enter a valid email address or leave this field empty.";ok=false;}
+ if(msg.length<10){$("feedback-message-error").textContent="Write at least 10 characters of feedback.";ok=false;}
+ if(!ok)return setStatus("feedback-status","Please review the highlighted fields.","error");
+ e.currentTarget.reset();setStatus("feedback-status","Thanks — this feedback was validated locally. No remote feedback service is connected.","success");
+});
+
+/* ---- Nav ---- */
+$("menu-button").onclick=()=>{const nav=$("mobile-nav"),open=!nav.classList.contains("open");nav.classList.toggle("open",open);$("menu-button").setAttribute("aria-expanded",String(open));};
+$("mobile-nav").querySelectorAll("a").forEach(a=>a.onclick=()=>{$("mobile-nav").classList.remove("open");$("menu-button").setAttribute("aria-expanded","false");});
+
+loadRecords();updatePoetryPreview();drawLyricsPreview();renderTemplates();renderProjects();
 </script>
-  <script>
-(function(){var s=document.getElementById('side');if(!s)return;var a=document.createElement('a');a.href='cartoon.html';a.innerHTML='Photo to Cartoon<span>Photo se cartoon, anime, sketch</span>';var t=s.querySelector('a[href="tools.html"]');if(t&&t.after)t.after(a);else s.appendChild(a)})();
-</script>
-  <script src="pwa.js" defer></script>
-  <style>
-body{background:radial-gradient(900px 480px at 85% -10%,rgba(121,217,189,.18),transparent 60%),radial-gradient(700px 420px at -10% 30%,rgba(216,182,116,.08),transparent 60%),var(--bg)}
-header{background:rgba(12,18,20,.6);backdrop-filter:blur(20px) saturate(1.4)}
-.hero h1{background:linear-gradient(120deg,#fff 30%,var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent}
-.card,.pc,.step,.panel,.tc,.fbi{border-radius:20px;transition:transform .25s,border-color .25s,box-shadow .25s}
-.card:hover,.pc:hover,.step:hover,.tc:hover{transform:translateY(-4px);border-color:rgba(121,217,189,.45);box-shadow:0 18px 40px -18px rgba(121,217,189,.35)}
-.btn{min-height:44px}
-.btn-p{background:linear-gradient(135deg,#79d9bd,#d8b674)}
-.pv{box-shadow:0 40px 90px -30px #000,0 0 0 1px rgba(121,217,189,.12)}
-section{padding:96px 0}
-@media(max-width:900px){section{padding:60px 0}}
-.fade{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
-.fade.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.fade{opacity:1;transform:none}*{transition:none!important}}
-</style>
-<script>
-(function(){if(!('IntersectionObserver' in window))return;
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
-document.querySelectorAll('.card,.step,.pc,.panel').forEach(function(el){el.classList.add('fade');io.observe(el)})})();
-</script>
-</body>
-</html>
+</body></html>
