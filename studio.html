@@ -314,7 +314,22 @@ $("template-next").onclick=()=>$("template-carousel").scrollBy({left:300,behavio
 
 /* ---- Feedback ---- */
 const API_URL="https://navaar-backend-production.up.railway.app";
-$("feedback-form").addEventListener("submit",async e=>{
+async function loadFeedback(){
+ const box=$("feedback-list");
+ try{
+  const r=await fetch(API_URL+"/api/feedback");
+  const list=await r.json();
+  box.innerHTML="";
+  if(!Array.isArray(list)||!list.length){box.innerHTML='<p class="section-copy">No feedback yet.</p>';return;}
+  list.forEach(f=>{
+   const row=document.createElement("div");row.className="saved-row";row.style.display="block";
+   const who=document.createElement("strong");who.textContent=f.name+" · "+f.type;
+   const msg=document.createElement("div");msg.className="section-copy";msg.style.margin=".3rem 0 0";msg.textContent=f.message;
+   row.append(who,msg);box.append(row);
+  });
+ }catch{box.innerHTML='<p class="section-copy">Could not load feedback.</p>';}
+}
+ $("feedback-form").addEventListener("submit",async e=>{
  e.preventDefault();
  const form=e.currentTarget;
  const name=$("feedback-name").value.trim(),email=$("feedback-email").value.trim(),msg=$("feedback-message").value.trim();
