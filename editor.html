@@ -283,7 +283,8 @@ let mr,ch;
 function startExport(fmt){if(rec)return;if(!window.MediaRecorder){msg('This browser cannot export video. Try Chrome.');return}
  ensureAC();AC.resume();
  const st=C.captureStream(30);AD.stream.getAudioTracks().forEach(x=>st.addTrack(x));
- const mt=(fmt=='mp4'?['video/mp4;codecs=avc1,mp4a.40.2','video/mp4']:['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm']).find(m=>MediaRecorder.isTypeSupported(m));if(!mt){msg('MP4 is not supported here. Use .webm or try the latest Chrome.');return}const ext=fmt=='mp4'?'mp4':'webm';
+ const MP=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1,mp4a.40.2','video/mp4'],WB=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+const mt=(fmt=='webm'?WB:MP.concat(WB)).find(m=>MediaRecorder.isTypeSupported(m));if(!mt){msg('This browser cannot export video. Try Chrome.');return}const ext=mt.indexOf('mp4')>-1?'mp4':'webm';if(fmt=='mp4'&&ext=='webm')msg('MP4 not supported here, saving .webm');
  mr=new MediaRecorder(st,{mimeType:mt,videoBitsPerSecond:6e6});ch=[];mr.ondataavailable=e=>e.data.size&&ch.push(e.data);
  mr.onstop=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(ch,{type:mt.split(';')[0]}));a.download=($('#pname').value||'video')+'.'+ext;a.click();rec=false;$('#exp').textContent='Download ▾';msg('Downloaded .'+ext)};
  t=0;rec=true;play=true;$('#exp').textContent='Recording…';mr.start()}
@@ -307,4 +308,28 @@ ui();requestAnimationFrame(n=>{last=n;loop(n)});
 const pq=new URLSearchParams(location.search).get('poem');if(pq!==null&&window.POEMS&&POEMS[+pq]){tool='Templates';applyPoem(+pq)}
 </script>
 <script src="pwa.js" defer></script>
+ <script>
+startExport=function(fmt){
+  if(rec)return;
+  if(!window.MediaRecorder){msg('This browser cannot export video. Try Chrome.');return}
+  ensureAC();AC.resume();
+  const st=C.captureStream(30);AD.stream.getAudioTracks().forEach(x=>st.addTrack(x));
+  const MP=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1,mp4a.40.2','video/mp4'];
+  const WB=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+  const mt=(fmt=='webm'?WB:MP.concat(WB)).find(m=>MediaRecorder.isTypeSupported(m));
+  if(!mt){msg('This browser cannot export video. Try Chrome.');return}
+  const ext=mt.indexOf('mp4')>-1?'mp4':'webm';
+  if(fmt=='mp4'&&ext=='webm')msg('MP4 not supported here, saving .webm');
+  mr=new MediaRecorder(st,{mimeType:mt,videoBitsPerSecond:8e6,audioBitsPerSecond:128000});
+  ch=[];
+  mr.ondataavailable=e=>e.data.size&&ch.push(e.data);
+  mr.onstop=()=>{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob(ch,{type:mt.split(';')[0]}));
+    a.download=($('#pname').value||'video')+'.'+ext;a.click();
+    rec=false;$('#exp').textContent='Download ▾';msg('Downloaded .'+ext);
+  };
+  t=0;rec=true;play=true;$('#exp').textContent='Recording…';mr.start();
+};
+</script>
 </body></html>
