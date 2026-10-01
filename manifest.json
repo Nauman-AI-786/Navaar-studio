@@ -2,7 +2,7 @@
   "name": "Navaar Studio",
   "short_name": "Navaar",
   "description": "Free online video editor for Urdu and English poetry, quotes and reels.",
-  "start_id": "./",
+  "id": "./",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
