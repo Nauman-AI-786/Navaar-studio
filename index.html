@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navaar Studio: words, in motion</title>
+<meta name="description" content="Navaar Studio is a browser-based creative workspace for Urdu and English poetry, shayari, lyrics, quotes and visual stories.">
+<meta name="theme-color" content="#0b0d12">
+<link rel="canonical" href="https://nauman-ai-786.github.io/Navaar-studio/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Navaar Studio: words, in motion">
+<meta property="og:description" content="Urdu and English poetry, lyrics and quotes as shareable video.">
+<meta property="og:url" content="https://nauman-ai-786.github.io/Navaar-studio/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0b0d12;--paper:#f5f1e9;--sand:#e8e0d4;--muted:#a9a69e;--line:rgba(245,241,233,.17);--lime:#dcff71;--lime-dark:#596d10}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-width:320px;color:var(--paper);background:var(--ink);font-family:"DM Sans",sans-serif}
+a{color:inherit}
+.wrap{width:min(100% - 3rem,1180px);margin-inline:auto}
+:focus-visible{outline:3px solid var(--lime);outline-offset:4px}
+.skip{position:fixed;z-index:100;top:-5rem;left:1rem;padding:.7rem 1rem;border-radius:.45rem;background:var(--lime);color:var(--ink);font-weight:700;text-decoration:none}
+.skip:focus{top:1rem}
+header{position:fixed;z-index:50;inset:0 0 auto;border-bottom:1px solid rgba(245,241,233,.12);background:rgba(11,13,18,.85);backdrop-filter:blur(18px)}
+.bar{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:1.25rem}
+.brand{font-size:1.15rem;font-weight:700;letter-spacing:-.06em;text-decoration:none}
+.brand b{color:var(--lime)}
+.nav{display:flex;align-items:center;gap:1.6rem}
+.nav a,.mnav a{font-size:.84rem;font-weight:500;text-decoration:none;transition:color .2s}
+.nav a:hover,.mnav a:hover{color:var(--lime)}
+.nav .pill{padding:.5rem 1rem;border:1px solid var(--line);border-radius:.45rem}
+.mtoggle{display:none;width:43px;height:43px;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:.45rem;color:var(--paper);background:transparent;font-size:1.2rem;cursor:pointer}
+.mnav{display:none;padding:0 0 1.2rem;gap:1rem;flex-direction:column}
+.mnav.open{display:flex}
+.hero{position:relative;isolation:isolate;min-height:92vh;display:flex;align-items:flex-end;padding:9.5rem 0 4.5rem}
+.hero::after{position:absolute;z-index:-1;inset:0;content:"";background:linear-gradient(90deg,rgba(11,13,18,.97) 0%,rgba(11,13,18,.82) 43%,rgba(11,13,18,.34) 100%)}
+.hero-img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72}
+.hero-copy{max-width:785px}
+.eyebrow{display:flex;align-items:center;gap:.65rem;margin:0 0 1.3rem;color:var(--lime);font-size:.73rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.eyebrow::before{width:1.8rem;height:1px;content:"";background:currentColor}
+h1,h2,h3{font-family:"Fraunces",serif;font-weight:600;margin:0}
+h1{max-width:740px;font-size:clamp(3.3rem,8vw,7rem);line-height:.92;letter-spacing:-.07em}
+h1 em{color:var(--lime);font-style:normal}
+.lead{max-width:565px;margin:1.7rem 0 2rem;color:#e4e0d9;font-size:clamp(1rem,1.5vw,1.17rem);line-height:1.65}
+.row{display:flex;flex-wrap:wrap;gap:.8rem}
+.btn{min-height:49px;display:inline-flex;align-items:center;justify-content:center;padding:.8rem 1.2rem;border:1px solid transparent;border-radius:.45rem;font-size:.9rem;font-weight:700;text-decoration:none;transition:transform .2s,background .2s,border-color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-p{background:var(--lime);color:#11140c}
+.btn-p:hover{background:#e7ffa1}
+.btn-s{border-color:var(--line);color:var(--paper)}
+.btn-s:hover{border-color:var(--lime);color:var(--lime)}
+.pad{padding:7rem 0}
+.light{color:var(--ink);background:var(--paper)}
+.top{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.78fr);gap:2rem;align-items:end;margin-bottom:3rem}
+.label{margin:0 0 .85rem;color:var(--lime-dark);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+h2{max-width:680px;font-size:clamp(2.4rem,4.6vw,4.2rem);line-height:1;letter-spacing:-.06em}
+.copy{margin:0;color:#5a5751;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.card{position:relative;isolation:isolate;min-height:425px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;padding:1.5rem;border-radius:.75rem;background:#222630;color:var(--paper);text-decoration:none}
+.card::after{position:absolute;z-index:-1;inset:35% 0 0;content:"";background:linear-gradient(transparent,rgba(4,5,8,.94))}
+.card img{position:absolute;z-index:-2;inset:0;width:100%;height:100%;object-fit:cover;opacity:.72;transition:transform .5s}
+.card:hover img{transform:scale(1.045)}
+.card .tag{margin:0 auto auto 0;color:var(--lime);font-size:.74rem;font-weight:700;letter-spacing:.08em}
+.card h3{font-size:2rem;line-height:1;letter-spacing:-.05em}
+.card p:last-child{margin:.75rem 0 0;color:#ebe8e1;font-size:.92rem;line-height:1.55}
+.dark2{background:#11141b}
+.dark2 .label{color:var(--lime)}
+.dark2 .copy{color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.step{min-height:260px;padding:2rem 1.4rem 1.5rem 0;border-right:1px solid var(--line)}
+.step+.step{padding-left:1.4rem}
+.step:last-child{border-right:0}
+.step span{display:block;margin-bottom:4rem;color:var(--lime);font-size:.78rem;font-weight:700}
+.step h3{font-size:1.7rem;letter-spacing:-.045em}
+.step p{margin:.7rem 0 0;color:var(--muted);line-height:1.65}
+.split{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,7vw,7rem);align-items:stretch}
+.split img{width:100%;min-height:440px;border-radius:.75rem;object-fit:cover;filter:saturate(.7) contrast(1.05)}
+.panel{display:flex;flex-direction:column;justify-content:center}
+.panel .label{color:var(--lime)}
+.panel .copy{margin-top:1.3rem;color:var(--muted)}
+.points{display:grid;gap:.9rem;margin:2rem 0 0;padding:1.35rem 0 0;border-top:1px solid var(--line);list-style:none}
+.points li{display:flex;gap:.8rem;color:#e6e2da;line-height:1.55}
+.points li::before{content:"";flex:0 0 auto;width:8px;height:8px;margin-top:.55rem;border-radius:50%;background:var(--lime)}
+.cta{background:var(--paper);color:var(--ink)}
+.cta-box{padding:clamp(1.8rem,5vw,4rem);border-radius:.85rem;background:var(--sand)}
+.cta-box h2{margin-bottom:1rem}
+.cta-box .copy{max-width:52ch;margin-bottom:1.8rem}
+.cta .btn-s{border-color:#aaa396;color:var(--ink)}
+.cta .btn-s:hover{border-color:var(--lime-dark);color:var(--lime-dark)}
+footer{border-top:1px solid var(--line);padding:1.65rem 0}
+.frow{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.frow p{margin:0;color:#98948c;font-size:.78rem}
+.frow nav{display:flex;gap:1.2rem;flex-wrap:wrap}
+.frow nav a{font-size:.8rem;text-decoration:none}
+.frow nav a:hover{color:var(--lime)}
+@media(max-width:760px){
+.wrap{width:min(100% - 1.5rem,1180px)}
+.nav{display:none}.mtoggle{display:inline-flex}
+.hero{min-height:88vh;padding:8rem 0 3.2rem}
+.hero::after{background:linear-gradient(90deg,rgba(11,13,18,.94),rgba(11,13,18,.61))}
+.pad{padding:4.8rem 0}
+.top,.split{grid-template-columns:1fr;gap:1.5rem}
+.grid,.steps{grid-template-columns:1fr}
+.card{min-height:345px}
+.step,.step+.step{min-height:auto;padding:1.55rem 0;border-right:0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step span{margin-bottom:1.5rem}
+.split img{min-height:315px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Navaar Studio home">Navaar<b>.</b></a>
+    <nav class="nav" aria-label="Primary"><a href="#tools">Tools</a><a href="#workflow">Workflow</a><a href="studio.html#pricing">Plans</a><a class="pill" href="studio.html">Sign in</a></nav>
+    <button id="mt" class="mtoggle" type="button" aria-label="Open navigation menu" aria-controls="mn" aria-expanded="false">&#9776;</button>
+  </div>
+  <nav id="mn" class="wrap mnav" aria-label="Mobile"><a href="#tools">Tools</a><a href="#workflow">Workflow</a><a href="studio.html#pricing">Plans</a><a href="studio.html">Sign in</a></nav>
+</header>
+<main id="main">
+  <section id="top" class="hero">
+    <img class="hero-img" src="https://images.pexels.com/photos/8102674/pexels-photo-8102674.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="A video editor working on color grading in a dimly lit room" fetchpriority="high">
+    <div class="wrap hero-copy">
+      <p class="eyebrow">Navaar Studio</p>
+      <h1>Give every verse a <em>visual pulse.</em></h1>
+      <p class="lead">A browser-based creative workspace for Urdu and English poetry, shayari, lyrics, quotes, reels and visual stories.</p>
+      <div class="row"><a class="btn btn-p" href="editor.html">Open the editor</a><a class="btn btn-s" href="#workflow">See the workflow</a></div>
+    </div>
+  </section>
+
+  <section id="tools" class="light pad">
+    <div class="wrap">
+      <div class="top">
+        <div><p class="label">Creative workspace</p><h2>Tools for the words that deserve to move.</h2></div>
+        <p class="copy">Poetry-led creation, visual composition and editing in one place. Pick a tool and start.</p>
+      </div>
+      <div class="grid">
+        <a class="card" href="studio.html#studio"><img loading="lazy" src="https://images.pexels.com/photos/14292517/pexels-photo-14292517.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Close-up of an open book with Urdu text"><p class="tag">01 / COMPOSE</p><h3>Poetry video maker</h3><p>Turn a single line, nazm, quote or shayari into a vertical video with the mood and pace you choose.</p></a>
+        <a class="card" href="editor.html"><img loading="lazy" src="https://images.pexels.com/photos/29505140/pexels-photo-29505140.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Video editing software with timeline and controls"><p class="tag">02 / EDIT</p><h3>Timeline editor</h3><p>Bring text, images, layers, timing, animation and audio together in one sequence.</p></a>
+        <a class="card" href="studio.html#photoVideo"><img loading="lazy" src="https://images.pexels.com/photos/7086294/pexels-photo-7086294.jpeg?auto=compress&cs=tinysrgb&w=800" alt="A musician reading lyrics in a recording studio"><p class="tag">03 / ASSEMBLE</p><h3>Lyrics &amp; photo stories</h3><p>Pair your photos, written lines and music into a lyric video that is ready to share.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="workflow" class="dark2 pad">
+    <div class="wrap">
+      <div class="top">
+        <div><p class="label">A clear creative path</p><h2>From a line of text to a shareable story.</h2></div>
+        <p class="copy">Begin with your words, build their atmosphere, then export for the places people watch.</p>
+      </div>
+      <div class="steps">
+        <article class="step"><span>01</span><h3>Start with meaning</h3><p>Bring a poem, quote or lyric into the editor, or pick a template.</p></article>
+        <article class="step"><span>02</span><h3>Shape the atmosphere</h3><p>Choose type, images, timing and sound to match the feeling behind the words.</p></article>
+        <article class="step"><span>03</span><h3>Share with intent</h3><p>Download a vertical video for Instagram, TikTok, YouTube or WhatsApp.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad" style="background:#0b0d12">
+    <div class="wrap split">
+      <img loading="lazy" src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1280" alt="Young creators collaborating around a laptop">
+      <div class="panel">
+        <p class="label">Studio direction</p>
+        <h2 style="color:var(--paper)">Made for expression across Urdu and English.</h2>
+        <p class="copy">Shaped around the rhythm of poetry and lyric-led video, with a browser-first approach that keeps the work close to the words.</p>
+        <ul class="points"><li>Urdu-first design with Nastaliq and modern type choices.</li><li>Works in your browser. Nothing to install.</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta pad">
+    <div class="wrap cta-box">
+      <h2>Start with one line.</h2>
+      <p class="copy">The free plan includes the full editor and video downloads. Sign in to save projects and use them on any device.</p>
+      <div class="row"><a class="btn btn-p" href="editor.html">Open the editor</a><a class="btn btn-s" href="studio.html#pricing">See plans</a></div>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap frow">
+    <p>Navaar Studio: words, in motion.</p>
+    <nav aria-label="Footer"><a href="editor.html">Editor</a><a href="tools.html">Tools</a><a href="studio.html#pricing">Plans</a><a href="studio.html#feedback">Feedback</a><a href="privacy.html">Privacy</a></nav>
+  </div>
+</footer>
+<script>
+(function(){var b=document.getElementById('mt'),n=document.getElementById('mn');
+function s(o){n.classList.toggle('open',o);b.setAttribute('aria-expanded',String(o));b.setAttribute('aria-label',o?'Close navigation menu':'Open navigation menu')}
+b.addEventListener('click',function(){s(!n.classList.contains('open'))});
+n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){s(false)})})})();
+</script>
+<script src="pwa.js" defer></script>
+</body>
+</html>
