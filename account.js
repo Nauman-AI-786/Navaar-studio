@@ -74,7 +74,7 @@
 
   // ---- Header: one menu for everything ----
   var mb = document.getElementById("menu-button"), mnav = document.getElementById("mobile-nav");
-  mnav.innerHTML = '<a href="index.html">Home</a><a href="editor.html">Editor</a><a href="tools.html">Tools</a><a href="#quick-poetry">Quick poetry</a><a href="#photo-lyrics">Photo + lyrics</a><a href="#templates">Templates</a><a href="#projects">Projects</a><a href="#pricing">Plans</a><a href="#feedback">Feedback</a><a href="#" id="auth-link" style="color:#79d9bd;font-weight:700">Sign in / Sign up</a>';
+  mnav.innerHTML = '<a href="index.html">Home</a><a href="editor.html">Editor</a><a href="all-tools.html">Tools</a><a href="#quick-poetry">Quick poetry</a><a href="#photo-lyrics">Photo + lyrics</a><a href="#templates">Templates</a><a href="#projects">Projects</a><a href="#pricing">Plans</a><a href="#feedback">Feedback</a><a href="#" id="auth-link" style="color:#79d9bd;font-weight:700">Sign in / Sign up</a>';
   function closeMenu() { mnav.classList.remove("open"); mb.setAttribute("aria-expanded", "false"); }
   mnav.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", closeMenu); });
   var authBtn = document.getElementById("auth-link");
