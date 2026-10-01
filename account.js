@@ -3,8 +3,8 @@
    <script src="account.js" defer></script> */
 (function () {
   // ====== PASTE YOUR TWO VALUES HERE (public values only, never the service key) ======
-  var SUPABASE_URL = "PASTE_SUPABASE_URL_HERE";
-  var SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY_HERE";
+  var SUPABASE_URL = "https://zcungofmmaagqcinafhb.supabase.co";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpjdW5nb2ZtbWFhZ3FjaW5hZmhiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1MzQ3OTksImV4cCI6MjEwNjExMDc5OX0.I0tfr6qLUr8Uzw2saJBzhAIvOwMkSM5PX0XWt1MBJcQ";
   // ====================================================================================
   var API = "https://navaar-backend-production.up.railway.app";
 
