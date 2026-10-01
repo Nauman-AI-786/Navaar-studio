@@ -332,4 +332,37 @@ startExport=function(fmt){
   t=0;rec=true;play=true;$('#exp').textContent='Recording…';mr.start();
 };
 </script>
+ <script>
+(function(){
+const _d=drawer;
+drawer=function(){
+  _d();
+  if(tool!=='AI')return;
+  $('#drawer').innerHTML='<h3>Smart tools</h3><p class="hint">Photo ya video select karke tap karein. Sab free hain.</p><div class="g"><button data-ai="enh">✨ Auto enhance</button><button data-ai="fill">⛶ Fill screen</button><button data-ai="zoom">🎬 Slow zoom</button><button data-ai="txt">Aa Fit text</button></div><button class="pri" data-ai="show" style="width:100%">🖼 Photos to slideshow</button><h3 style="margin-top:14px">More AI tools</h3><div class="g"><button data-ai="bg">Background remover</button><button data-ai="cap">Voice to captions</button></div>';
+};
+function fill(o){const k=Math.max(C.width/o.w,C.height/o.h);o.w*=k;o.h*=k;o.x=(C.width-o.w)/2;o.y=(C.height-o.h)/2}
+function enh(o){const e=o.el,w=e.videoWidth||e.naturalWidth||e.width,h=e.videoHeight||e.naturalHeight||e.height;if(!w)return false;
+  const c=document.createElement('canvas');c.width=48;c.height=Math.max(1,Math.round(48*h/w));const x=c.getContext('2d');x.drawImage(e,0,0,c.width,c.height);
+  const d=x.getImageData(0,0,c.width,c.height).data,n=d.length/4;let s=0,q=0;
+  for(let i=0;i<d.length;i+=4){const y=.2126*d[i]+.7152*d[i+1]+.0722*d[i+2];s+=y;q+=y*y}
+  const m=s/n,sd=Math.sqrt(Math.max(0,q/n-m*m));
+  o.br=+Math.min(1.4,Math.max(.8,1+(120-m)/255*.9)).toFixed(2);o.ct=sd<55?1.2:sd<75?1.1:1.03;o.sa=1.15;return true}
+$('#drawer').addEventListener('click',function(e){
+  const b=e.target.closest('[data-ai]');if(!b)return;const a=b.dataset.ai,o=cur();
+  if(a=='bg'){location.href='tools.html#aibg';return}
+  if(a=='cap'){location.href='tools.html#aicap';return}
+  if(a=='show'){const im=L.filter(z=>z.type=='image');if(!im.length){msg('Pehle Media se photos add karein');return}
+    snap();let s=0;im.forEach(z=>{fill(z);z.st=s;z.d=3;z.an='fade';z.out='fade';z.lp='slow zoom';s+=3});
+    dur=Math.min(120,Math.ceil(s));$('#dur').value=dur;t=0;ui();msg(im.length+' photos slideshow ban gayi');return}
+  if(!o){msg('Pehle ek item select karein');return}
+  const media=o.type=='image'||o.type=='video';
+  if(a=='txt'){if(o.type!='text'){msg('Text select karein');return}snap();fitText(o);o.x=(C.width-o.w)/2}
+  else{if(!media){msg('Photo ya video select karein');return}
+    if(a=='enh'){snap();if(!enh(o)){msg('Media abhi load nahi hua');return}}
+    if(a=='fill'){snap();fill(o)}
+    if(a=='zoom'){snap();o.lp='slow zoom';o.an='fade'}}
+  props();msg('Ho gaya');
+});
+})();
+</script>
 </body></html>
