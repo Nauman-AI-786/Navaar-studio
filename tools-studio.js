@@ -1,3 +1,4 @@
+(()=>{
 const{form,S,dl,rd,blob,XS,U,shell,flist,ld,pdfOut}=NVH,$=(s,r=document)=>r.querySelector(s),E='Something went wrong. Please try again.',NF='Please select a file first.',LAME='https://cdn.jsdelivr.net/npm/lamejs@1.2.1/lame.min.js';
 /* ---------- audio helpers ---------- */
 const AC=()=>new(window.AudioContext||window.webkitAudioContext)(),dec=async f=>{try{return await AC().decodeAudioData(await f.arrayBuffer())}catch(e){throw U('Your browser could not read this file. Try MP3, WAV or M4A.')}};
