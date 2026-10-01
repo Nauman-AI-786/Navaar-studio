@@ -356,6 +356,6 @@ async function loadFeedback(){
 $("menu-button").onclick=()=>{const nav=$("mobile-nav"),open=!nav.classList.contains("open");nav.classList.toggle("open",open);$("menu-button").setAttribute("aria-expanded",String(open));};
 $("mobile-nav").querySelectorAll("a").forEach(a=>a.onclick=()=>{$("mobile-nav").classList.remove("open");$("menu-button").setAttribute("aria-expanded","false");});
 
-loadRecords();updatePoetryPreview();drawLyricsPreview();renderTemplates();renderProjects();
+loadRecords();updatePoetryPreview();drawLyricsPreview();renderTemplates();renderProjects();loadFeedback();
 </script>
 </body></html>
