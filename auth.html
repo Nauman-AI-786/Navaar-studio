@@ -30,6 +30,7 @@ select option{color:#000}input:focus,select:focus{outline:2px solid var(--mint);
 <a class="brand" href="index.html">Navaar Studio</a>
 <p class="sub">Urdu-first creative studio</p>
 <div class="tabs"><button type="button" id="t-in" class="on">Sign in</button><button type="button" id="t-up">Sign up</button></div>
+<label class="chk" style="margin:0 0 .6rem"><input type="checkbox" id="terms"><span>I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a> (required to sign in or sign up).</span></label>
 <button class="btn" type="button" id="google" style="margin-top:0">Continue with Google</button>
 <button class="btn" type="button" id="facebook">Continue with Facebook</button>
 <div class="or">or use email</div>
@@ -43,7 +44,6 @@ select option{color:#000}input:focus,select:focus{outline:2px solid var(--mint);
 <div class="up"><label for="pass2">Confirm password</label><input id="pass2" type="password" autocomplete="new-password"></div>
 <label class="chk"><input type="checkbox" id="show"> Show password</label>
 <label class="chk up"><input type="checkbox" id="news"> Send me tips and updates (optional)</label>
-<label class="chk up"><input type="checkbox" id="terms"><span>I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a>.</span></label>
 <button class="btn pri" type="submit" id="go">Sign in</button>
 <button class="fg in-only" type="button" id="forgot">Forgot password?</button>
 <p id="msg" role="status" aria-live="polite"></p>
@@ -61,11 +61,12 @@ $("t-in").onclick=function(){setMode("in")};$("t-up").onclick=function(){setMode
 if(new URLSearchParams(location.search).get("mode")==="signup")setMode("up");
 $("show").onchange=function(){var t=this.checked?"text":"password";$("pass").type=t;$("pass2").type=t};
 sb.auth.getSession().then(function(r){if(r.data&&r.data.session)location.replace(NEXT)});
-function oauth(p){var base=location.href.split("?")[0].split("#")[0].replace(/[^\/]*$/,"");sb.auth.signInWithOAuth({provider:p,options:{redirectTo:base+NEXT}}).then(function(r){if(r.error)msg(r.error.message,"e")})}
+function oauth(p){if(!$("terms").checked)return msg("Please tick the Privacy Policy box first.","e");var base=location.href.split("?")[0].split("#")[0].replace(/[^\/]*$/,"");sb.auth.signInWithOAuth({provider:p,options:{redirectTo:base+NEXT}}).then(function(r){if(r.error)msg(r.error.message,"e")})}
 $("google").onclick=function(){oauth("google")};$("facebook").onclick=function(){oauth("facebook")};
 $("forgot").onclick=function(){var e=$("email").value.trim();if(!/^\S+@\S+\.\S+$/.test(e))return msg("Enter your email first.","e");sb.auth.resetPasswordForEmail(e,{redirectTo:location.href.split("?")[0]}).then(function(r){r.error?msg(r.error.message,"e"):msg("Reset link sent. Check your email.","s")})};
 $("f").addEventListener("submit",async function(ev){
 ev.preventDefault();var email=$("email").value.trim(),pass=$("pass").value;
+if(!$("terms").checked)return msg("Please tick the Privacy Policy box to continue.","e");
 if(!/^\S+@\S+\.\S+$/.test(email))return msg("Enter a valid email.","e");
 if(pass.length<6)return msg("Password must be at least 6 characters.","e");
 var opts;
@@ -73,7 +74,6 @@ if(mode==="up"){
 if($("name").value.trim().length<2)return msg("Enter your full name.","e");
 if($("user").value.trim().length<3)return msg("Username needs at least 3 characters.","e");
 if(pass!==$("pass2").value)return msg("Passwords do not match.","e");
-if(!$("terms").checked)return msg("Please agree to the Privacy Policy.","e");
 opts={data:{full_name:$("name").value.trim(),username:$("user").value.trim(),phone:$("phone").value.trim(),country:$("country").value,gender:$("gender").value,dob:$("dob").value,interest:$("use").value,newsletter:$("news").checked}}}
 var b=$("go");b.disabled=true;msg("Please wait…");
 try{
