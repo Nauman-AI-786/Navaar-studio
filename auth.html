@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in or Sign up — Navaar Studio</title>
+<meta name="theme-color" content="#0c1214"><link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@1,9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0c1214;--panel:#162326;--line:rgba(143,230,204,.2);--paper:#f2f7f4;--muted:#9ab0aa;--mint:#79d9bd;--gold:#d8b674;--bad:#ffaaa4;--ok:#a9edce}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px;background:radial-gradient(700px 400px at 90% -5%,rgba(121,217,189,.2),transparent 60%),radial-gradient(600px 400px at 0% 100%,rgba(216,182,116,.12),transparent 60%),var(--ink);color:var(--paper);font-family:"DM Sans",system-ui,sans-serif}
+.card{width:100%;max-width:460px;background:linear-gradient(160deg,#1a2c2f,#101b1e);border:1px solid var(--line);border-radius:22px;padding:26px 22px;box-shadow:0 30px 80px -30px #000}
+.brand{display:block;text-align:center;text-decoration:none;font-family:Fraunces,serif;font-style:italic;font-weight:700;font-size:2.1rem;letter-spacing:-.02em;background:linear-gradient(120deg,#8fe6cc,#d8b674);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{text-align:center;color:var(--muted);font-size:.85rem;margin:.2rem 0 1.2rem}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:rgba(255,255,255,.05);padding:4px;border-radius:12px;margin-bottom:1rem}
+.tabs button{border:0;background:none;color:var(--muted);padding:.65rem;border-radius:9px;font-weight:700;cursor:pointer;font:inherit}
+.tabs button.on{background:var(--mint);color:#082018}
+label{display:block;font-size:.78rem;font-weight:700;color:#d6e2dd;margin:.7rem 0 .3rem}
+input,select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(214,239,230,.25);border-radius:10px;color:var(--paper);padding:.75rem;font:inherit;font-size:16px}
+select option{color:#000}input:focus,select:focus{outline:2px solid var(--mint);outline-offset:1px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.up{display:none}.signup .up{display:block}.signup .g2.up{display:grid}.signup .in-only{display:none}
+.chk{display:flex;gap:.5rem;align-items:flex-start;font-weight:500;color:var(--muted);font-size:.8rem;margin-top:.7rem}.chk input{width:auto;margin-top:.15rem}
+.chk a{color:var(--mint)}
+.btn{width:100%;min-height:46px;border-radius:12px;border:1px solid var(--line);font:inherit;font-weight:700;cursor:pointer;margin-top:.9rem;background:transparent;color:var(--paper)}
+.pri{background:linear-gradient(135deg,var(--mint),#a8ecd6);color:#082018;border:0}.btn:disabled{opacity:.5}
+.or{display:flex;align-items:center;gap:.6rem;color:var(--muted);font-size:.75rem;margin:1rem 0 0}.or:before,.or:after{content:"";flex:1;height:1px;background:var(--line)}
+.fg{background:none;border:0;color:var(--mint);font-size:.82rem;margin-top:.8rem;cursor:pointer;width:100%}
+#msg{min-height:1.2rem;font-size:.84rem;margin-top:.8rem;text-align:center;color:var(--muted)}#msg.e{color:var(--bad)}#msg.s{color:var(--ok)}
+.back{display:block;text-align:center;color:var(--muted);font-size:.8rem;margin-top:1rem;text-decoration:none}
+</style></head><body>
+<div class="card" id="card">
+<a class="brand" href="index.html">Navaar Studio</a>
+<p class="sub">Urdu-first creative studio</p>
+<div class="tabs"><button type="button" id="t-in" class="on">Sign in</button><button type="button" id="t-up">Sign up</button></div>
+<button class="btn" type="button" id="google" style="margin-top:0">Continue with Google</button>
+<button class="btn" type="button" id="facebook">Continue with Facebook</button>
+<div class="or">or use email</div>
+<form id="f" novalidate>
+<div class="up"><label for="name">Full name</label><input id="name" autocomplete="name"></div>
+<div class="g2 up"><div><label for="user">Username</label><input id="user" autocomplete="username"></div><div><label for="phone">Phone</label><input id="phone" type="tel" autocomplete="tel"></div></div>
+<label for="email">Email</label><input id="email" type="email" autocomplete="email">
+<div class="g2 up"><div><label for="country">Country</label><select id="country"><option value="">Select</option><option>Pakistan</option><option>India</option><option>UAE</option><option>Saudi Arabia</option><option>UK</option><option>USA</option><option>Canada</option><option>Other</option></select></div><div><label for="gender">Gender</label><select id="gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Prefer not to say</option></select></div></div>
+<div class="g2 up"><div><label for="dob">Date of birth</label><input id="dob" type="date"></div><div><label for="use">I mainly make</label><select id="use"><option>Poetry videos</option><option>Reels / Shorts</option><option>Lyric videos</option><option>Posters / designs</option><option>Business promos</option></select></div></div>
+<label for="pass">Password</label><input id="pass" type="password" autocomplete="current-password">
+<div class="up"><label for="pass2">Confirm password</label><input id="pass2" type="password" autocomplete="new-password"></div>
+<label class="chk"><input type="checkbox" id="show"> Show password</label>
+<label class="chk up"><input type="checkbox" id="news"> Send me tips and updates (optional)</label>
+<label class="chk up"><input type="checkbox" id="terms"><span>I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a>.</span></label>
+<button class="btn pri" type="submit" id="go">Sign in</button>
+<button class="fg in-only" type="button" id="forgot">Forgot password?</button>
+<p id="msg" role="status" aria-live="polite"></p>
+</form>
+<a class="back" href="index.html">← Back to start page</a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+var NEXT="studio.html",$=function(i){return document.getElementById(i)},mode="in";
+var sb=supabase.createClient("https://zcungofmmaagqcinafhb.supabase.co","sb_publishable_7ydxbZOzF0v2X58P7Pk_jg_za4pBQ3s");
+function msg(t,k){var m=$("msg");m.textContent=t;m.className=k||""}
+function setMode(m){mode=m;$("card").classList.toggle("signup",m==="up");$("t-in").classList.toggle("on",m==="in");$("t-up").classList.toggle("on",m==="up");$("go").textContent=m==="up"?"Create account":"Sign in";$("pass").autocomplete=m==="up"?"new-password":"current-password";msg("")}
+$("t-in").onclick=function(){setMode("in")};$("t-up").onclick=function(){setMode("up")};
+if(new URLSearchParams(location.search).get("mode")==="signup")setMode("up");
+$("show").onchange=function(){var t=this.checked?"text":"password";$("pass").type=t;$("pass2").type=t};
+sb.auth.getSession().then(function(r){if(r.data&&r.data.session)location.replace(NEXT)});
+function oauth(p){var base=location.href.split("?")[0].split("#")[0].replace(/[^\/]*$/,"");sb.auth.signInWithOAuth({provider:p,options:{redirectTo:base+NEXT}}).then(function(r){if(r.error)msg(r.error.message,"e")})}
+$("google").onclick=function(){oauth("google")};$("facebook").onclick=function(){oauth("facebook")};
+$("forgot").onclick=function(){var e=$("email").value.trim();if(!/^\S+@\S+\.\S+$/.test(e))return msg("Enter your email first.","e");sb.auth.resetPasswordForEmail(e,{redirectTo:location.href.split("?")[0]}).then(function(r){r.error?msg(r.error.message,"e"):msg("Reset link sent. Check your email.","s")})};
+$("f").addEventListener("submit",async function(ev){
+ev.preventDefault();var email=$("email").value.trim(),pass=$("pass").value;
+if(!/^\S+@\S+\.\S+$/.test(email))return msg("Enter a valid email.","e");
+if(pass.length<6)return msg("Password must be at least 6 characters.","e");
+var opts;
+if(mode==="up"){
+if($("name").value.trim().length<2)return msg("Enter your full name.","e");
+if($("user").value.trim().length<3)return msg("Username needs at least 3 characters.","e");
+if(pass!==$("pass2").value)return msg("Passwords do not match.","e");
+if(!$("terms").checked)return msg("Please agree to the Privacy Policy.","e");
+opts={data:{full_name:$("name").value.trim(),username:$("user").value.trim(),phone:$("phone").value.trim(),country:$("country").value,gender:$("gender").value,dob:$("dob").value,interest:$("use").value,newsletter:$("news").checked}}}
+var b=$("go");b.disabled=true;msg("Please wait…");
+try{
+var r=mode==="in"?await sb.auth.signInWithPassword({email:email,password:pass}):await sb.auth.signUp({email:email,password:pass,options:opts});
+if(r.error)throw r.error;
+if(mode==="up"&&!(r.data&&r.data.session)){setMode("in");msg("Account created. Check your email to confirm, then sign in.","s")}
+else{msg("Welcome!","s");location.href=NEXT}
+}catch(e){msg(e.message||"Something went wrong.","e")}
+b.disabled=false});
+})();
+</script></body></html>
