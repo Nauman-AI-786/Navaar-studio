@@ -1,0 +1,18 @@
+(function(){
+var L=[['Home','index.html'],['Video Editor','editor.html'],['Design Studio & Tools','tools.html'],['Quick Poetry Video','index.html#studio'],['Photo + Lyrics Video','index.html#photoVideo'],['Templates','index.html#templates'],['Plans','index.html#pricing'],['Feedback','index.html#feedback'],['Privacy Policy','privacy.html']];
+var signed=false;try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(/^sb-.*-auth-token$/.test(k))signed=true}}catch(e){}
+var st=document.createElement('style');st.textContent='#nvMB{width:44px;height:44px;min-height:44px;border-radius:12px;border:1px solid #2a353c;background:#1c262c;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;padding:0;flex:none}#nvMB i{display:block;width:20px;height:2px;border-radius:2px;background:#e9f0ee}#nvSh{position:fixed;inset:0;background:#0009;z-index:1000;display:none}#nvSh.on{display:block}#nvDr{position:fixed;top:0;right:0;bottom:0;width:min(320px,88vw);z-index:1001;background:#11191d;border-left:1px solid #2a353c;padding:18px 16px;overflow:auto;transform:translateX(105%);visibility:hidden;transition:transform .25s;font:14.5px system-ui,sans-serif;color:#e9f0ee}#nvDr.on{transform:none;visibility:visible}#nvDr a{display:block;padding:10px 12px;margin-bottom:4px;border-radius:10px;background:rgba(255,255,255,.04);color:#e9f0ee;text-decoration:none}#nvDr a:hover,#nvDr a.cur{background:rgba(111,211,181,.16)}#nvDr .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-weight:800;font-size:18px}#nvDr .top button{width:38px;height:38px;min-height:38px;border-radius:10px;border:0;background:rgba(255,255,255,.06);color:#e9f0ee;cursor:pointer}#nvDr .au{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}#nvDr .au a{text-align:center;margin:0;border:1px solid #2a353c}#nvDr .au a.p{background:#6fd3b5;color:#0b1a15;font-weight:700;border-color:#6fd3b5}.nvbar{display:flex;justify-content:space-between;align-items:center;padding:0 16px;height:56px;background:#151d22;border-bottom:1px solid #2a353c}.nvbar a.b{color:#e9f0ee;font:800 17px system-ui,sans-serif;text-decoration:none}';document.head.appendChild(st);
+var b=document.createElement('button');b.id='nvMB';b.type='button';b.setAttribute('aria-label','Open menu');b.innerHTML='<i></i><i></i><i></i>';
+var h=document.querySelector('header');
+if(!h){h=document.createElement('header');h.className='nvbar';h.innerHTML='<a class="b" href="index.html">Navaar Studio</a>';document.body.insertBefore(h,document.body.firstChild)}
+var n=h.querySelector('nav');if(n)n.remove();
+var w=h.querySelector('.w');(w||h).appendChild(b);
+var sh=document.createElement('div');sh.id='nvSh';
+var d=document.createElement('aside');d.id='nvDr';d.setAttribute('aria-label','Website menu');
+var page=location.pathname.split('/').pop()||'index.html';
+d.innerHTML='<div class="top">Navaar Studio<button type="button" aria-label="Close menu">&#10005;</button></div>'+(signed?'<a href="index.html" style="margin-bottom:14px">Your account</a>':'<div class="au"><a class="p" href="index.html?auth=login">Sign in</a><a href="index.html?auth=signup">Sign up</a></div>')+L.map(function(x){return'<a href="'+x[1]+'"'+(x[1]==page?' class="cur"':'')+'>'+x[0].replace('&','&amp;')+'</a>'}).join('');
+document.body.appendChild(sh);document.body.appendChild(d);
+function o(v){d.classList.toggle('on',v);sh.classList.toggle('on',v)}
+b.onclick=function(){o(true)};sh.onclick=d.querySelector('button').onclick=function(){o(false)};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')o(false)});
+})();
